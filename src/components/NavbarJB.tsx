@@ -1,4 +1,4 @@
-import { Container, Navbar, Nav } from "react-bootstrap"
+import { Container, Navbar, Nav, Row } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 
 const NavbarJB = function () {
@@ -25,48 +25,51 @@ const NavbarJB = function () {
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav>
-              <Link
-                className={
-                  location.pathname === "/index"
-                    ? "nav-link active"
-                    : "nav-link"
-                }
-                to="/index"
-              >
-                Dashboard
-              </Link>
-            </Nav>
-            <Nav>
-              <Link className="nav-link" to="/diario">
-                Diario
-              </Link>
-            </Nav>
-            <Nav>
-              <Link className="nav-link" to="/calendario">
-                Calendario
-              </Link>
-            </Nav>
-            <Nav>
-              <Link className="nav-link" to="/mood">
-                Mood
-              </Link>
-            </Nav>
-            <Nav>
-              <Link className="nav-link" to="/eventi">
-                Eventi
-              </Link>
-            </Nav>
-            <Nav>
-              {ruolo === "ADMIN" && (
-                <Link className="nav-link" to="/backOffice">
-                  Backoffice
+            <div className="w-100 d-flex justify-content-between">
+              <Nav>
+                <Link
+                  className={
+                    location.pathname === "/index"
+                      ? "nav-link active"
+                      : "nav-link"
+                  }
+                  to="/index"
+                >
+                  Dashboard
                 </Link>
-              )}
-            </Nav>
-            <Nav>
-              {token && <Nav.Link onClick={handleLogout}>Logout</Nav.Link>}
-            </Nav>
+                <Link className="nav-link" to="/diario">
+                  Diario
+                </Link>
+                <Link className="nav-link" to="/calendario">
+                  Calendario
+                </Link>
+                <Link className="nav-link" to="/mood">
+                  Mood
+                </Link>
+                <Link className="nav-link" to="/eventi">
+                  Eventi
+                </Link>
+                {ruolo === "ADMIN" && (
+                  <Link className="nav-link" to="/backOffice">
+                    Backoffice
+                  </Link>
+                )}
+              </Nav>
+
+              <Nav>
+                {!token && (
+                  <>
+                    <Link className="nav-link" to="/login">
+                      Login
+                    </Link>
+                    <Link className="nav-link" to="/register">
+                      Registrati
+                    </Link>
+                  </>
+                )}
+                {token && <Nav.Link onClick={handleLogout}>Logout</Nav.Link>}
+              </Nav>
+            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>
