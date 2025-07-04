@@ -16,12 +16,16 @@ const NavbarJB = function () {
     <header>
       <Navbar expand="lg" className="mynav" data-bs-theme="dark">
         <Container>
-          <Link to={token ? "/index" : "/"}>
-            🌿 <em>Just Breathe</em>
+          <Link to={token ? "/index" : "/"} className="ms-0">
+            <img
+              alt="logo Just Breathe"
+              src="Just Breathe-Logo.png"
+              width={100}
+            />
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+            <Nav>
               <Link
                 className={
                   location.pathname === "/index"
