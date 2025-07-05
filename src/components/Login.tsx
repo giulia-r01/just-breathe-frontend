@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Spinner, Container, Row, Col } from "react-bootstrap"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 interface LoginFormData {
   username: string
@@ -81,7 +81,7 @@ const Login = function () {
               />
             </div>
 
-            <div className="mb-5">
+            <div className="mb-4">
               <label htmlFor="password" className="form-label">
                 Password
               </label>
@@ -95,7 +95,15 @@ const Login = function () {
                 required
               />
             </div>
-
+            <p className="text-center text-white">
+              <Link
+                to="/auth/password/recupero"
+                className="text-white"
+                aria-label="Hai scordato la tua password? - Recupera la password dimenticata"
+              >
+                Hai scordato la tua password?
+              </Link>
+            </p>
             <button
               type="submit"
               className="btn btn-outline-success w-100 d-flex justify-content-center align-items-center"

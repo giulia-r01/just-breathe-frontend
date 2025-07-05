@@ -8,6 +8,7 @@ interface RegisterFormData {
 
 import { useState } from "react"
 import { Col, Container, Row, Spinner } from "react-bootstrap"
+import { Link } from "react-router-dom"
 
 const Register = function () {
   const [formData, setFormData] = useState<RegisterFormData>({
@@ -74,6 +75,13 @@ const Register = function () {
       <Row className="justify-content-center px-4">
         <Col md={6} lg={4} className="mynav py-3 my-4 rounded text-white">
           <h2>Registrati</h2>
+          <p className="text-white pt-2">
+            Hai già un account?
+            <br />
+            <Link to="/login" className="text-white" aria-label="Accedi">
+              Accedi
+            </Link>
+          </p>
 
           {error && <div className="alert alert-danger">{error}</div>}
           {success && <div className="alert alert-success">{success}</div>}

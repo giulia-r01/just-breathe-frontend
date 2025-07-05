@@ -6,6 +6,8 @@ import NavbarJB from "./components/NavbarJB"
 import FooterJB from "./components/FooterJB"
 import Register from "./components/Register"
 import Login from "./components/Login"
+import RecuperoPsw from "./components/RecuperoPsw"
+import ResetPsw from "./components/ResetPsw"
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Routes>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/auth/password/recupero" element={<RecuperoPsw />} />
+            <Route path="/reset-password" element={<ResetPsw />} />
           </Routes>
         </main>
         <FooterJB />
