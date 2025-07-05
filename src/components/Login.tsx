@@ -1,26 +1,22 @@
-interface RegisterFormData {
-  nome: string
-  cognome: string
+import React, { useState } from "react"
+import { Spinner, Container, Row, Col } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
+
+interface LoginFormData {
   username: string
-  email: string
   password: string
 }
 
-import { useState } from "react"
-import { Col, Container, Row, Spinner } from "react-bootstrap"
-
-const Register = function () {
-  const [formData, setFormData] = useState<RegisterFormData>({
-    nome: "",
-    cognome: "",
+const Login = function () {
+  const [formData, setFormData] = useState<LoginFormData>({
     username: "",
-    email: "",
     password: "",
   })
 
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -36,33 +32,24 @@ const Register = function () {
     setLoading(true)
 
     try {
-      const response = await fetch("http://localhost:8080/auth/register", {
+      const response = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       })
 
       if (!response.ok) {
         const data = await response.json()
-        setError(data.message || "Errore durante la registrazione")
+        setError(data.message || "Credenziali non valide")
       } else {
-        setSuccess("Registrazione avvenuta con successo!")
-        setFormData({
-          nome: "",
-          cognome: "",
-          username: "",
-          email: "",
-          password: "",
-        })
+        const data = await response.json()
+        localStorage.setItem("token", data.token)
+        localStorage.setItem("ruolo", data.ruolo)
+        setSuccess("Login effettuato con successo!")
+        setTimeout(() => navigate("/index"), 1500)
       }
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error(err.message)
-      } else {
-        console.error(err)
-      }
+      console.error(err)
       setError("Errore di rete o server")
     } finally {
       setLoading(false)
@@ -73,42 +60,12 @@ const Register = function () {
     <Container className="container mt-4">
       <Row className="justify-content-center px-4">
         <Col md={6} lg={4} className="mynav py-3 my-4 rounded text-white">
-          <h2>Registrati</h2>
+          <h2>Login</h2>
 
           {error && <div className="alert alert-danger">{error}</div>}
           {success && <div className="alert alert-success">{success}</div>}
 
           <form onSubmit={handleSubmit} noValidate>
-            <div className="mb-3">
-              <label htmlFor="nome" className="form-label">
-                Nome
-              </label>
-              <input
-                type="text"
-                id="nome"
-                name="nome"
-                className="form-control"
-                value={formData.nome}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="cognome" className="form-label">
-                Cognome
-              </label>
-              <input
-                type="text"
-                id="cognome"
-                name="cognome"
-                className="form-control"
-                value={formData.cognome}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
                 Username
@@ -119,21 +76,6 @@ const Register = function () {
                 name="username"
                 className="form-control"
                 value={formData.username}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="form-control"
-                value={formData.email}
                 onChange={handleChange}
                 required
               />
@@ -151,13 +93,12 @@ const Register = function () {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                minLength={6}
               />
             </div>
 
             <button
               type="submit"
-              className="btn btn-outline-success w-100"
+              className="btn btn-outline-success w-100 d-flex justify-content-center align-items-center"
               disabled={loading}
             >
               {loading ? (
@@ -172,7 +113,7 @@ const Register = function () {
                   Caricamento...
                 </>
               ) : (
-                "Registrati"
+                "Accedi"
               )}
             </button>
           </form>
@@ -182,4 +123,4 @@ const Register = function () {
   )
 }
 
-export default Register
+export default Login
