@@ -133,7 +133,7 @@ const Respiri = () => {
       {loading && <Spinner animation="border" />}
       {error && <Alert variant="danger">{error}</Alert>}
 
-      <Row className="g-4">
+      <Row className="g-4 py-5">
         {respiri.map((respiro) => (
           <Col md={6} lg={4} key={respiro.id}>
             <Card className="mynav text-white h-100">
