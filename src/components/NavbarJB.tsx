@@ -49,14 +49,17 @@ const NavbarJB = function () {
                 <Link className="nav-link" to="/eventi">
                   Eventi
                 </Link>
+                <Link className="nav-link" to="/respirazioni">
+                  Respirazioni guidate
+                </Link>
+              </Nav>
+
+              <Nav>
                 {ruolo === "ADMIN" && (
                   <Link className="nav-link" to="/backOffice">
                     Backoffice
                   </Link>
                 )}
-              </Nav>
-
-              <Nav>
                 {!token && (
                   <>
                     <Link className="nav-link" to="/login">
