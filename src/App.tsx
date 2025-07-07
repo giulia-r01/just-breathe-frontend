@@ -8,6 +8,7 @@ import Register from "./components/Register"
 import Login from "./components/Login"
 import RecuperoPsw from "./components/RecuperoPsw"
 import ResetPsw from "./components/ResetPsw"
+import Home from "./components/Home"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <NavbarJB />
         <main className="flex-grow-1">
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/auth/password/recupero" element={<RecuperoPsw />} />
