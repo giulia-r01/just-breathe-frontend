@@ -65,7 +65,7 @@ const Login = function () {
           {error && <div className="alert alert-danger">{error}</div>}
           {success && <div className="alert alert-success">{success}</div>}
 
-          <form onSubmit={handleSubmit} noValidate>
+          <form onSubmit={handleSubmit} noValidate autoComplete="off">
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
                 Username
@@ -73,6 +73,7 @@ const Login = function () {
               <input
                 type="text"
                 id="username"
+                autoComplete="new-username"
                 name="username"
                 className="form-control"
                 value={formData.username}
@@ -89,6 +90,7 @@ const Login = function () {
                 type="password"
                 id="password"
                 name="password"
+                autoComplete="new-password"
                 className="form-control"
                 value={formData.password}
                 onChange={handleChange}

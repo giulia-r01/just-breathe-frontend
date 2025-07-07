@@ -8,7 +8,7 @@ interface RegisterFormData {
 
 import { useState } from "react"
 import { Col, Container, Row, Spinner } from "react-bootstrap"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const Register = function () {
   const [formData, setFormData] = useState<RegisterFormData>({
@@ -22,6 +22,7 @@ const Register = function () {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -57,6 +58,9 @@ const Register = function () {
           email: "",
           password: "",
         })
+        setTimeout(() => {
+          navigate("/login")
+        }, 1000)
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -86,7 +90,7 @@ const Register = function () {
           {error && <div className="alert alert-danger">{error}</div>}
           {success && <div className="alert alert-success">{success}</div>}
 
-          <form onSubmit={handleSubmit} noValidate>
+          <form onSubmit={handleSubmit} noValidate autoComplete="off">
             <div className="mb-3">
               <label htmlFor="nome" className="form-label">
                 Nome
@@ -125,6 +129,7 @@ const Register = function () {
                 type="text"
                 id="username"
                 name="username"
+                autoComplete="new-username"
                 className="form-control"
                 value={formData.username}
                 onChange={handleChange}
@@ -155,6 +160,7 @@ const Register = function () {
                 type="password"
                 id="password"
                 name="password"
+                autoComplete="new-password"
                 className="form-control"
                 value={formData.password}
                 onChange={handleChange}
