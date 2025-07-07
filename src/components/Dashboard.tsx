@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react"
 import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+import UltimoRespiro from "./dashboardComponents/UltimoRespiro"
 
 interface Utente {
   id: number
@@ -53,20 +54,7 @@ const Dashboard = function () {
 
       <Row className="g-4 pt-5">
         <Col md={6}>
-          <Card className="h-100 mynav text-white">
-            <Card.Body>
-              <Card.Title>Respiro Guidato</Card.Title>
-              <Card.Text>
-                Non hai ancora salvato esercizi di respirazione.
-              </Card.Text>
-              <Button
-                variant="success"
-                onClick={() => navigate("/respirazioni")}
-              >
-                Vai agli esercizi
-              </Button>
-            </Card.Body>
-          </Card>
+          <UltimoRespiro />
         </Col>
 
         <Col md={6}>

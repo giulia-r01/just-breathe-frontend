@@ -127,7 +127,7 @@ const Respiri = () => {
   return (
     <Container className="my-4">
       <h2 className="text-center mb-4 text-white mynav rounded py-3">
-        Esercizi di Respiro Guidato
+        Esercizi di Respirazione Guidata
       </h2>
 
       {loading && <Spinner animation="border" />}
@@ -138,16 +138,20 @@ const Respiri = () => {
           <Col md={6} lg={4} key={respiro.id}>
             <Card className="mynav text-white h-100">
               <Card.Body>
-                <Card.Title>{respiro.nome}</Card.Title>
+                <Card.Title className="fs-2">{respiro.nome}</Card.Title>
                 <Badge
-                  className={`mb-2 text-uppercase ${getColorClass(
+                  className={`mb-2 fs-6 text-uppercase ${getColorClass(
                     respiro.categoria
                   )}`}
                 >
                   {respiro.categoria}
                 </Badge>
-                <Card.Text>{respiro.descrizione}</Card.Text>
-                <Button variant="success" onClick={() => apriModale(respiro)}>
+                <Card.Text className="fs-5">{respiro.descrizione}</Card.Text>
+                <Button
+                  className="fs-5"
+                  variant="success"
+                  onClick={() => apriModale(respiro)}
+                >
                   Avvia respirazione
                 </Button>
               </Card.Body>

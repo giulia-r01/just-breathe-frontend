@@ -1,32 +1,32 @@
 .bg-relax {
-  background-color: #88c9bf !important;
+  background-color: #306e65 !important;
   color: white !important;
   border: none;
 }
 
 .bg-focus {
-  background-color: #6c63ff !important;
+  background-color: #0900bd !important;
   color: white !important;
   border: none;
 }
 
 .bg-energia {
-  background-color: #f57c00 !important;
+  background-color: #ad5700 !important;
   color: white !important;
   border: none;
 }
 
 /* Badge */
 .badge.bg-relax {
-  background-color: #88c9bf !important;
+  background-color: #306e65 !important;
 }
 
 .badge.bg-focus {
-  background-color: #6c63ff !important;
+  background-color: #0900bd !important;
 }
 
 .badge.bg-energia {
-  background-color: #f57c00 !important;
+  background-color: #ad5700 !important;
 }
 
 /* Animazione cerchio */
@@ -39,13 +39,13 @@
 }
 
 .cerchio.bg-relax {
-  background-color: #88c9bf;
+  background-color: #306e65;
 }
 
 .cerchio.bg-focus {
-  background-color: #6c63ff;
+  background-color: #0900bd;
 }
 
 .cerchio.bg-energia {
-  background-color: #f57c00;
+  background-color: #ad5700;
 }

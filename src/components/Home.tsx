@@ -6,7 +6,7 @@ const Home = function () {
 
   return (
     <Container className="text-center mt-5">
-      <Row className="justify-content-center pt-5">
+      <Row className="justify-content-center py-5 px-5">
         <Col md={6} className="mynav rounded text-white py-3">
           <h1 className="mb-4">🌿 Benvenut* su Just Breathe</h1>
           <p className="mb-4">
@@ -14,7 +14,7 @@ const Home = function () {
             <br /> Inizia il tuo viaggio verso il benessere digitale.
           </p>
           <Row className="justify-content-center">
-            <Col xs={6} md={3}>
+            <Col xs={6} md={6}>
               <Button
                 variant="success"
                 className="w-100 mb-2"
@@ -23,7 +23,7 @@ const Home = function () {
                 Accedi
               </Button>
             </Col>
-            <Col xs={6} md={3}>
+            <Col xs={6} md={6}>
               <Button
                 variant="outline-success"
                 className="w-100"
