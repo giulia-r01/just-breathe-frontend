@@ -1,4 +1,4 @@
-import { Container, Navbar, Nav, Row } from "react-bootstrap"
+import { Container, Navbar, Nav } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 
 const NavbarJB = function () {

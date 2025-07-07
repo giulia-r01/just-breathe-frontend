@@ -8,10 +8,10 @@ const Home = function () {
     <Container className="text-center mt-5">
       <Row className="justify-content-center pt-5">
         <Col md={6} className="mynav rounded text-white py-3">
-          <h1 className="mb-4">🌿 Benvenuto su Just Breathe</h1>
+          <h1 className="mb-4">🌿 Benvenut* su Just Breathe</h1>
           <p className="mb-4">
-            Organizza la mente, libera il respiro. Inizia il tuo viaggio verso
-            il benessere digitale.
+            Organizza la mente, libera il respiro.
+            <br /> Inizia il tuo viaggio verso il benessere digitale.
           </p>
           <Row className="justify-content-center">
             <Col xs={6} md={3}>
