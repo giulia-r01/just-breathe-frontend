@@ -10,6 +10,7 @@ import RecuperoPsw from "./components/RecuperoPsw"
 import ResetPsw from "./components/ResetPsw"
 import Home from "./components/Home"
 import Dashboard from "./components/Dashboard"
+import Respiri from "./components/Respiri"
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/auth/password/recupero" element={<RecuperoPsw />} />
             <Route path="/reset-password" element={<ResetPsw />} />
             <Route path="/index" element={<Dashboard />} />
+            <Route path="/respirazioni" element={<Respiri />} />
           </Routes>
         </main>
         <FooterJB />

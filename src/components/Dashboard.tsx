@@ -59,7 +59,10 @@ const Dashboard = function () {
               <Card.Text>
                 Non hai ancora salvato esercizi di respirazione.
               </Card.Text>
-              <Button variant="success" onClick={() => navigate("/respiro")}>
+              <Button
+                variant="success"
+                onClick={() => navigate("/respirazioni")}
+              >
                 Vai agli esercizi
               </Button>
             </Card.Body>

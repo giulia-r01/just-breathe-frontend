@@ -1,0 +1,51 @@
+.bg-relax {
+  background-color: #88c9bf !important;
+  color: white !important;
+  border: none;
+}
+
+.bg-focus {
+  background-color: #6c63ff !important;
+  color: white !important;
+  border: none;
+}
+
+.bg-energia {
+  background-color: #f57c00 !important;
+  color: white !important;
+  border: none;
+}
+
+/* Badge */
+.badge.bg-relax {
+  background-color: #88c9bf !important;
+}
+
+.badge.bg-focus {
+  background-color: #6c63ff !important;
+}
+
+.badge.bg-energia {
+  background-color: #f57c00 !important;
+}
+
+/* Animazione cerchio */
+.cerchio {
+  width: 140px;
+  height: 140px;
+  margin: auto;
+  border-radius: 50%;
+  transform: scale(1);
+}
+
+.cerchio.bg-relax {
+  background-color: #88c9bf;
+}
+
+.cerchio.bg-focus {
+  background-color: #6c63ff;
+}
+
+.cerchio.bg-energia {
+  background-color: #f57c00;
+}
