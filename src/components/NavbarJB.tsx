@@ -14,7 +14,7 @@ const NavbarJB = function () {
 
   return (
     <header>
-      <Navbar expand="lg" className="mynav" data-bs-theme="dark">
+      <Navbar expand="lg" className="mynav" data-bs-theme="dark" fixed="top">
         <Container>
           <Link to={token ? "/index" : "/"} className="ms-0">
             <img

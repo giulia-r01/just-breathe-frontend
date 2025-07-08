@@ -11,13 +11,14 @@ import ResetPsw from "./components/ResetPsw"
 import Home from "./components/Home"
 import Dashboard from "./components/Dashboard"
 import Respiri from "./components/Respiri"
+import Diario from "./components/Diario"
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <NavbarJB />
-        <main className="flex-grow-1">
+        <main className="flex-grow-1 pt-5 mt-5">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
@@ -26,6 +27,7 @@ function App() {
             <Route path="/reset-password" element={<ResetPsw />} />
             <Route path="/index" element={<Dashboard />} />
             <Route path="/respirazioni" element={<Respiri />} />
+            <Route path="/diario" element={<Diario />} />
           </Routes>
         </main>
         <FooterJB />

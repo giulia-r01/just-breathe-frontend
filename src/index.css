@@ -8,3 +8,15 @@ body {
   background-repeat: no-repeat;
   background-position: contain;
 }
+
+.my-pagination .page-link {
+  background-color: #fff !important;
+  color: rgb(5, 73, 60) !important;
+  border: none !important;
+}
+
+.my-pagination .page-item.active .page-link {
+  background-color: rgb(5, 73, 60) !important;
+  color: #fff !important;
+  border: none !important;
+}

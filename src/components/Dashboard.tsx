@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import UltimoRespiro from "./dashboardComponents/UltimoRespiro"
+import UltimoDiario from "./dashboardComponents/UltimoDiario"
 
 interface Utente {
   id: number
@@ -48,7 +49,7 @@ const Dashboard = function () {
 
   return (
     <Container className="my-4">
-      <h2 className="text-center py-5 text-white mynav rounded">
+      <h2 className="text-center py-4 text-white mynav rounded">
         Ciao <strong>{utente?.nome}</strong> 🌿
       </h2>
 
@@ -58,15 +59,7 @@ const Dashboard = function () {
         </Col>
 
         <Col md={6}>
-          <Card className="h-100 mynav text-white">
-            <Card.Body>
-              <Card.Title>Diario</Card.Title>
-              <Card.Text>Non hai ancora scritto nulla nel diario.</Card.Text>
-              <Button variant="success" onClick={() => navigate("/diario")}>
-                Scrivi qualcosa
-              </Button>
-            </Card.Body>
-          </Card>
+          <UltimoDiario />
         </Col>
 
         <Col md={6}>
