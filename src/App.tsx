@@ -12,6 +12,7 @@ import Home from "./components/Home"
 import Dashboard from "./components/Dashboard"
 import Respiri from "./components/Respiri"
 import Diario from "./components/Diario"
+import ToDoList from "./components/ToDoList"
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/index" element={<Dashboard />} />
             <Route path="/respirazioni" element={<Respiri />} />
             <Route path="/diario" element={<Diario />} />
+            <Route path="/calendario" element={<ToDoList />} />
           </Routes>
         </main>
         <FooterJB />
