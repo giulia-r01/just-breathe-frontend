@@ -4,6 +4,7 @@ import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import UltimoRespiro from "./dashboardComponents/UltimoRespiro"
 import UltimoDiario from "./dashboardComponents/UltimoDiario"
+import UltimiTask from "./dashboardComponents/UltimiTask"
 
 interface Utente {
   id: number
@@ -75,15 +76,7 @@ const Dashboard = function () {
         </Col>
 
         <Col md={6}>
-          <Card className="h-100 mynav text-white">
-            <Card.Body>
-              <Card.Title>To-Do List</Card.Title>
-              <Card.Text>Non hai ancora creato attività.</Card.Text>
-              <Button variant="success" onClick={() => navigate("/calendario")}>
-                Vai al calendario
-              </Button>
-            </Card.Body>
-          </Card>
+          <UltimiTask />
         </Col>
 
         <Col md={6}>

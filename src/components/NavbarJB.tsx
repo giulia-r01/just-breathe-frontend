@@ -40,8 +40,8 @@ const NavbarJB = function () {
                 <Link className="nav-link" to="/diario">
                   Diario
                 </Link>
-                <Link className="nav-link" to="/calendario">
-                  Calendario
+                <Link className="nav-link" to="/todolist">
+                  ToDo List - Calendario
                 </Link>
                 <Link className="nav-link" to="/mood">
                   Mood

@@ -29,7 +29,7 @@ function App() {
             <Route path="/index" element={<Dashboard />} />
             <Route path="/respirazioni" element={<Respiri />} />
             <Route path="/diario" element={<Diario />} />
-            <Route path="/calendario" element={<ToDoList />} />
+            <Route path="/todolist" element={<ToDoList />} />
           </Routes>
         </main>
         <FooterJB />

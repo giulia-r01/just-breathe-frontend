@@ -29,7 +29,7 @@ type TaskDraft = Partial<Omit<ToDo, "dataCreazioneTask">> & {
 const tipiTask = [
   { value: "DA_FARE", label: "Da fare" },
   { value: "IN_CORSO", label: "In corso" },
-  { value: "FATTO", label: "Completato" },
+  { value: "FATTO", label: "Fatto" },
 ]
 
 const ToDoList = () => {
@@ -41,6 +41,19 @@ const ToDoList = () => {
   const [currentTask, setCurrentTask] = useState<TaskDraft | null>(null)
 
   const token = localStorage.getItem("token")
+
+  const labelTipoTask = (tipo: string) => {
+    switch (tipo) {
+      case "DA_FARE":
+        return "Da fare"
+      case "IN_CORSO":
+        return "In corso"
+      case "FATTO":
+        return "Fatto"
+      default:
+        return tipo
+    }
+  }
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -243,7 +256,7 @@ const ToDoList = () => {
                   </Card.Title>
                   <Card.Text>{task.descrizione}</Card.Text>
                   <Card.Text className="text-muted">
-                    Stato: <strong>{task.tipoTask}</strong>
+                    Stato: <strong>{labelTipoTask(task.tipoTask)}</strong>
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -279,11 +292,11 @@ const ToDoList = () => {
                       </div>
                     </Card.Title>
                     <Card.Text>{task.descrizione}</Card.Text>
-                    <Card.Text className="text-muted">
+                    <Card.Text className="text-muted fs-5">
                       {new Date(task.dataCreazioneTask).toLocaleDateString(
                         "it-IT"
                       )}{" "}
-                      – <strong>{task.tipoTask}</strong>
+                      – <strong>{labelTipoTask(task.tipoTask)}</strong>
                     </Card.Text>
                   </Card.Body>
                 </Card>
