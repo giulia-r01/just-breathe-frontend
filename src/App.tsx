@@ -13,6 +13,7 @@ import Dashboard from "./components/Dashboard"
 import Respiri from "./components/Respiri"
 import Diario from "./components/Diario"
 import ToDoList from "./components/ToDoList"
+import Mood from "./components/Mood"
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/respirazioni" element={<Respiri />} />
             <Route path="/diario" element={<Diario />} />
             <Route path="/todolist" element={<ToDoList />} />
+            <Route path="/mood" element={<Mood />} />
           </Routes>
         </main>
         <FooterJB />
