@@ -1,0 +1,209 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react"
+import {
+  Form,
+  Button,
+  ListGroup,
+  Spinner,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap"
+import { FaRegStar, FaStar } from "react-icons/fa"
+import UltimiEventiSalvati from "./dashboardComponents/UltimiEventiSalvati"
+
+interface EventoDto {
+  id?: number
+  nome: string
+  luogo?: string
+  dataEvento?: string
+  immagine?: string
+  linkEsterno?: string
+}
+
+const Eventi = () => {
+  const [citta, setCitta] = useState("")
+  const [eventi, setEventi] = useState<EventoDto[]>([])
+  const [salvati, setSalvati] = useState<EventoDto[]>([])
+  const [loading, setLoading] = useState(false)
+  const [reloadFlag, setReloadFlag] = useState(0)
+
+  const token = localStorage.getItem("token")
+
+  useEffect(() => {
+    if (token) fetchSalvati()
+  }, [token])
+
+  const fetchSalvati = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/eventi/utente", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setSalvati(data.content || [])
+      }
+    } catch (err) {
+      console.error("Errore nel recupero eventi salvati:", err)
+    }
+  }
+
+  const handleSearch = async () => {
+    if (!citta.trim()) return
+    setLoading(true)
+    try {
+      const res = await fetch(
+        `http://localhost:8080/eventi/esterni?citta=${encodeURIComponent(
+          citta
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      const data = await res.json()
+      setEventi(data)
+    } catch (err) {
+      console.error("Errore nella ricerca eventi:", err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const trovaEventoSalvato = (evento: EventoDto) => {
+    return salvati.find(
+      (e) =>
+        e.nome === evento.nome &&
+        e.luogo === evento.luogo &&
+        e.dataEvento === evento.dataEvento
+    )
+  }
+
+  const handleToggleSalvataggio = async (evento: EventoDto) => {
+    const eventoSalvato = trovaEventoSalvato(evento)
+
+    if (eventoSalvato && eventoSalvato.id) {
+      // Evento già salvato, quindi lo rimuovo
+      try {
+        const res = await fetch(
+          `http://localhost:8080/eventi/${eventoSalvato.id}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        if (res.ok) {
+          // Aggiorna lista salvati
+          setSalvati((prev) => prev.filter((e) => e.id !== eventoSalvato.id))
+          setReloadFlag((f) => f + 1)
+        }
+      } catch (err) {
+        console.error("Errore nella rimozione evento:", err)
+      }
+    } else {
+      // Evento non salvato, quindi lo salvo
+      try {
+        const res = await fetch("http://localhost:8080/eventi", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(evento),
+        })
+        if (res.ok) {
+          fetchSalvati()
+          setReloadFlag((f) => f + 1)
+        }
+      } catch (err) {
+        console.error("Errore nel salvataggio evento:", err)
+      }
+    }
+  }
+
+  return (
+    <Container>
+      <Row className="align-items-start py-4 g-3">
+        <h2 className="text-center text-white mb-4 mynav rounded mt-3 py-3">
+          Eventi
+        </h2>
+        <Col md={6}>
+          <Form className="d-flex mb-3">
+            <Form.Control
+              type="text"
+              placeholder="Cerca gli eventi nella tua città"
+              value={citta}
+              onChange={(e) => setCitta(e.target.value)}
+              className="me-2"
+            />
+            <Button variant="success" onClick={handleSearch}>
+              Cerca
+            </Button>
+          </Form>
+          {loading ? (
+            <div className="text-center my-5">
+              <Spinner animation="border" variant="success" />
+            </div>
+          ) : eventi.length === 1 && !eventi[0].id ? (
+            // Se c’è un solo elemento e NON ha id, consideriamolo messaggio e mostriamolo senza stellina
+            <label className="bg-white mytext rounded p-2 fw-bold">
+              {eventi[0].nome}
+            </label>
+          ) : (
+            <ListGroup>
+              {eventi.map((evento, i) => {
+                const isSalvato = !!trovaEventoSalvato(evento)
+                return (
+                  <ListGroup.Item
+                    key={i}
+                    className="d-flex justify-content-between align-items-start"
+                  >
+                    <div>
+                      <div className="fw-bold">{evento.nome}</div>
+                      {evento.luogo && <div>{evento.luogo}</div>}
+                      {evento.dataEvento && (
+                        <div>
+                          {new Date(evento.dataEvento).toLocaleString("it-IT", {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </div>
+                      )}
+                    </div>
+                    <Button
+                      variant="link"
+                      className={`fs-4 ${
+                        isSalvato ? "text-success" : "text-secondary"
+                      }`}
+                      onClick={() => handleToggleSalvataggio(evento)}
+                    >
+                      {isSalvato ? <FaStar /> : <FaRegStar />}
+                    </Button>
+                  </ListGroup.Item>
+                )
+              })}
+            </ListGroup>
+          )}
+        </Col>
+        <Col sm={6}>
+          <UltimiEventiSalvati
+            showButton={false}
+            showTitle={false}
+            reloadFlag={reloadFlag}
+          />
+        </Col>
+      </Row>
+    </Container>
+  )
+}
+
+export default Eventi
