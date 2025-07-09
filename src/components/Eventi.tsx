@@ -128,15 +128,15 @@ const Eventi = () => {
 
   return (
     <Container>
-      <Row className="align-items-start py-4 g-3">
+      <Row className="align-items-start py-4 g-2">
         <h2 className="text-center text-white mb-4 mynav rounded mt-3 py-3">
           Eventi
         </h2>
-        <Col md={6}>
+        <Col md={5} lg={6}>
           <Form className="d-flex mb-3">
             <Form.Control
               type="text"
-              placeholder="Cerca gli eventi nella tua città"
+              placeholder="Cerca eventi nella tua città"
               value={citta}
               onChange={(e) => setCitta(e.target.value)}
               className="me-2"
@@ -194,11 +194,13 @@ const Eventi = () => {
             </ListGroup>
           )}
         </Col>
-        <Col sm={6}>
+        <Col md={7} lg={6}>
           <UltimiEventiSalvati
             showButton={false}
             showTitle={false}
             reloadFlag={reloadFlag}
+            showStars={true}
+            onToggleSalvataggio={handleToggleSalvataggio}
           />
         </Col>
       </Row>

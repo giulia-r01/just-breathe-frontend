@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Card, Spinner, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+import { FaTrashAlt } from "react-icons/fa"
 
 interface Evento {
   id: number
@@ -13,12 +14,16 @@ interface UltimiEventiSalvatiProps {
   showButton?: boolean
   showTitle?: boolean
   reloadFlag?: number
+  showStars?: boolean // mostra stelline per toggle preferiti
+  onToggleSalvataggio?: (evento: Evento) => void // callback per toggle
 }
 
 const UltimiEventiSalvati = ({
   showButton = true,
   showTitle = true,
   reloadFlag,
+  showStars = false,
+  onToggleSalvataggio,
 }: UltimiEventiSalvatiProps) => {
   const [eventi, setEventi] = useState<Evento[]>([])
   const [loading, setLoading] = useState(true)
@@ -59,6 +64,7 @@ const UltimiEventiSalvati = ({
         <Card.Subtitle className="fs-5 pb-4 pt-2">
           Ultimi eventi salvati:
         </Card.Subtitle>
+
         {loading ? (
           <div className="text-center py-4">
             <Spinner animation="border" variant="light" />
@@ -68,28 +74,46 @@ const UltimiEventiSalvati = ({
         ) : (
           <>
             {eventi.map((evento) => (
-              <div key={evento.id} className="mb-2">
-                <strong>{evento.nome}</strong>
-                {evento.luogo && (
-                  <div className="text-white fst-italic">
-                    Luogo: {evento.luogo}
-                  </div>
-                )}
-                {evento.dataEvento && (
-                  <div className="text-white">
-                    {new Date(evento.dataEvento).toLocaleString("it-IT", {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                    <hr />
-                  </div>
+              <div
+                key={evento.id}
+                className="mb-2 d-flex justify-content-between align-items-center"
+              >
+                <div>
+                  <strong>{evento.nome}</strong>
+                  {evento.luogo && (
+                    <div className="text-white fst-italic">
+                      Luogo: {evento.luogo}
+                    </div>
+                  )}
+                  {evento.dataEvento && (
+                    <div className="text-white">
+                      {new Date(evento.dataEvento).toLocaleString("it-IT", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                      <hr />
+                    </div>
+                  )}
+                </div>
+
+                {/* Stellina visibile solo se showStars=true e c'è la callback */}
+                {showStars && onToggleSalvataggio && (
+                  <Button
+                    variant="link"
+                    className="p-0 border-0 text-danger fs-5"
+                    title="Rimuovi dai preferiti"
+                    onClick={() => onToggleSalvataggio(evento)}
+                  >
+                    <FaTrashAlt />
+                  </Button>
                 )}
               </div>
             ))}
+
             {showButton && (
               <div className="text-end mt-3">
                 <Button variant="success" onClick={() => navigate("/eventi")}>
