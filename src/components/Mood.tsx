@@ -9,6 +9,7 @@ import {
   Form,
   ListGroup,
   Modal,
+  Alert,
 } from "react-bootstrap"
 
 interface Brano {
@@ -40,6 +41,7 @@ const Mood = () => {
   const token = localStorage.getItem("token")
 
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
   const [moods, setMoods] = useState<Mood[]>([])
   const [selectedMood, setSelectedMood] = useState<Mood | null>(null)
   const [newTipoMood, setNewTipoMood] = useState("")
@@ -57,7 +59,10 @@ const Mood = () => {
     if (!token) return
 
     const fetchMoods = async () => {
+      setError("")
+      setLoading(true)
       try {
+        setError("")
         const res = await fetch("http://localhost:8080/moods", {
           headers: { Authorization: `Bearer ${token}` },
         })
@@ -72,6 +77,7 @@ const Mood = () => {
         }
       } catch (e) {
         console.error("Errore fetch moods", e)
+        setError("Impossibile caricare i mood")
       } finally {
         setLoading(false)
       }
@@ -79,6 +85,7 @@ const Mood = () => {
 
     const fetchBrani = async (moodId: number): Promise<Brano[]> => {
       try {
+        setError("")
         const res = await fetch(`http://localhost:8080/brani/mood/${moodId}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
@@ -90,6 +97,7 @@ const Mood = () => {
         return data || []
       } catch (e) {
         console.error("Errore fetch brani", e)
+        setError("Impossibile caricare i brani")
         return []
       }
     }
@@ -119,6 +127,7 @@ const Mood = () => {
     if (!token) return
     setLoading(true)
     try {
+      setError("")
       const res = await fetch(`http://localhost:8080/brani/mood/${mood.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -126,6 +135,7 @@ const Mood = () => {
       setSelectedMood({ ...mood, brani })
     } catch (e) {
       console.error("Errore fetch brani mood", e)
+      setError("Impossibile caricare i brani del mood")
     } finally {
       setLoading(false)
     }
@@ -135,6 +145,7 @@ const Mood = () => {
   const handleCreateMood = async () => {
     if (!token || !newTipoMood) return
     try {
+      setError("")
       const res = await fetch(
         `http://localhost:8080/moods?tipoMood=${newTipoMood}`,
         {
@@ -149,6 +160,7 @@ const Mood = () => {
       setNewTipoMood("")
     } catch (e) {
       console.error(e)
+      setError("Impossibile creare il mood")
     }
   }
 
@@ -156,6 +168,7 @@ const Mood = () => {
   const handleAddBrano = async () => {
     if (!token || !newBrano || !selectedMood) return
     try {
+      setError("")
       const res = await fetch(
         `http://localhost:8080/brani/${selectedMood.id}`,
         {
@@ -175,6 +188,7 @@ const Mood = () => {
       setNewBrano("")
     } catch (e) {
       console.error(e)
+      setError("Impossibile aggiungere il brano")
     }
   }
 
@@ -192,6 +206,7 @@ const Mood = () => {
     if (!token || !editingBrano || editMoodId === null) return
 
     try {
+      setError("")
       let updatedBrano = editingBrano
 
       // 1. Modifica titolo o link (PUT)
@@ -295,6 +310,7 @@ const Mood = () => {
   const handleDeleteBrano = async (branoId: number) => {
     if (!token || !selectedMood) return
     try {
+      setError("")
       const res = await fetch(`http://localhost:8080/brani/${branoId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
@@ -311,6 +327,7 @@ const Mood = () => {
       )
     } catch (e) {
       console.error(e)
+      setError("Impossibile eliminare il brano")
     }
   }
 
@@ -318,6 +335,7 @@ const Mood = () => {
   const handleDeleteMood = async () => {
     if (!token || !selectedMood) return
     try {
+      setError("")
       const res = await fetch(
         `http://localhost:8080/moods/${selectedMood.id}`,
         {
@@ -331,6 +349,7 @@ const Mood = () => {
       setSelectedMood(null)
     } catch (e) {
       console.error(e)
+      setError("Impossibile eliminare il mood")
     }
   }
 
@@ -345,18 +364,28 @@ const Mood = () => {
           <Spinner animation="border" variant="success" />
         </div>
       )}
+      {error && (
+        <Alert variant="danger" className="text-center">
+          {error}
+        </Alert>
+      )}
 
       <Row className="justify-content-center g-3">
-        <Col lg={6}>
+        <Col md={4} lg={6}>
           <h4 className="mynav rounded p-3">I tuoi mood</h4>
           <ListGroup>
-            {moods.length === 0 && <p>Nessun mood salvato.</p>}
+            {moods.length === 0 && (
+              <p className="bg-white rounded p-2 mytext fw-semibold">
+                Nessun mood salvato.
+              </p>
+            )}
             {moods.map((mood) => (
               <ListGroup.Item
                 key={mood.id}
                 action
                 active={selectedMood?.id === mood.id}
                 onClick={() => handleSelectMood(mood)}
+                as="div"
                 className={
                   selectedMood?.id === mood.id
                     ? "d-flex justify-content-between align-items-center text-white bg-success border border-success"
@@ -391,7 +420,7 @@ const Mood = () => {
               className="me-2"
               disabled={showEditModal}
             >
-              <option value="">Seleziona un mood</option>
+              <option value="">Crea un mood</option>
               {tipiMood.map((tipo) => (
                 <option key={tipo} value={tipo}>
                   {tipo.charAt(0) + tipo.slice(1).toLowerCase()}
@@ -408,29 +437,35 @@ const Mood = () => {
           </Form>
         </Col>
 
-        <Col lg={6}>
+        <Col md={8} lg={6}>
           {selectedMood ? (
             <>
-              <h4 className="mynav rounded p-3">
-                Mood selezionato: {selectedMood.tipoMood}
-              </h4>
-              <p className="text-white mynav rounded p-2">
-                Salvato il:{" "}
-                {new Date(selectedMood.dataCreazione).toLocaleDateString(
-                  "it-IT",
-                  {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  }
+              <div className="mynav rounded">
+                <h4 className="p-3">
+                  Mood selezionato: {selectedMood.tipoMood}
+                </h4>
+                <p className="text-white ps-3 pb-2">
+                  Salvato il:{" "}
+                  {new Date(selectedMood.dataCreazione).toLocaleDateString(
+                    "it-IT",
+                    {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  )}
+                </p>
+                {(!selectedMood.brani || selectedMood.brani.length === 0) && (
+                  <p className="text-white fw-bold ps-3 pb-2">
+                    Nessun brano associato a questo mood.
+                  </p>
                 )}
-              </p>
-
+              </div>
               <Form className="d-flex mb-3">
                 <Form.Control
                   type="text"
-                  placeholder="Aggiungi una canzone (es. Imagine Dragons)"
+                  placeholder="Aggiungi una canzone (es. Toxicity )"
                   value={newBrano}
                   onChange={(e) => setNewBrano(e.target.value)}
                   className="me-2"
@@ -445,10 +480,7 @@ const Mood = () => {
                 </Button>
               </Form>
 
-              <Row>
-                {(!selectedMood.brani || selectedMood.brani.length === 0) && (
-                  <p>Nessun brano associato a questo mood.</p>
-                )}
+              <Row className="g-1">
                 {(selectedMood.brani || []).map((brano) => {
                   const embedUrl = extractYouTubeEmbedUrl(brano.link)
                   return (
@@ -498,7 +530,9 @@ const Mood = () => {
               </Row>
             </>
           ) : (
-            <p>Seleziona un mood per vedere i dettagli.</p>
+            <p className="bg-white rounded p-2 mytext fw-semibold">
+              Seleziona un mood per vedere i dettagli.
+            </p>
           )}
         </Col>
       </Row>

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import UltimoRespiro from "./dashboardComponents/UltimoRespiro"
 import UltimoDiario from "./dashboardComponents/UltimoDiario"
 import UltimiTask from "./dashboardComponents/UltimiTask"
+import UltimoMood from "./dashboardComponents/UltimoMood"
 
 interface Utente {
   id: number
@@ -64,15 +65,7 @@ const Dashboard = function () {
         </Col>
 
         <Col md={6}>
-          <Card className="h-100 mynav text-white">
-            <Card.Body>
-              <Card.Title>Mood</Card.Title>
-              <Card.Text>Non hai ancora registrato stati d’animo.</Card.Text>
-              <Button variant="success" onClick={() => navigate("/mood")}>
-                Crea il tuo mood
-              </Button>
-            </Card.Body>
-          </Card>
+          <UltimoMood />
         </Col>
 
         <Col md={6}>
