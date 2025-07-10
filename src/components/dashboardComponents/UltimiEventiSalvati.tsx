@@ -69,51 +69,52 @@ const UltimiEventiSalvati = ({
           <div className="text-center py-4">
             <Spinner animation="border" variant="light" />
           </div>
-        ) : eventi.length === 0 ? (
-          <Card.Text>Non hai ancora salvato eventi.</Card.Text>
         ) : (
           <>
-            {eventi.map((evento) => (
-              <div
-                key={evento.id}
-                className="mb-2 d-flex justify-content-between align-items-center"
-              >
-                <div>
-                  <strong>{evento.nome}</strong>
-                  {evento.luogo && (
-                    <div className="text-white fst-italic">
-                      Luogo: {evento.luogo}
-                    </div>
-                  )}
-                  {evento.dataEvento && (
-                    <div className="text-white">
-                      {new Date(evento.dataEvento).toLocaleString("it-IT", {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                      <hr />
-                    </div>
+            {eventi.length === 0 ? (
+              <Card.Text>Non hai ancora salvato eventi.</Card.Text>
+            ) : (
+              eventi.map((evento) => (
+                <div
+                  key={evento.id}
+                  className="mb-2 d-flex justify-content-between align-items-center"
+                >
+                  <div>
+                    <strong>{evento.nome}</strong>
+                    {evento.luogo && (
+                      <div className="text-white fst-italic">
+                        Luogo: {evento.luogo}
+                      </div>
+                    )}
+                    {evento.dataEvento && (
+                      <div className="text-white">
+                        {new Date(evento.dataEvento).toLocaleString("it-IT", {
+                          weekday: "long",
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                        <hr />
+                      </div>
+                    )}
+                  </div>
+                  {showStars && onToggleSalvataggio && (
+                    <Button
+                      variant="link"
+                      className="p-0 border-0 text-danger fs-5"
+                      title="Rimuovi dai preferiti"
+                      onClick={() => onToggleSalvataggio(evento)}
+                    >
+                      <FaTrashAlt />
+                    </Button>
                   )}
                 </div>
+              ))
+            )}
 
-                {/* Stellina visibile solo se showStars=true e c'è la callback */}
-                {showStars && onToggleSalvataggio && (
-                  <Button
-                    variant="link"
-                    className="p-0 border-0 text-danger fs-5"
-                    title="Rimuovi dai preferiti"
-                    onClick={() => onToggleSalvataggio(evento)}
-                  >
-                    <FaTrashAlt />
-                  </Button>
-                )}
-              </div>
-            ))}
-
+            {/* ✅ Bottone SEMPRE visibile se richiesto */}
             {showButton && (
               <div className="text-end mt-3">
                 <Button variant="success" onClick={() => navigate("/eventi")}>
