@@ -376,7 +376,7 @@ const ToDoList = () => {
           <Button variant="secondary" onClick={handleCloseModal}>
             Annulla
           </Button>
-          <Button variant="primary" onClick={handleSaveTask}>
+          <Button variant="success" onClick={handleSaveTask}>
             Salva
           </Button>
         </Modal.Footer>
