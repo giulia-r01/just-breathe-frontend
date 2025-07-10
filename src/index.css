@@ -24,3 +24,15 @@ body {
 .mytext {
   color: #066051 !important;
 }
+
+.imgProfilo {
+  width: 120px !important;
+  height: 120px !important;
+  object-fit: cover !important;
+}
+
+.imgProfiloNav {
+  width: 50px !important;
+  height: 50px !important;
+  object-fit: cover !important;
+}

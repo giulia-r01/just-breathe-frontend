@@ -96,7 +96,6 @@ const UltimiEventiSalvati = ({
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
-                        <hr />
                       </div>
                     )}
                   </div>
@@ -113,8 +112,7 @@ const UltimiEventiSalvati = ({
                 </div>
               ))
             )}
-
-            {/* ✅ Bottone SEMPRE visibile se richiesto */}
+            <hr />
             {showButton && (
               <div className="text-end mt-3">
                 <Button variant="success" onClick={() => navigate("/eventi")}>

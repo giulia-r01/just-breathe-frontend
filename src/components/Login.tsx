@@ -45,6 +45,21 @@ const Login = function () {
         const data = await response.json()
         localStorage.setItem("token", data.token)
         localStorage.setItem("ruolo", data.ruolo)
+
+        // Recupero il profilo per salvare l'immagine nel localStorage
+        const profiloRes = await fetch("http://localhost:8080/utenti/me", {
+          headers: {
+            Authorization: `Bearer ${data.token}`,
+          },
+        })
+
+        if (profiloRes.ok) {
+          const utente = await profiloRes.json()
+          localStorage.setItem("imgProfilo", utente.imgProfilo || "user.svg")
+        } else {
+          localStorage.setItem("imgProfilo", "user.svg") // fallback
+        }
+
         setSuccess("Login effettuato con successo!")
         setTimeout(() => navigate("/index"), 1500)
       }

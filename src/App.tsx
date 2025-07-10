@@ -15,6 +15,7 @@ import Diario from "./components/Diario"
 import ToDoList from "./components/ToDoList"
 import Mood from "./components/Mood"
 import Eventi from "./components/Eventi"
+import ProfiloUtente from "./components/ProfiloUtente"
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/todolist" element={<ToDoList />} />
             <Route path="/mood" element={<Mood />} />
             <Route path="/eventi" element={<Eventi />} />
+            <Route path="/profilo" element={<ProfiloUtente />} />
           </Routes>
         </main>
         <FooterJB />
