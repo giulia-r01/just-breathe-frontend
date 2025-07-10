@@ -56,8 +56,9 @@ const Login = function () {
         if (profiloRes.ok) {
           const utente = await profiloRes.json()
           localStorage.setItem("imgProfilo", utente.imgProfilo || "user.svg")
+          localStorage.setItem("userId", utente.id.toString())
         } else {
-          localStorage.setItem("imgProfilo", "user.svg") // fallback
+          localStorage.setItem("imgProfilo", "user.svg")
         }
 
         setSuccess("Login effettuato con successo!")

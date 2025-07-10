@@ -90,7 +90,7 @@ const NavbarJB = function () {
                     </NavDropdown.Item>
 
                     {ruolo === "ADMIN" && (
-                      <NavDropdown.Item as={Link} to="/backOffice">
+                      <NavDropdown.Item as={Link} to="/backoffice">
                         Backoffice
                       </NavDropdown.Item>
                     )}
