@@ -1,4 +1,4 @@
-import { Container, Navbar, Nav } from "react-bootstrap"
+import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap"
 import { Link, useNavigate, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
 
@@ -10,7 +10,6 @@ const NavbarJB = function () {
   const [ruolo, setRuolo] = useState<string | null>(null)
   const [imgProfilo, setImgProfilo] = useState<string>("user.svg")
 
-  // Al mount o cambio pagina, rileggi i dati utente dal localStorage
   useEffect(() => {
     const t = localStorage.getItem("token")
     const r = localStorage.getItem("ruolo")
@@ -73,29 +72,35 @@ const NavbarJB = function () {
               </Nav>
 
               <Nav>
-                {token && (
-                  <>
-                    <Link className="nav-link" to="/profilo">
+                {token ? (
+                  <NavDropdown
+                    title={
                       <img
                         src={imgProfilo}
                         alt="Immagine del profilo"
                         className="imgProfiloNav my-0 rounded-circle"
                       />
-                    </Link>
+                    }
+                    id="dropdown-profilo"
+                    align="end"
+                    menuVariant="dark"
+                  >
+                    <NavDropdown.Item as={Link} to="/profilo">
+                      Profilo
+                    </NavDropdown.Item>
 
                     {ruolo === "ADMIN" && (
-                      <Link className="nav-link mt-2" to="/backOffice">
+                      <NavDropdown.Item as={Link} to="/backOffice">
                         Backoffice
-                      </Link>
+                      </NavDropdown.Item>
                     )}
 
-                    <Nav.Link className="mt-2" onClick={handleLogout}>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item onClick={handleLogout}>
                       Logout
-                    </Nav.Link>
-                  </>
-                )}
-
-                {!token && (
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                ) : (
                   <>
                     <Link className="nav-link mt-2" to="/login">
                       Login

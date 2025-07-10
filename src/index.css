@@ -36,3 +36,18 @@ body {
   height: 50px !important;
   object-fit: cover !important;
 }
+
+.dropdown-menu {
+  background-color: #198754 !important;
+  color: white !important;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #157347 !important;
+  color: white !important;
+}
+
+.dropdown-menu .dropdown-item:active {
+  background-color: #14532d !important;
+  color: white !important;
+}
