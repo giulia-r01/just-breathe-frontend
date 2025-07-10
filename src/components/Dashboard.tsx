@@ -70,7 +70,7 @@ const Dashboard = function () {
         </Col>
 
         <Col md={6}>
-          <UltimiTask />
+          <UltimiTask escludiFatti={true} />
         </Col>
 
         <Col md={6}>

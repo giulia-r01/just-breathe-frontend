@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react"
 import { Card, Spinner, Alert, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
@@ -9,7 +10,11 @@ interface ToDo {
   dataCreazioneTask: string
 }
 
-const UltimiTask = () => {
+interface UltimiTaskProps {
+  escludiFatti?: boolean
+}
+
+const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
   const [tasks, setTasks] = useState<ToDo[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
@@ -42,7 +47,12 @@ const UltimiTask = () => {
         )
         if (!res.ok) throw new Error("Errore nel caricamento degli ultimi task")
         const data = await res.json()
-        setTasks(data.content || data)
+        const filteredTasks = escludiFatti
+          ? (data.content || data).filter(
+              (task: ToDo) => task.tipoTask !== "FATTO"
+            )
+          : data.content || data
+        setTasks(filteredTasks)
       } catch (err) {
         console.log(err)
         setError("Impossibile caricare gli ultimi task")
