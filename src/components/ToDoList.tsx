@@ -89,10 +89,17 @@ const ToDoList = () => {
   const upcomingTasksOfMonth = tasks
     .filter((task) => {
       const taskDate = new Date(task.dataCreazioneTask)
+
+      const sameDay =
+        taskDate.getFullYear() === selectedDate.getFullYear() &&
+        taskDate.getMonth() === selectedDate.getMonth() &&
+        taskDate.getDate() === selectedDate.getDate()
+
       return (
         taskDate >= selectedDate &&
         taskDate.getFullYear() === selectedDate.getFullYear() &&
-        taskDate.getMonth() === selectedDate.getMonth()
+        taskDate.getMonth() === selectedDate.getMonth() &&
+        !sameDay
       )
     })
     .sort(
