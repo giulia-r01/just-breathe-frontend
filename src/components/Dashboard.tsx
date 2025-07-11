@@ -44,18 +44,28 @@ const Dashboard = function () {
 
   if (loading) {
     return (
-      <Container className="mt-5 text-center">
-        <Spinner animation="border" />
+      <Container className="mt-5 text-center" role="main">
+        <div role="status" aria-live="polite">
+          <Spinner animation="border" />
+          <span className="visually-hidden">Caricamento...</span>
+        </div>
       </Container>
     )
   }
 
   return (
     <Container className="my-4">
-      <h2 className="text-center py-4 text-white mynav rounded">
+      <h1 className="visually-hidden">Dashboard</h1>
+      <h2
+        className="text-center py-4 text-white mynav rounded"
+        aria-describedby="dashboard-subtitle"
+      >
         Ciao <strong>{utente?.nome}</strong> 🌿
       </h2>
-
+      <p id="dashboard-subtitle" className="visually-hidden">
+        Benvenuto nella tua area personale dove potrai accedere a diario,
+        eventi, mood e altro.
+      </p>
       <Row className="g-4 pt-5">
         <Col md={6}>
           <UltimoRespiro />

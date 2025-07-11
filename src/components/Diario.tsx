@@ -148,9 +148,10 @@ const Diario = () => {
   }
 
   return (
-    <Container className="my-4">
+    <Container className="my-4" role="main">
       <Row className="justify-content-center">
         <Col md={8}>
+          <h1 className="visually-hidden">Diario</h1>
           <h2 className="text-center text-white mb-4 mynav rounded mt-3 py-3">
             Scrivi il tuo Diario
           </h2>
@@ -161,6 +162,7 @@ const Diario = () => {
                 <Form.Control
                   type="text"
                   name="titolo"
+                  placeholder="Inserisci il titolo del tuo diario"
                   value={formData.titolo}
                   onChange={handleChange}
                   required
@@ -170,6 +172,7 @@ const Diario = () => {
                 <Form.Label>Contenuto</Form.Label>
                 <Form.Control
                   as="textarea"
+                  placeholder="Che ti passa per la mente? Scrivilo!"
                   name="contenuto"
                   rows={5}
                   value={formData.contenuto}
@@ -177,14 +180,26 @@ const Diario = () => {
                   required
                 />
               </Form.Group>
-              <Button type="submit" variant="success">
+              <Button
+                type="submit"
+                variant="success"
+                aria-label={editingId ? "Modifica Diario" : "Salva Diario"}
+              >
                 {editingId ? "Modifica Diario" : "Salva Diario"}
               </Button>
             </Form>
           </Card>
 
-          {success && <Alert variant="success">{success}</Alert>}
-          {error && <Alert variant="danger">{error}</Alert>}
+          {success && (
+            <div role="alert">
+              <Alert variant="success">{success}</Alert>
+            </div>
+          )}
+          {error && (
+            <div role="alert">
+              <Alert variant="danger">{error}</Alert>
+            </div>
+          )}
         </Col>
       </Row>
 
@@ -193,14 +208,21 @@ const Diario = () => {
       </h3>
 
       <Row>
-        {loading && <Spinner animation="border" />}
+        {loading && (
+          <div role="status" aria-live="polite">
+            <Spinner animation="border" />
+            <span className="visually-hidden">Caricamento...</span>
+          </div>
+        )}
         {!loading &&
           diari.map((d) => (
             <Col sm={12} md={6} lg={4} key={d.id}>
               <Card className="mynav text-white mb-3">
                 <Card.Body>
-                  <Card.Title>{d.titolo}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-white">
+                  <Card.Title as="h3" className="h4 pb-2">
+                    {d.titolo}
+                  </Card.Title>
+                  <Card.Subtitle as="h4" className="h5 mb-2 text-white">
                     {d.dataUltimaModifica !== d.dataInserimento
                       ? `Ultima modifica: ${new Date(
                           d.dataUltimaModifica
@@ -209,12 +231,14 @@ const Diario = () => {
                           d.dataInserimento
                         ).toLocaleString()}`}
                   </Card.Subtitle>
-                  <Card.Text>
+                  <hr />
+                  <Card.Text className="fs-5">
                     {d.contenuto.length > 150
                       ? d.contenuto.substring(0, 150) + "..."
                       : d.contenuto}
                   </Card.Text>
                   <Button
+                    aria-label="Visualizza il tuo diario"
                     variant="success"
                     size="sm"
                     onClick={() => handleShowModal(d)}
@@ -223,6 +247,7 @@ const Diario = () => {
                     Visualizza
                   </Button>
                   <Button
+                    aria-label="Modifica il tuo diario"
                     variant="outline-light"
                     size="sm"
                     onClick={() => handleEdit(d)}
@@ -231,6 +256,7 @@ const Diario = () => {
                     Modifica
                   </Button>
                   <Button
+                    aria-label="Elimina il tuo diario"
                     variant="danger"
                     size="sm"
                     onClick={() => handleDelete(d.id)}
@@ -250,6 +276,7 @@ const Diario = () => {
               key={i}
               active={i === currentPage}
               onClick={() => handlePageChange(i)}
+              aria-label={`Pagina ${i + 1}`}
             >
               {i + 1}
             </Pagination.Item>
@@ -258,15 +285,27 @@ const Diario = () => {
       )}
 
       {/* MODALE */}
-      <Modal show={showModal} onHide={handleCloseModal} centered>
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        centered
+        aria-labelledby="modalTitoloDiario"
+        aria-describedby="modalContenutoDiario"
+      >
         <Modal.Header closeButton>
-          <Modal.Title>{selectedDiario?.titolo}</Modal.Title>
+          <Modal.Title id="modalTitoloDiario">
+            {selectedDiario?.titolo}
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body id="modalContenutoDiario">
           <p>{selectedDiario?.contenuto}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button
+            variant="secondary"
+            onClick={handleCloseModal}
+            aria-label="Chiudi"
+          >
             Chiudi
           </Button>
         </Modal.Footer>

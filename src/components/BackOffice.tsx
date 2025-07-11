@@ -22,25 +22,26 @@ const BackOffice = () => {
 
   if (loading) {
     return (
-      <div className="text-center mt-5">
-        <Spinner animation="border" role="status" />
+      <div className="text-center mt-5" role="status" aria-live="polite">
+        <Spinner animation="border" />
+        <span className="visually-hidden">Caricamento...</span>
       </div>
     )
   }
 
   if (!token || !myId) {
     return (
-      <p className="text-center mt-5 text-danger">
+      <p className="beg-white rounded p2 text-center mt-5 text-danger fw-bold">
         Accesso non autorizzato. Effettua il login.
       </p>
     )
   }
 
   return (
-    <Container className="my-5">
-      <h2 className="text-white mynav rounded text-center mb-5 py-3">
+    <Container className="my-5" role="main">
+      <h1 className="text-white mynav rounded text-center mb-5 py-3">
         Backoffice Admin
-      </h2>
+      </h1>
 
       <Row className="mb-5">
         <Col>

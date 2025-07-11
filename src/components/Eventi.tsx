@@ -127,13 +127,17 @@ const Eventi = () => {
   }
 
   return (
-    <Container>
+    <Container role="main">
       <Row className="align-items-start py-4 g-2">
+        <h1 className="visually-hidden">Eventi</h1>
         <h2 className="text-center text-white mb-4 mynav rounded mt-3 py-3">
-          Eventi
+          Scopri gli eventi disponibili nella tua città
         </h2>
         <Col md={5} lg={6}>
-          <Form className="d-flex mb-3">
+          <Form.Group controlId="inputCitta" className="d-flex mb-3">
+            <Form.Label className="visually-hidden">
+              Cerca eventi nella tua città
+            </Form.Label>
             <Form.Control
               type="text"
               placeholder="Cerca eventi nella tua città"
@@ -141,16 +145,21 @@ const Eventi = () => {
               onChange={(e) => setCitta(e.target.value)}
               className="me-2"
             />
-            <Button variant="success" onClick={handleSearch}>
+            <Button
+              variant="success"
+              onClick={handleSearch}
+              aria-label="Cerca - clicca per trovare gli eventi nella città che preferisci"
+            >
               Cerca
             </Button>
-          </Form>
+          </Form.Group>
+
           {loading ? (
-            <div className="text-center my-5">
+            <div className="text-center my-5" role="status" aria-live="polite">
               <Spinner animation="border" variant="success" />
+              <span className="visually-hidden">Caricamento...</span>
             </div>
           ) : eventi.length === 1 && !eventi[0].id ? (
-            // Se c’è un solo elemento e NON ha id, consideriamolo messaggio e mostriamolo senza stellina
             <label className="bg-white mytext rounded p-2 fw-bold">
               {eventi[0].nome}
             </label>
@@ -180,6 +189,13 @@ const Eventi = () => {
                       )}
                     </div>
                     <Button
+                      type="button"
+                      aria-pressed={isSalvato}
+                      aria-label={
+                        isSalvato
+                          ? "Rimuovi evento dai preferiti"
+                          : "Aggiungi evento ai preferiti"
+                      }
                       variant="link"
                       className={`fs-4 ${
                         isSalvato ? "text-success" : "text-secondary"
