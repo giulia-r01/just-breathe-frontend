@@ -5,7 +5,7 @@ const Home = function () {
   const navigate = useNavigate()
 
   return (
-    <Container className="text-center mt-5">
+    <Container className="text-center mt-5" role="main">
       <Row className="justify-content-center py-5 px-5">
         <Col md={6} className="mynav rounded text-white py-3">
           <h1 className="mb-4">🌿 Benvenut* su Just Breathe</h1>
@@ -19,6 +19,7 @@ const Home = function () {
                 variant="success"
                 className="w-100 mb-2"
                 onClick={() => navigate("/login")}
+                aria-label="Accedi - clicca per accedere al login"
               >
                 Accedi
               </Button>
@@ -28,6 +29,7 @@ const Home = function () {
                 variant="outline-success"
                 className="w-100"
                 onClick={() => navigate("/register")}
+                aria-label="Registrati - clicca per accedere alla registrazione"
               >
                 Registrati
               </Button>

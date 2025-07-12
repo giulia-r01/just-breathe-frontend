@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Container, Row, Col, Spinner } from "react-bootstrap"
-import UserListComponent from "./backOfficeComponent/UserListComponent"
-import StatisticheComponent from "./backOfficeComponent/StatisticheComponent"
+import UserListComponent from "./backOfficeComponent.tsx/UserListComponent"
+import StatisticheComponent from "./backOfficeComponent.tsx/StatisticheComponent"
 
 const BackOffice = () => {
   const [token, setToken] = useState<string | null>(null)

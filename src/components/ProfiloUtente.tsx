@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import {
+  Alert,
   Button,
   Card,
   Col,
@@ -13,6 +14,7 @@ import { FaCamera, FaTrashAlt } from "react-icons/fa"
 
 interface Utente {
   id: number
+  nome?: string
   username: string
   imgProfilo?: string
 }
@@ -41,7 +43,6 @@ const ProfiloUtente = () => {
         if (res.ok) {
           const data = await res.json()
           setUtente(data)
-          setNuovoUsername(data.username)
         }
       } catch (err) {
         console.error("Errore nel recupero profilo:", err)
@@ -196,76 +197,85 @@ const ProfiloUtente = () => {
 
   if (loading) {
     return (
-      <div className="text-center mt-5">
+      <div className="text-center mt-5" role="status" aria-live="polite">
         <Spinner animation="border" variant="success" />
+        <span className="visually-hidden">Caricamento...</span>
       </div>
     )
   }
 
   return (
-    <Container className="py-5">
+    <Container className="py-5" role="main">
+      <h1 className="visually-hidden">Profilo utente</h1>
+
       <Row className="justify-content-center">
         <Col md={8} lg={6}>
           <Card className="p-4 mynav text-white">
             <div className="text-center">
+              <h2 className="text-white text-start">{utente?.nome}</h2>
+              <h3 className="fs-5 text-white text-start">
+                Modifica il tuo profilo
+              </h3>
               <img
                 src={utente?.imgProfilo || "user.svg"}
-                alt="Profilo"
+                alt={`Immagine del profilo di ${utente?.nome ?? "utente"}`}
                 className="rounded-circle mb-3 imgProfilo"
               />
 
               {error && (
-                <div
-                  className="alert alert-danger alert-dismissible fade show"
+                <Alert
+                  variant="danger"
+                  dismissible
+                  onClose={() => setError("")}
                   role="alert"
                 >
                   {error}
-                  <button
-                    type="button"
-                    className="btn-close"
-                    onClick={() => setError("")}
-                    aria-label="Close"
-                  ></button>
-                </div>
+                </Alert>
               )}
 
               {success && (
-                <div
-                  className="alert alert-success alert-dismissible fade show"
+                <Alert
+                  variant="success"
+                  dismissible
+                  onClose={() => setSuccess("")}
                   role="alert"
                 >
                   {success}
-                  <button
-                    type="button"
-                    className="btn-close"
-                    onClick={() => setSuccess("")}
-                    aria-label="Close"
-                  ></button>
-                </div>
+                </Alert>
               )}
 
-              <Form.Group controlId="formFile" className="mb-3">
-                <Form.Label className="btn btn-outline-light btn-sm">
+              <Form.Group controlId="fileInput" className="mb-3">
+                <Form.Label
+                  htmlFor="fileInputControl"
+                  className="btn btn-outline-light btn-sm"
+                >
                   <FaCamera className="me-2" /> Cambia immagine
-                  <Form.Control
-                    type="file"
-                    hidden
-                    onChange={(e) => {
-                      const target = e.target as HTMLInputElement
-                      if (target.files && target.files.length > 0) {
-                        setFile(target.files[0])
-                      }
-                    }}
-                  />
                 </Form.Label>
+                <Form.Control
+                  type="file"
+                  id="fileInputControl"
+                  className="d-none"
+                  onChange={(e) => {
+                    const input = e.target as HTMLInputElement
+                    if (input.files && input.files.length > 0) {
+                      setFile(input.files[0])
+                    }
+                  }}
+                />
               </Form.Group>
-              <Button variant="success" size="sm" onClick={handleUpload}>
-                Carica
+
+              <Button
+                variant="success"
+                size="sm"
+                onClick={handleUpload}
+                aria-label="Salva la nuova immagine del profilo"
+              >
+                Salva la nuova immagine del profilo
               </Button>
             </div>
 
             <Form className="mt-4" autoComplete="off">
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-3" controlId="usernameInput">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
                   type="text"
@@ -277,12 +287,13 @@ const ProfiloUtente = () => {
                   variant="success"
                   className="mt-2"
                   onClick={handleUsernameChange}
+                  aria-label="Aggiorna Username"
                 >
                   Aggiorna Username
                 </Button>
               </Form.Group>
 
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-3" controlId="oldPassword">
                 <Form.Label>Vecchia Password</Form.Label>
                 <Form.Control
                   type="password"
@@ -292,7 +303,7 @@ const ProfiloUtente = () => {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-3" controlId="newPassword">
                 <Form.Label>Nuova Password</Form.Label>
                 <Form.Control
                   type="password"
@@ -304,13 +315,18 @@ const ProfiloUtente = () => {
                   variant="success"
                   className="mt-2"
                   onClick={handlePasswordChange}
+                  aria-label="Aggiorna Password"
                 >
                   Aggiorna Password
                 </Button>
               </Form.Group>
 
               <div className="text-center mt-4">
-                <Button variant="danger" onClick={handleDeleteAccount}>
+                <Button
+                  variant="danger"
+                  onClick={handleDeleteAccount}
+                  aria-label="Elimina il mio account"
+                >
                   <FaTrashAlt className="me-2" /> Elimina il mio account
                 </Button>
               </div>

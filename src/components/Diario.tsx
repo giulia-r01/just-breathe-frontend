@@ -210,7 +210,7 @@ const Diario = () => {
       <Row>
         {loading && (
           <div role="status" aria-live="polite">
-            <Spinner animation="border" />
+            <Spinner animation="border" variant="success" />
             <span className="visually-hidden">Caricamento...</span>
           </div>
         )}

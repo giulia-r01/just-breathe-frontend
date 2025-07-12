@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react"
-import { Col, Container, Row, Spinner } from "react-bootstrap"
+import { Button, Col, Container, Row, Spinner } from "react-bootstrap"
 
 const RecuperoPsw = function () {
   const [email, setEmail] = useState<string>("")
@@ -48,10 +48,19 @@ const RecuperoPsw = function () {
     <Container className="container mt-4">
       <Row className="justify-content-center px-4">
         <Col md={6} lg={4} className="mynav py-3 my-4 rounded text-white">
+          <h1 className="visually-hidden">Recupero password</h1>
           <h2>Recupera Password</h2>
 
-          {error && <div className="alert alert-danger">{error}</div>}
-          {success && <div className="alert alert-success">{success}</div>}
+          {error && (
+            <div className="alert alert-danger" role="alert">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="alert alert-success" role="alert">
+              {success}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} noValidate>
             <div className="mb-5">
@@ -66,23 +75,30 @@ const RecuperoPsw = function () {
                 value={email}
                 onChange={handleChange}
                 required
+                aria-describedby="emailHelp"
+                disabled={loading}
               />
+              <small id="emailHelp" className="form-text text-light">
+                Riceverai un'email con le istruzioni per il recupero
+              </small>
             </div>
 
-            <button
+            <Button
               type="submit"
-              className="btn btn-outline-success w-100 d-flex justify-content-center align-items-center"
+              className=" w-100 d-flex justify-content-center align-items-center"
               disabled={loading}
+              variant="success"
+              aria-label="Invia email per recupero password"
             >
               {loading ? (
-                <>
+                <div role="status" aria-live="polite">
                   <Spinner animation="border" size="sm" className="me-2" />
                   Invio in corso...
-                </>
+                </div>
               ) : (
                 "Invia"
               )}
-            </button>
+            </Button>
           </form>
         </Col>
       </Row>

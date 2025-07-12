@@ -78,10 +78,19 @@ const ResetPsw = function () {
     <Container className="mt-4">
       <Row className="justify-content-center">
         <Col md={6} lg={4} className="mynav py-3 my-4 rounded text-white">
-          <h2>Reset Password</h2>
+          <h1 className="visually-hidden">Reset della password</h1>
+          <h2 className="pb-2">Imposta una nuova password</h2>
 
-          {error && <Alert variant="danger">{error}</Alert>}
-          {success && <Alert variant="success">{success}</Alert>}
+          {error && (
+            <div role="alert">
+              <Alert variant="danger">{error}</Alert>
+            </div>
+          )}
+          {success && (
+            <div role="alert">
+              <Alert variant="success">{success}</Alert>
+            </div>
+          )}
 
           <Form onSubmit={handleSubmit} noValidate>
             <Form.Group className="mb-3" controlId="password">
@@ -108,15 +117,16 @@ const ResetPsw = function () {
 
             <Button
               type="submit"
-              variant="outline-success"
+              variant="success"
               className="w-100 d-flex justify-content-center align-items-center"
               disabled={loading}
+              aria-label="Reset Password"
             >
               {loading ? (
-                <>
+                <div role="status" aria-live="polite">
                   <Spinner animation="border" size="sm" className="me-2" />
                   Caricamento...
-                </>
+                </div>
               ) : (
                 "Reset Password"
               )}

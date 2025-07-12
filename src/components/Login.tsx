@@ -46,7 +46,6 @@ const Login = function () {
         localStorage.setItem("token", data.token)
         localStorage.setItem("ruolo", data.ruolo)
 
-        // Recupero il profilo per salvare l'immagine nel localStorage
         const profiloRes = await fetch("http://localhost:8080/utenti/me", {
           headers: {
             Authorization: `Bearer ${data.token}`,
@@ -73,10 +72,10 @@ const Login = function () {
   }
 
   return (
-    <Container className="container mt-4">
+    <Container className="container mt-4" role="main">
       <Row className="justify-content-center px-4">
         <Col md={6} lg={4} className="mynav py-3 my-4 rounded text-white">
-          <h2>Login</h2>
+          <h1>Login</h1>
 
           {error && <div className="alert alert-danger">{error}</div>}
           {success && <div className="alert alert-success">{success}</div>}

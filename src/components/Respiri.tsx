@@ -72,7 +72,6 @@ const Respiri = () => {
     if (timerRef.current) clearTimeout(timerRef.current)
   }
 
-  // Cambio automatico fase in base alla durata senza mostrare secondi
   useEffect(() => {
     if (!respiroSelezionato || fase === "fermo") {
       if (timerRef.current) clearTimeout(timerRef.current)
@@ -95,7 +94,6 @@ const Respiri = () => {
     }
   }, [fase, respiroSelezionato])
 
-  // Colori per categoria
   const getColorClass = (categoria: string) => {
     switch (categoria.toLowerCase()) {
       case "relax":
@@ -109,7 +107,6 @@ const Respiri = () => {
     }
   }
 
-  // Testo accessibile in base a categoria (sr-only)
   const getSrText = () => {
     if (!respiroSelezionato) return ""
     switch (respiroSelezionato.categoria.toLowerCase()) {
@@ -125,13 +122,27 @@ const Respiri = () => {
   }
 
   return (
-    <Container className="my-4">
+    <Container className="my-4" role="region" aria-labelledby="respiri-heading">
+      <h1 id="respiri-heading" className="visually-hidden">
+        Respirazioni guidate
+      </h1>
+
       <h2 className="text-center mb-4 text-white mynav rounded py-3">
         Esercizi di Respirazione Guidata
       </h2>
 
-      {loading && <Spinner animation="border" />}
-      {error && <Alert variant="danger">{error}</Alert>}
+      {loading && (
+        <div className="text-center my-5" role="status" aria-live="polite">
+          <Spinner animation="border" variant="success" />
+          <span className="visually-hidden">Caricamento...</span>
+        </div>
+      )}
+
+      {error && (
+        <Alert variant="danger" role="alert">
+          {error}
+        </Alert>
+      )}
 
       <Row className="g-4 py-5">
         {respiri.map((respiro) => (
@@ -160,7 +171,14 @@ const Respiri = () => {
         ))}
       </Row>
 
-      <Modal show={showModal} onHide={chiudiModale} size="lg" centered>
+      <Modal
+        show={showModal}
+        onHide={chiudiModale}
+        size="lg"
+        centered
+        aria-labelledby="titolo-respiro"
+        aria-describedby="istruzioni-respiro"
+      >
         <Modal.Header
           closeButton
           className={
@@ -169,7 +187,7 @@ const Respiri = () => {
               : ""
           }
         >
-          <Modal.Title>
+          <Modal.Title id="titolo-respiro">
             {respiroSelezionato?.nome} –{" "}
             <span className="text-capitalize">
               {fase !== "fermo" ? fase : "Pronto"}
@@ -179,7 +197,9 @@ const Respiri = () => {
         <Modal.Body className="py-5 mt-4 text-center">
           {respiroSelezionato && (
             <>
-              <span className="visually-hidden">{getSrText()}</span>
+              <span id="istruzioni-respiro" className="visually-hidden">
+                {getSrText()}
+              </span>
               <div className="mb-4" aria-hidden="true">
                 <CircleAnimation
                   fase={fase}

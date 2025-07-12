@@ -47,14 +47,12 @@ const Mood = () => {
   const [newTipoMood, setNewTipoMood] = useState("")
   const [newBrano, setNewBrano] = useState("")
 
-  // Modale edit
   const [showEditModal, setShowEditModal] = useState(false)
   const [editingBrano, setEditingBrano] = useState<Brano | null>(null)
   const [editTitolo, setEditTitolo] = useState("")
   const [editLink, setEditLink] = useState("")
   const [editMoodId, setEditMoodId] = useState<number | null>(null)
 
-  // Fetch moods e primi brani
   useEffect(() => {
     if (!token) return
 
@@ -105,7 +103,6 @@ const Mood = () => {
     fetchMoods()
   }, [token])
 
-  // Estrae link embed Youtube - supporta vari formati link
   const extractYouTubeEmbedUrl = (
     url: string | undefined | null
   ): string | null => {
@@ -122,7 +119,6 @@ const Mood = () => {
     return null
   }
 
-  // Seleziona un mood e carica i brani
   const handleSelectMood = async (mood: Mood) => {
     if (!token) return
     setLoading(true)
@@ -141,7 +137,6 @@ const Mood = () => {
     }
   }
 
-  // Crea nuovo mood
   const handleCreateMood = async () => {
     if (!token || !newTipoMood) return
     try {
@@ -164,7 +159,6 @@ const Mood = () => {
     }
   }
 
-  // Aggiungi brano a mood selezionato
   const handleAddBrano = async () => {
     if (!token || !newBrano || !selectedMood) return
     try {
@@ -192,7 +186,6 @@ const Mood = () => {
     }
   }
 
-  // Apri modale modifica brano
   const startEditBrano = (brano: Brano) => {
     setEditingBrano(brano)
     setEditTitolo(brano.titoloBrano)
@@ -201,7 +194,6 @@ const Mood = () => {
     setShowEditModal(true)
   }
 
-  // Salva modifica brano
   const handleSaveEditBrano = async () => {
     if (!token || !editingBrano || editMoodId === null) return
 
@@ -209,7 +201,6 @@ const Mood = () => {
       setError("")
       let updatedBrano = editingBrano
 
-      // 1. Modifica titolo o link (PUT)
       if (
         editingBrano.titoloBrano !== editTitolo ||
         (editingBrano.link || "") !== editLink
@@ -234,7 +225,6 @@ const Mood = () => {
         updatedBrano = await res.json()
       }
 
-      // 2. Cambia mood (PATCH)
       if (editMoodId !== selectedMood?.id) {
         const res = await fetch(
           `http://localhost:8080/brani/${editingBrano.id}/mood/${editMoodId}`,
@@ -251,9 +241,6 @@ const Mood = () => {
         updatedBrano = await res.json()
       }
 
-      // 3. Aggiorna stato frontend
-
-      // Rimuovi il brano dal mood precedente
       setMoods((prev) =>
         prev.map((m) =>
           m.id === selectedMood?.id
@@ -265,14 +252,12 @@ const Mood = () => {
         )
       )
 
-      // Aggiungi il brano al nuovo mood
       setMoods((prev) =>
         prev.map((m) =>
           m.id === editMoodId ? { ...m, brani: [...m.brani, updatedBrano] } : m
         )
       )
 
-      // Se il mood selezionato è quello nuovo, aggiorna anche selectedMood
       if (selectedMood?.id === editMoodId) {
         setSelectedMood((prev) =>
           prev
@@ -298,7 +283,6 @@ const Mood = () => {
         )
       }
 
-      // Chiudi modale
       setShowEditModal(false)
       setEditingBrano(null)
     } catch (e) {
@@ -306,7 +290,6 @@ const Mood = () => {
     }
   }
 
-  // Elimina brano
   const handleDeleteBrano = async (branoId: number) => {
     if (!token || !selectedMood) return
     try {
@@ -331,7 +314,6 @@ const Mood = () => {
     }
   }
 
-  // Elimina mood
   const handleDeleteMood = async () => {
     if (!token || !selectedMood) return
     try {
@@ -354,25 +336,29 @@ const Mood = () => {
   }
 
   return (
-    <Container className="text-white py-4 px-3 rounded my-5">
-      <h2 className="text-center mb-4 mynav p-3 rounded">
+    <Container className="py-4 px-3 rounded my-5" role="main">
+      <h1 className="visually-hidden">Mood</h1>
+      <h2 className="text-center mb-4 mynav p-3 rounded text-white ">
         Come ti senti oggi? Crea la tua playlist
       </h2>
 
       {loading && (
-        <div className="text-center py-5">
+        <div className="text-center py-5" role="status" aria-live="polite">
           <Spinner animation="border" variant="success" />
+          <span className="visually-hidden">Caricamento...</span>
         </div>
       )}
       {error && (
-        <Alert variant="danger" className="text-center">
-          {error}
-        </Alert>
+        <div role="alert">
+          <Alert variant="danger" className="text-center">
+            {error}
+          </Alert>
+        </div>
       )}
 
       <Row className="justify-content-center g-3">
         <Col md={4} lg={6}>
-          <h4 className="mynav rounded p-3">I tuoi mood</h4>
+          <h3 className="mynav rounded p-3 text-white">I tuoi mood</h3>
           <ListGroup>
             {moods.length === 0 && (
               <p className="bg-white rounded p-2 mytext fw-semibold">
@@ -419,6 +405,7 @@ const Mood = () => {
               onChange={(e) => setNewTipoMood(e.target.value)}
               className="me-2"
               disabled={showEditModal}
+              aria-label="Seleziona un mood da creare"
             >
               <option value="">Crea un mood</option>
               {tipiMood.map((tipo) => (
@@ -427,10 +414,12 @@ const Mood = () => {
                 </option>
               ))}
             </Form.Select>
+
             <Button
               variant="success"
               onClick={handleCreateMood}
               disabled={showEditModal}
+              aria-label="Crea - clicca per creare il tuo mood"
             >
               Crea
             </Button>
@@ -441,9 +430,9 @@ const Mood = () => {
           {selectedMood ? (
             <>
               <div className="mynav rounded">
-                <h4 className="p-3">
+                <h3 className="p-3 text-white ">
                   Mood selezionato: {selectedMood.tipoMood}
-                </h4>
+                </h3>
                 <p className="text-white ps-3 pb-2">
                   Salvato il:{" "}
                   {new Date(selectedMood.dataCreazione).toLocaleDateString(
@@ -462,19 +451,32 @@ const Mood = () => {
                   </p>
                 )}
               </div>
-              <Form className="d-flex mb-3">
-                <Form.Control
-                  type="text"
-                  placeholder="Aggiungi una canzone (es. Toxicity )"
-                  value={newBrano}
-                  onChange={(e) => setNewBrano(e.target.value)}
-                  className="me-2"
-                  disabled={showEditModal}
-                />
+              <Form
+                className="d-flex mb-3"
+                role="form"
+                aria-label="Aggiungi un nuovo brano al mood selezionato"
+              >
+                <Form.Group
+                  controlId="nuovoBranoInput"
+                  className="flex-grow-1 me-2"
+                >
+                  <Form.Label className="visually-hidden">
+                    Inserisci il titolo di un nuovo brano
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Aggiungi una canzone (es. Toxicity )"
+                    value={newBrano}
+                    onChange={(e) => setNewBrano(e.target.value)}
+                    disabled={showEditModal}
+                    aria-required="true"
+                  />
+                </Form.Group>
                 <Button
                   variant="success"
                   onClick={handleAddBrano}
                   disabled={showEditModal}
+                  aria-label="Aggiungi - clicca per aggiungere un brano al mood selezionato"
                 >
                   Aggiungi
                 </Button>
@@ -495,9 +497,11 @@ const Mood = () => {
                             <div className="ratio ratio-16x9">
                               <iframe
                                 src={embedUrl}
-                                title={brano.titoloBrano}
+                                title={`Player di ${brano.titoloBrano}`}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
+                                role="presentation"
+                                aria-label={`Video di YouTube per ${brano.titoloBrano}`}
                               />
                             </div>
                           ) : (
@@ -510,6 +514,7 @@ const Mood = () => {
                             className="me-2 mt-2"
                             onClick={() => startEditBrano(brano)}
                             disabled={showEditModal}
+                            aria-label="Modifica il brano selezionato"
                           >
                             Modifica
                           </Button>
@@ -519,6 +524,7 @@ const Mood = () => {
                             className="mt-2"
                             onClick={() => handleDeleteBrano(brano.id)}
                             disabled={showEditModal}
+                            aria-label="Elimina il brano selezionato"
                           >
                             Elimina
                           </Button>
@@ -537,44 +543,47 @@ const Mood = () => {
         </Col>
       </Row>
 
-      {/* Modale modifica brano */}
       <Modal
         show={showEditModal}
         onHide={() => setShowEditModal(false)}
+        aria-labelledby="modalModificaBranoTitolo"
+        aria-describedby="modalModificaBranoDescrizione"
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Modifica Brano</Modal.Title>
+          <Modal.Title id="modalModificaBranoTitolo">
+            Modifica brano selezionato
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body id="modalModificaBranoDescrizione">
           <Form>
             <Form.Group className="mb-3" controlId="editTitolo">
-              <Form.Label>Titolo</Form.Label>
+              <Form.Label>Titolo del brano</Form.Label>
               <Form.Control
                 type="text"
                 value={editTitolo}
                 onChange={(e) => setEditTitolo(e.target.value)}
-                disabled={!showEditModal}
+                autoFocus
+                aria-required="true"
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="editLink">
-              <Form.Label>Link YouTube</Form.Label>
+              <Form.Label>Link YouTube (facoltativo)</Form.Label>
               <Form.Control
-                type="text"
+                type="url"
                 value={editLink}
                 onChange={(e) => setEditLink(e.target.value)}
                 placeholder="https://www.youtube.com/watch?v=..."
-                disabled={!showEditModal}
+                inputMode="url"
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="editMoodId">
-              <Form.Label>Mood</Form.Label>
+              <Form.Label>Assegna a un altro mood</Form.Label>
               <Form.Select
                 value={editMoodId || ""}
                 onChange={(e) => setEditMoodId(Number(e.target.value))}
-                disabled={!showEditModal}
               >
                 {moods.map((m) => (
                   <option key={m.id} value={m.id}>
@@ -589,14 +598,14 @@ const Mood = () => {
           <Button
             variant="secondary"
             onClick={() => setShowEditModal(false)}
-            disabled={!showEditModal}
+            aria-label="Annulla la modifica del brano"
           >
             Annulla
           </Button>
           <Button
             variant="success"
             onClick={handleSaveEditBrano}
-            disabled={!showEditModal}
+            aria-label="Salva le modifiche del brano"
           >
             Salva
           </Button>
