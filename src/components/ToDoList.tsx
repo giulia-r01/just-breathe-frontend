@@ -208,16 +208,6 @@ const ToDoList = () => {
       </h1>
       <Row className="justify-content-center my-5 g-3">
         <Col sm={12} lg={6} className="d-flex flex-column align-items-center">
-          <Button
-            variant="success"
-            className="mb-3"
-            onClick={handleAddTaskClick}
-            aria-label={`Aggiungi un nuovo task per il ${selectedDate.toLocaleDateString(
-              "it-IT"
-            )}`}
-          >
-            + Aggiungi task per il {selectedDate.toLocaleDateString("it-IT")}
-          </Button>
           <Calendar
             onChange={(date) => {
               if (!date) return
@@ -228,6 +218,16 @@ const ToDoList = () => {
             locale="it-IT"
             calendarType="iso8601"
           />
+          <Button
+            variant="success"
+            className="my-3"
+            onClick={handleAddTaskClick}
+            aria-label={`Aggiungi un nuovo task per il ${selectedDate.toLocaleDateString(
+              "it-IT"
+            )}`}
+          >
+            + Aggiungi task per il {selectedDate.toLocaleDateString("it-IT")}
+          </Button>
         </Col>
 
         <Col sm={12} lg={6} className="text-white mynav rounded px-3">
