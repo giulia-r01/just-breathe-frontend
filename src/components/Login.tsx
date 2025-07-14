@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Spinner, Container, Row, Col } from "react-bootstrap"
+import { Spinner, Container, Row, Col, Button } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 
 interface LoginFormData {
@@ -121,10 +121,11 @@ const Login = function () {
                 Hai scordato la tua password?
               </Link>
             </p>
-            <button
+            <Button
               type="submit"
-              className="btn btn-outline-success w-100 d-flex justify-content-center align-items-center"
+              className="w-100 d-flex justify-content-center align-items-center"
               disabled={loading}
+              variant="success"
             >
               {loading ? (
                 <>
@@ -140,7 +141,7 @@ const Login = function () {
               ) : (
                 "Accedi"
               )}
-            </button>
+            </Button>
           </form>
         </Col>
       </Row>
