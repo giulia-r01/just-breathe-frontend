@@ -77,47 +77,54 @@ const UltimiEventiSalvati = ({
             {eventi.length === 0 ? (
               <Card.Text>Non hai ancora salvato eventi.</Card.Text>
             ) : (
-              eventi.map((evento) => (
-                <div
-                  key={evento.id}
-                  role="listitem"
-                  className="mb-2 d-flex justify-content-between align-items-center"
-                >
-                  <div>
-                    <strong>{evento.nome}</strong>
-                    {evento.luogo && (
-                      <div className="text-white fst-italic">
-                        Luogo: {evento.luogo}
-                      </div>
-                    )}
-                    {evento.dataEvento && (
-                      <div className="text-white">
-                        {new Date(evento.dataEvento).toLocaleString("it-IT", {
-                          weekday: "long",
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </div>
+              eventi.map((evento, index) => (
+                <div key={evento.id}>
+                  <div
+                    role="listitem"
+                    className="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <div>
+                      <strong>{evento.nome}</strong>
+                      {evento.luogo && (
+                        <div className="text-white fst-italic">
+                          Luogo: {evento.luogo}
+                        </div>
+                      )}
+                      {evento.dataEvento && (
+                        <div className="text-white">
+                          {new Date(evento.dataEvento).toLocaleString("it-IT", {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </div>
+                      )}
+                    </div>
+
+                    {showStars && onToggleSalvataggio && (
+                      <Button
+                        variant="link"
+                        className="p-0 border-0 text-danger fs-5"
+                        title="Rimuovi dai preferiti"
+                        onClick={() => onToggleSalvataggio(evento)}
+                        aria-label="Rimuovi l'evento dai preferiti"
+                      >
+                        <FaTrashAlt />
+                      </Button>
                     )}
                   </div>
-                  {showStars && onToggleSalvataggio && (
-                    <Button
-                      variant="link"
-                      className="p-0 border-0 text-danger fs-5"
-                      title="Rimuovi dai preferiti"
-                      onClick={() => onToggleSalvataggio(evento)}
-                      aria-label="Rimuovi l'evento dai preferiti"
-                    >
-                      <FaTrashAlt />
-                    </Button>
+
+                  {/* Mostra <hr /> solo tra gli eventi, non dopo l'ultimo */}
+                  {index < eventi.length - 1 && (
+                    <hr className="text-white my-2" />
                   )}
                 </div>
               ))
             )}
-            <hr />
+
             {showButton && (
               <div className="text-end mt-3">
                 <Button
