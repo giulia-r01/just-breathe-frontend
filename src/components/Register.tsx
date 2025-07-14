@@ -7,7 +7,7 @@ interface RegisterFormData {
 }
 
 import { useState } from "react"
-import { Col, Container, Row, Spinner } from "react-bootstrap"
+import { Button, Col, Container, Row, Spinner } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 
 const Register = function () {
@@ -169,10 +169,11 @@ const Register = function () {
               />
             </div>
 
-            <button
+            <Button
               type="submit"
-              className="btn btn-outline-success w-100"
+              variant="success"
               disabled={loading}
+              className="w-100"
             >
               {loading ? (
                 <>
@@ -188,7 +189,7 @@ const Register = function () {
               ) : (
                 "Registrati"
               )}
-            </button>
+            </Button>
           </form>
         </Col>
       </Row>
