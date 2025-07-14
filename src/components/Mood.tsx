@@ -254,7 +254,9 @@ const Mood = () => {
 
       setMoods((prev) =>
         prev.map((m) =>
-          m.id === editMoodId ? { ...m, brani: [...m.brani, updatedBrano] } : m
+          m.id === editMoodId
+            ? { ...m, brani: [...(m.brani || []), updatedBrano] }
+            : m
         )
       )
 
