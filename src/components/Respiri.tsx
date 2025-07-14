@@ -107,18 +107,12 @@ const Respiri = () => {
     }
   }
 
-  const getSrText = () => {
-    if (!respiroSelezionato) return ""
-    switch (respiroSelezionato.categoria.toLowerCase()) {
-      case "relax":
-        return "Respirazione rilassante: inspira per 4 secondi, trattieni per 7 secondi, espira per 8 secondi."
-      case "focus":
-        return "Respirazione per concentrazione: inspira per 4 secondi, trattieni per 4 secondi, espira per 4 secondi."
-      case "energia":
-        return "Respirazione energizzante: inspira per 6 secondi, trattieni per 2 secondi, espira per 4 secondi."
-      default:
-        return `Inspira per ${respiroSelezionato.inspiraSecondi} secondi, trattieni per ${respiroSelezionato.trattieniSecondi} secondi, espira per ${respiroSelezionato.espiraSecondi} secondi.`
-    }
+  const getSrText = (respiro: Respiri) => {
+    if (!respiro) return ""
+    const { categoria, inspiraSecondi, trattieniSecondi, espiraSecondi, nome } =
+      respiro
+
+    return `Respirazione "${nome}", categoria ${categoria.toLowerCase()}. Inspira per ${inspiraSecondi} secondi, trattieni per ${trattieniSecondi} secondi, espira per ${espiraSecondi} secondi.`
   }
 
   return (
@@ -162,6 +156,9 @@ const Respiri = () => {
                   className="fs-5"
                   variant="success"
                   onClick={() => apriModale(respiro)}
+                  aria-label={`Avvia respirazione guidata: ${getSrText(
+                    respiro
+                  )}`}
                 >
                   Avvia respirazione
                 </Button>
@@ -198,8 +195,9 @@ const Respiri = () => {
           {respiroSelezionato && (
             <>
               <span id="istruzioni-respiro" className="visually-hidden">
-                {getSrText()}
+                {respiroSelezionato ? getSrText(respiroSelezionato) : ""}
               </span>
+
               <div className="mb-4" aria-hidden="true">
                 <CircleAnimation
                   fase={fase}

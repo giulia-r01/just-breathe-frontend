@@ -55,8 +55,9 @@ const UltimoMood = () => {
         <Card.Title as="h4">Mood</Card.Title>
 
         {loading ? (
-          <div className="text-center py-3">
-            <Spinner animation="border" variant="light" size="sm" />
+          <div className="text-center py-3" role="status" aria-live="polite">
+            <Spinner animation="border" variant="success" />
+            <span className="visually-hidden">Caricamento...</span>
           </div>
         ) : mood ? (
           <>
@@ -75,7 +76,11 @@ const UltimoMood = () => {
             </Card.Text>
 
             {mood.brani.length > 0 ? (
-              <ListGroup variant="flush" className="mb-3 rounded">
+              <ListGroup
+                variant="flush"
+                className="mb-3 rounded"
+                aria-label="Lista dei brani associati all'ultimo mood"
+              >
                 {mood.brani.map((brano) => (
                   <ListGroup.Item key={brano.id} className="text-dark py-1">
                     🎵 {brano.titoloBrano}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Container, Row, Col, Spinner } from "react-bootstrap"
 import UserListComponent from "./backOfficeComponent.tsx/UserListComponent"
 import StatisticheComponent from "./backOfficeComponent.tsx/StatisticheComponent"
+import RespiriAdminComponent from "./backOfficeComponent.tsx/RespiriAdminComponent"
 
 const BackOffice = () => {
   const [token, setToken] = useState<string | null>(null)
@@ -52,7 +53,9 @@ const BackOffice = () => {
       </Row>
       <StatisticheComponent token={token} />
       <Row>
-        <Col></Col>
+        <Col>
+          <RespiriAdminComponent />
+        </Col>
       </Row>
     </Container>
   )
