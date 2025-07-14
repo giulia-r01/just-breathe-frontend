@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import { useEffect, useState } from "react"
 import { Card, Spinner, Alert, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
@@ -63,31 +64,60 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
     if (token) fetchUltimiTasks()
   }, [token])
 
-  if (loading) return <Spinner animation="border" variant="primary" />
-  if (error) return <Alert variant="danger">{error}</Alert>
+  if (loading)
+    return (
+      <div className="text-center py-3" role="status" aria-live="polite">
+        <Spinner animation="border" variant="success" />
+        <span className="visually-hidden">Caricamento...</span>
+      </div>
+    )
+  if (error)
+    return (
+      <Alert variant="danger" role="alert">
+        {error}
+      </Alert>
+    )
 
   return (
-    <Card className="mb-3 p-3 shadow-sm  mynav text-white">
-      <Card.Title>Ultimi Task in calendario</Card.Title>
+    <Card className="mb-3 p-3 shadow-sm mynav text-white">
+      <Card.Title as="h4">Ultimi Task in calendario</Card.Title>
+
       {tasks.length === 0 ? (
-        <p>Nessun task salvato.</p>
+        <p role="alert">Nessun task salvato.</p>
       ) : (
-        tasks.map((task) => (
-          <Card key={task.id} className="mt-3 mb-2 p-2 fs-5">
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <strong>{task.titolo}</strong> <br />
-                <small className="text-muted">
-                  {new Date(task.dataCreazioneTask).toLocaleDateString("it-IT")}{" "}
-                  - <strong>{labelTipoTask(task.tipoTask)}</strong>
-                </small>
+        <div
+          role="list"
+          aria-live="polite"
+          aria-label="Lista degli ultimi task in calendario"
+        >
+          {tasks.map((task) => (
+            <Card.Body
+              key={task.id}
+              className="mt-3 mb-2 p-2 fs-5 bg-white text-dark rounded"
+              role="listitem"
+            >
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>{task.titolo}</strong> <br />
+                  <small className="text-muted">
+                    {new Date(task.dataCreazioneTask).toLocaleDateString(
+                      "it-IT"
+                    )}{" "}
+                    - <strong>{labelTipoTask(task.tipoTask)}</strong>
+                  </small>
+                </div>
               </div>
-            </div>
-          </Card>
-        ))
+            </Card.Body>
+          ))}
+        </div>
       )}
+
       <div className="text-end mt-2">
-        <Button variant="success" onClick={() => navigate("/todolist")}>
+        <Button
+          variant="success"
+          onClick={() => navigate("/todolist")}
+          aria-label="Vai al calendario - vai alla sezione ToDoList Calendario"
+        >
           Vai al calendario
         </Button>
       </div>

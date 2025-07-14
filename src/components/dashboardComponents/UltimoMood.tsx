@@ -52,7 +52,7 @@ const UltimoMood = () => {
   return (
     <Card className="mynav text-white">
       <Card.Body>
-        <Card.Title>Mood</Card.Title>
+        <Card.Title as="h4">Mood</Card.Title>
 
         {loading ? (
           <div className="text-center py-3">
@@ -88,7 +88,11 @@ const UltimoMood = () => {
               </Card.Text>
             )}
 
-            <Button variant="success" onClick={() => navigate("/mood")}>
+            <Button
+              variant="success"
+              onClick={() => navigate("/mood")}
+              aria-label="Vai ai mood - Crea le tue playlist in base al mood"
+            >
               Vai ai mood
             </Button>
           </>
@@ -96,9 +100,13 @@ const UltimoMood = () => {
           <>
             <Card.Text>
               Ascolta la musica che preferisci in base al tuo mood e crea la tua
-              playlist!.
+              playlist!
             </Card.Text>
-            <Button variant="success" onClick={() => navigate("/mood")}>
+            <Button
+              variant="success"
+              onClick={() => navigate("/mood")}
+              aria-label="Crea il tuo mood - Vai alla sezione mood"
+            >
               Crea il tuo mood
             </Button>
           </>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Card, Spinner, Col, Table, Row } from "react-bootstrap"
+import { Card, Spinner, Col, Table, Row, Alert } from "react-bootstrap"
 import { ListGroup } from "react-bootstrap"
 
 interface Props {
@@ -66,8 +66,18 @@ const StatisticheComponent = ({ token }: Props) => {
   }, [token])
 
   if (loading)
-    return <Spinner animation="border" variant="success" className="mt-4" />
-  if (error) return <p className="text-danger">{error}</p>
+    return (
+      <div className="text-center py-3" role="status" aria-live="polite">
+        <Spinner animation="border" variant="success" />
+        <span className="visually-hidden">Caricamento...</span>
+      </div>
+    )
+  if (error)
+    return (
+      <Alert className="text-danger" role="alert">
+        {error}
+      </Alert>
+    )
 
   return (
     <Col sm={12}>
@@ -78,8 +88,11 @@ const StatisticheComponent = ({ token }: Props) => {
       </h3>
 
       <Card className="shadow p-4">
-        <h5 className="fw-bold mb-3 mytext">Attività dettagliate per utente</h5>
+        <h4 className="fw-bold mb-3 mytext">Attività dettagliate per utente</h4>
         <Table striped bordered hover responsive className="mb-4">
+          <caption className="visually-hidden">
+            Tabella dettagli attività per utente
+          </caption>
           <thead className="table-secondary">
             <tr>
               <th>Username</th>

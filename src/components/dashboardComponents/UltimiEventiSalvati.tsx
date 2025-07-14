@@ -14,8 +14,8 @@ interface UltimiEventiSalvatiProps {
   showButton?: boolean
   showTitle?: boolean
   reloadFlag?: number
-  showStars?: boolean // mostra stelline per toggle preferiti
-  onToggleSalvataggio?: (evento: Evento) => void // callback per toggle
+  showStars?: boolean
+  onToggleSalvataggio?: (evento: Evento) => void
 }
 
 const UltimiEventiSalvati = ({
@@ -56,27 +56,31 @@ const UltimiEventiSalvati = ({
   }, [token, reloadFlag])
 
   return (
-    <Card className="h-100 mynav text-white">
+    <Card className="mynav text-white">
       <Card.Body>
         {showTitle && (
-          <Card.Title>Scopri gli eventi disponibili nella tua città</Card.Title>
+          <Card.Title as="h4">
+            Scopri gli eventi disponibili nella tua città
+          </Card.Title>
         )}
         <Card.Subtitle className="fs-5 pb-4 pt-2">
           Ultimi eventi salvati:
         </Card.Subtitle>
 
         {loading ? (
-          <div className="text-center py-4">
+          <div className="text-center py-4" role="status" aria-live="polite">
             <Spinner animation="border" variant="light" />
+            <span className="visually-hidden">Caricamento...</span>
           </div>
         ) : (
-          <>
+          <div aria-live="polite" role="list">
             {eventi.length === 0 ? (
               <Card.Text>Non hai ancora salvato eventi.</Card.Text>
             ) : (
               eventi.map((evento) => (
                 <div
                   key={evento.id}
+                  role="listitem"
                   className="mb-2 d-flex justify-content-between align-items-center"
                 >
                   <div>
@@ -105,6 +109,7 @@ const UltimiEventiSalvati = ({
                       className="p-0 border-0 text-danger fs-5"
                       title="Rimuovi dai preferiti"
                       onClick={() => onToggleSalvataggio(evento)}
+                      aria-label="Rimuovi l'evento dai preferiti"
                     >
                       <FaTrashAlt />
                     </Button>
@@ -115,12 +120,16 @@ const UltimiEventiSalvati = ({
             <hr />
             {showButton && (
               <div className="text-end mt-3">
-                <Button variant="success" onClick={() => navigate("/eventi")}>
+                <Button
+                  variant="success"
+                  onClick={() => navigate("/eventi")}
+                  aria-label="Cerca eventi nella tua città - Vai alla sezione eventi"
+                >
                   Cerca eventi nella tua città
                 </Button>
               </div>
             )}
-          </>
+          </div>
         )}
       </Card.Body>
     </Card>

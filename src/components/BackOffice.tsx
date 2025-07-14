@@ -42,7 +42,9 @@ const BackOffice = () => {
       <h1 className="text-white mynav rounded text-center mb-5 py-3">
         Backoffice Admin
       </h1>
-
+      <h2 className="visually-hidden">
+        Riepilogo attività di backoffice dell'admin
+      </h2>
       <Row className="mb-5">
         <Col>
           <UserListComponent token={token} myId={myId} />

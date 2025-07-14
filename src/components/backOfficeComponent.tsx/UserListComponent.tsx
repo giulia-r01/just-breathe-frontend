@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Table, Button, Spinner, Form, Col } from "react-bootstrap"
+import { Table, Button, Spinner, Form, Col, Alert } from "react-bootstrap"
 
 interface BackOfficeUser {
   id: number
@@ -80,8 +80,18 @@ const UserListComponent = ({ token, myId }: Props) => {
     })
 
   if (loading)
-    return <Spinner animation="border" variant="success" className="mt-3" />
-  if (errore) return <p className="text-danger">{errore}</p>
+    return (
+      <div className="text-center py-3" role="status" aria-live="polite">
+        <Spinner animation="border" variant="success" />
+        <span className="visually-hidden">Caricamento...</span>
+      </div>
+    )
+  if (errore)
+    return (
+      <Alert className="text-danger" role="alert">
+        {errore}
+      </Alert>
+    )
 
   return (
     <Col sm={12}>

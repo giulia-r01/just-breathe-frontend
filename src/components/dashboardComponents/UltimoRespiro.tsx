@@ -39,7 +39,6 @@ const UltimoRespiro = () => {
       })
       .then((data: Respiro[]) => {
         if (data.length > 0) {
-          // prendo uno random
           const randomIndex = Math.floor(Math.random() * data.length)
           setRespiro(data[randomIndex])
         } else {
@@ -50,20 +49,35 @@ const UltimoRespiro = () => {
       .finally(() => setLoading(false))
   }, [])
 
-  if (loading) return <Spinner animation="border" />
+  if (loading)
+    return (
+      <div className="text-center py-3" role="status" aria-live="polite">
+        <Spinner animation="border" variant="success" />
+        <span className="visually-hidden">Caricamento...</span>
+      </div>
+    )
 
-  if (error) return <Alert variant="danger">{error}</Alert>
+  if (error)
+    return (
+      <Alert variant="danger" role="alert">
+        {error}
+      </Alert>
+    )
 
   if (!respiro) {
     return (
       <Card className="mynav text-white">
         <Card.Body>
-          <Card.Title>Respiro Guidato</Card.Title>
+          <Card.Title as="h4">Respirazioni guidate</Card.Title>
           <Card.Text>
             Non hai ancora salvato esercizi di respirazione.
           </Card.Text>
-          <Button variant="success" onClick={() => navigate("/respirazioni")}>
-            Vai agli esercizi
+          <Button
+            variant="success"
+            onClick={() => navigate("/respirazioni")}
+            aria-label="Vai agli esercizi di respirazione - Vai alla sezione Respirazioni"
+          >
+            Vai agli esercizi di respirazione
           </Button>
         </Card.Body>
       </Card>
@@ -73,9 +87,10 @@ const UltimoRespiro = () => {
   return (
     <Card className="mynav text-white">
       <Card.Body>
-        <Card.Title>Respirazioni guidate</Card.Title>
+        <Card.Title as="h4">Respirazioni guidate</Card.Title>
         <Card.Text>
           <Badge
+            aria-label={`Categoria: ${respiro.categoria}`}
             className={`mb-2 text-uppercase fs-6 ${getColorClass(
               respiro.categoria
             )}`}
@@ -85,7 +100,11 @@ const UltimoRespiro = () => {
           <br />
           {respiro.descrizione}
         </Card.Text>
-        <Button variant="success" onClick={() => navigate("/respirazioni")}>
+        <Button
+          variant="success"
+          onClick={() => navigate("/respirazioni")}
+          aria-label="Vai agli esercizi di respirazione - Vai alla sezione Respirazioni"
+        >
           Vai agli esercizi di respirazione
         </Button>
       </Card.Body>

@@ -66,6 +66,9 @@ const Dashboard = function () {
         Benvenuto nella tua area personale dove potrai accedere a diario,
         eventi, mood e altro.
       </p>
+      <h3 className="visually-hidden">
+        Recap del contenuto delle sezioni utilizzate dall'utente
+      </h3>
       <Row className="g-4 pt-5">
         <Col md={6}>
           <UltimoRespiro />

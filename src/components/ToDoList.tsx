@@ -10,6 +10,7 @@ import {
   Modal,
   Card,
   Spinner,
+  Alert,
 } from "react-bootstrap"
 import "../assets/cssVari/toDoList.css"
 
@@ -201,16 +202,19 @@ const ToDoList = () => {
   }
 
   return (
-    <Container>
-      <h2 className="text-center mynav text-white py-3 mt-5 rounded">
+    <Container role="main">
+      <h1 className="text-center mynav text-white py-3 mt-5 rounded">
         To Do List - Calendario
-      </h2>
+      </h1>
       <Row className="justify-content-center my-5 g-3">
         <Col sm={12} lg={6} className="d-flex flex-column align-items-center">
           <Button
             variant="success"
             className="mb-3"
             onClick={handleAddTaskClick}
+            aria-label={`Aggiungi un nuovo task per il ${selectedDate.toLocaleDateString(
+              "it-IT"
+            )}`}
           >
             + Aggiungi task per il {selectedDate.toLocaleDateString("it-IT")}
           </Button>
@@ -228,15 +232,20 @@ const ToDoList = () => {
 
         <Col sm={12} lg={6} className="text-white mynav rounded px-3">
           {loading && (
-            <div className="text-center py-3">
-              <Spinner animation="border" variant="light" />
+            <div className="text-center py-3" role="status" aria-live="polite">
+              <Spinner animation="border" variant="success" />
+              <span className="visually-hidden">Caricamento...</span>
             </div>
           )}
-          {error && <p className="text-danger">{error}</p>}
+          {error && (
+            <Alert variant="danger" role="alert">
+              {error}
+            </Alert>
+          )}
 
-          <h4 className="pt-3">
+          <h2 className="pt-3">
             Task del {selectedDate.toLocaleDateString("it-IT")}
-          </h4>
+          </h2>
           {tasksOfDay.length > 0 ? (
             tasksOfDay.map((task) => (
               <Card key={task.id} className="mb-2 text-dark">
@@ -249,10 +258,12 @@ const ToDoList = () => {
                         size="sm"
                         onClick={() => handleEditTaskClick(task)}
                         className="me-2"
+                        aria-label={`Modifica il task ${task.titolo}`}
                       >
                         ✏️
                       </Button>
                       <Button
+                        aria-label={`Elimina il task ${task.titolo}`}
                         variant="outline-danger"
                         size="sm"
                         onClick={() => handleDeleteTask(task.id)}
@@ -269,12 +280,12 @@ const ToDoList = () => {
               </Card>
             ))
           ) : (
-            <p>Nessun task per questa data.</p>
+            <p aria-live="polite">Nessun task per questa data.</p>
           )}
 
           {upcomingTasksOfMonth.length > 0 && (
             <>
-              <h5 className="mt-4">Prossimi task del mese</h5>
+              <h3 className="mt-4 fs-4">Prossimi task del mese</h3>
               {upcomingTasksOfMonth.map((task) => (
                 <Card key={task.id} className="mb-2 text-dark">
                   <Card.Body>
@@ -286,10 +297,12 @@ const ToDoList = () => {
                           size="sm"
                           onClick={() => handleEditTaskClick(task)}
                           className="me-2"
+                          aria-label={`Modifica il task ${task.titolo}`}
                         >
                           ✏️
                         </Button>
                         <Button
+                          aria-label={`Elimina il task ${task.titolo}`}
                           variant="outline-danger"
                           size="sm"
                           onClick={() => handleDeleteTask(task.id)}
@@ -314,13 +327,21 @@ const ToDoList = () => {
       </Row>
 
       {/* MODALE */}
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        aria-labelledby="modal-titolo"
+        aria-describedby="modal-descrizione"
+      >
         <Modal.Header closeButton>
-          <Modal.Title>
+          <Modal.Title id="modal-titolo">
             {currentTask?.id ? "Modifica task" : "Aggiungi nuovo task"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <span id="modal-descrizione" className="visually-hidden">
+            Compila il modulo per creare o modificare un task.
+          </span>
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Titolo</Form.Label>
@@ -345,6 +366,7 @@ const ToDoList = () => {
               <Form.Label>Tipo Task</Form.Label>
               <Form.Select
                 name="tipoTask"
+                aria-label="Seleziona lo stato del task"
                 value={currentTask?.tipoTask || "DA_FARE"}
                 onChange={handleChange}
               >
@@ -373,10 +395,18 @@ const ToDoList = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button
+            variant="secondary"
+            onClick={handleCloseModal}
+            aria-label="Annulla la modifica al task"
+          >
             Annulla
           </Button>
-          <Button variant="success" onClick={handleSaveTask}>
+          <Button
+            variant="success"
+            onClick={handleSaveTask}
+            aria-label="Salva la modifica al task"
+          >
             Salva
           </Button>
         </Modal.Footer>

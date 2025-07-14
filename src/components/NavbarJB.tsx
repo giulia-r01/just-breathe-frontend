@@ -55,20 +55,6 @@ const NavbarJB = function () {
                   <>
                     <Link
                       aria-current={
-                        location.pathname === "/index" ? "page" : undefined
-                      }
-                      aria-label="Dashboard - Vai alla dashboard"
-                      className={`nav-link ${
-                        location.pathname === "/index"
-                          ? "text-custom-active fw-bold"
-                          : "text-white"
-                      }`}
-                      to="/index"
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      aria-current={
                         location.pathname === "/diario" ? "page" : undefined
                       }
                       aria-label="Diario - Scrivi il tuo diario"

@@ -46,13 +46,24 @@ const UltimoDiario = () => {
     if (token) fetchDashboard()
   }, [token])
 
-  if (loading) return <Spinner animation="border" />
-  if (error) return <Alert variant="danger">{error}</Alert>
+  if (loading)
+    return (
+      <div className="text-center py-3" role="status" aria-live="polite">
+        <Spinner animation="border" variant="success" />
+        <span className="visually-hidden">Caricamento...</span>
+      </div>
+    )
+  if (error)
+    return (
+      <Alert variant="danger" role="alert">
+        {error}
+      </Alert>
+    )
   if (!dashboardData) return null
 
   return (
     <Card className="mynav text-white p-3">
-      <Card.Title>Diario</Card.Title>
+      <Card.Title as="h4">Diario</Card.Title>
 
       {dashboardData.diario ? (
         <>
@@ -67,7 +78,6 @@ const UltimoDiario = () => {
                 ).toLocaleString()}`}
           </Card.Subtitle>
 
-          {/* Sposta h5 fuori dal paragrafo */}
           <h5>{dashboardData.diario.titolo}</h5>
 
           <Card.Text>
@@ -81,7 +91,11 @@ const UltimoDiario = () => {
       )}
 
       <div className="d-flex justify-content-end mt-3">
-        <Button variant="success" onClick={() => navigate("/diario")}>
+        <Button
+          variant="success"
+          onClick={() => navigate("/diario")}
+          aria-label="Scrivi qualcosa - Vai alla sezione Diario"
+        >
           Scrivi qualcosa
         </Button>
       </div>
