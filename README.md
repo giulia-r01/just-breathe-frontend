@@ -1,69 +1,56 @@
-# React + TypeScript + Vite
+# 🌿 Just Breathe
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Just Breathe** è una web app di benessere digitale pensata per aiutare gli utenti a organizzare la propria mente, rilassarsi e ritrovare l’equilibrio interiore.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Funzionalità principali
 
-## Expanding the ESLint configuration
+- 📝 Diario personale  
+- ✅ To-Do list quotidiana  
+- 🎵 Playlist musicali da creare in base al proprio mood  
+- 🌬️ Respiro guidato con animazioni e accessibilità  
+- 📅 Eventi nelle vicinanze con possibilità di salvare i preferiti  
+- 🔐 Registrazione/Login sicuri con JWT  
+- 🔐 Recupero password dimenticata  
+- 🛠️ Backoffice per gestione contenuti (admin) e statistiche  
+- ♿ Interfaccia **accessibile** e **responsive**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Tecnologie usate
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Frontend
+- **React** con Vite  
+- **React Router DOM**  
+- **Bootstrap 5**  
+- **React Icons**  
+- **JWT Authentication**  
+- **Fetch API**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Backend
+- **Spring Boot**  
+- **PostgreSQL**  
+- **Spring Security con JWT**  
+- **JPA e Hibernate**  
+- **Cloudinary** per upload immagini  
+- **JavaMailSender** per invio email (es. recupero password)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ⚙️ Setup del progetto
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 🔧 Requisiti
+
+- Node.js e npm  
+- Java 17+  
+- PostgreSQL
+
+---
+
+## 👤 Autrice
+
+**Giulia Rizzo**  
+🔗 [LinkedIn](https://www.linkedin.com/in/giulia-rizzo-4782bb102/)  
+💻 [GitHub](https://github.com/giulia-r01)  
+📧 [girzzo@gmail.com](mailto:girzzo@gmail.com?subject=Richiesta%20di%20assistenza)
