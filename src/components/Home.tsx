@@ -26,7 +26,7 @@ const Home = function () {
             </Col>
             <Col xs={6} md={6}>
               <Button
-                variant="outline-success"
+                variant="success"
                 className="w-100"
                 onClick={() => navigate("/register")}
                 aria-label="Registrati - clicca per accedere alla registrazione"
