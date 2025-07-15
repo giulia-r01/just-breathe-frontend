@@ -76,6 +76,7 @@ const Register = function () {
 
   return (
     <Container className="container mt-4">
+      <h1 className="visually-hidden">Pagina di registrazione</h1>
       <Row className="justify-content-center px-4">
         <Col md={6} lg={4} className="mynav py-3 my-4 rounded text-white">
           <h2>Registrati</h2>
