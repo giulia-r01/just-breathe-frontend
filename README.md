@@ -52,26 +52,37 @@
 ## 🧭 Istruzioni per avviare il progetto
 ### 📦 Clona i repository
 git clone https://github.com/tuo-username/just-breathe-frontend.git
+
 git clone https://github.com/tuo-username/just-breathe-backend.git
 
 ### ▶️ Avvio del frontend
 Posizionati nella cartella del frontend:
 
 cd just-breathe-frontend
+
 Installa le dipendenze:
+
 npm install
+
 Avvia l’app:
+
 npm run dev
+
 L'applicazione sarà disponibile all’indirizzo http://localhost:5173.
 
 ### ⚙️ Avvio del Backend
 Spostati nella cartella del backend:
+
 cd ../just-breathe-backend
 
 Assicurati di avere installato:
+
 Java 17 o superiore
+
 Maven
+
 PostgreSQL (in esecuzione)
+
 
 Configura le credenziali in un file src/main/resources/application.properties. Un esempio di configurazione potrebbe essere:
 
@@ -88,6 +99,7 @@ cloudinary.api-secret=segreto
 Avvia l’app Spring Boot con Maven:
 
 mvn spring-boot:run
+
 Il backend sarà disponibile all’indirizzo http://localhost:8080.
 
 ✅ A questo punto l'applicazione sarà completamente funzionante in locale!
