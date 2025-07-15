@@ -32,7 +32,7 @@ const BackOffice = () => {
 
   if (!token || !myId) {
     return (
-      <p className="beg-white rounded p2 text-center mt-5 text-danger fw-bold">
+      <p className="bg-white rounded p2 text-center mt-5 text-danger fw-bold">
         Accesso non autorizzato. Effettua il login.
       </p>
     )
