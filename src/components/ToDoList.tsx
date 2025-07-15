@@ -326,7 +326,6 @@ const ToDoList = () => {
         </Col>
       </Row>
 
-      {/* MODALE */}
       <Modal
         show={showModal}
         onHide={handleCloseModal}

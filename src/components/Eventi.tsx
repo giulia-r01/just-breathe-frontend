@@ -86,7 +86,6 @@ const Eventi = () => {
     const eventoSalvato = trovaEventoSalvato(evento)
 
     if (eventoSalvato && eventoSalvato.id) {
-      // Evento già salvato, quindi lo rimuovo
       try {
         const res = await fetch(
           `http://localhost:8080/eventi/${eventoSalvato.id}`,
@@ -98,7 +97,6 @@ const Eventi = () => {
           }
         )
         if (res.ok) {
-          // Aggiorna lista salvati
           setSalvati((prev) => prev.filter((e) => e.id !== eventoSalvato.id))
           setReloadFlag((f) => f + 1)
         }
@@ -106,7 +104,6 @@ const Eventi = () => {
         console.error("Errore nella rimozione evento:", err)
       }
     } else {
-      // Evento non salvato, quindi lo salvo
       try {
         const res = await fetch("http://localhost:8080/eventi", {
           method: "POST",

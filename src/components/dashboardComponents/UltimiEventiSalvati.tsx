@@ -117,7 +117,6 @@ const UltimiEventiSalvati = ({
                     )}
                   </div>
 
-                  {/* Mostra <hr /> solo tra gli eventi, non dopo l'ultimo */}
                   {index < eventi.length - 1 && (
                     <hr className="text-white my-2" />
                   )}

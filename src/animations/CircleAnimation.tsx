@@ -4,7 +4,7 @@ import "./CircleAnimation.css"
 interface CircleAnimationProps {
   fase: "inspira" | "trattieni" | "espira" | "fermo"
   durataInspira: number
-  durataTrattieni: number // <-- lo lasci nell'interfaccia se vuoi tenerlo documentato
+  durataTrattieni: number
   durataEspira: number
   className?: string
 }
@@ -30,7 +30,7 @@ const CircleAnimation = ({
       transitionProps = { duration: durataEspira, ease: "easeInOut" }
       break
     case "trattieni":
-      animateProps = { scale: 1.8 } // nessuna animazione
+      animateProps = { scale: 1.8 }
       transitionProps = {}
       break
     default:
