@@ -32,12 +32,15 @@ const UltimiEventiSalvati = ({
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token")
-    setToken(storedToken)
+    if (storedToken && storedToken !== "null") {
+      setToken(storedToken)
+    }
   }, [])
 
   useEffect(() => {
     const fetchEventi = async () => {
       try {
+        console.log("TOKEN:", token)
         const res = await fetch(
           `${
             import.meta.env.VITE_API_URL
@@ -74,7 +77,7 @@ const UltimiEventiSalvati = ({
           Ultimi eventi salvati:
         </Card.Subtitle>
 
-        {loading ? (
+        {loading || token === null ? (
           <div className="text-center py-4" role="status" aria-live="polite">
             <Spinner animation="border" variant="light" />
             <span className="visually-hidden">Caricamento...</span>
