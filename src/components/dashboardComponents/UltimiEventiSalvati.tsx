@@ -27,8 +27,13 @@ const UltimiEventiSalvati = ({
 }: UltimiEventiSalvatiProps) => {
   const [eventi, setEventi] = useState<Evento[]>([])
   const [loading, setLoading] = useState(true)
-  const token = localStorage.getItem("token")
+  const [token, setToken] = useState<string | null>(null)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token")
+    setToken(storedToken)
+  }, [])
 
   useEffect(() => {
     const fetchEventi = async () => {
