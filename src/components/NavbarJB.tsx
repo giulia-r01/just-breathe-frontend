@@ -156,7 +156,6 @@ const NavbarJB = function () {
                     id="dropdown-profilo"
                     align="end"
                     menuVariant="dark"
-                    onClick={() => setExpanded(false)}
                   >
                     <NavDropdown.Item
                       as={Link}
