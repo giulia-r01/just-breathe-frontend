@@ -196,7 +196,7 @@ const RespiriAdminComponent = () => {
 
       {loading && (
         <div className="text-center" role="status" aria-live="polite">
-          <Spinner animation="border" variant="primary" />
+          <Spinner animation="border" variant="success" />
           <span className="visually-hidden">Caricamento...</span>
         </div>
       )}
