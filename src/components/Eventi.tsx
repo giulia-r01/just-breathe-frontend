@@ -48,10 +48,10 @@ const Eventi = () => {
       }
     } catch (err) {
       console.error("Errore nel recupero eventi salvati:", err)
+      setIsError(
+        "Qualcosa è andato storto nel recupero degli eventi salvati 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+      )
     }
-    setIsError(
-      "Qualcosa è andato storto nel recupero degli eventi salvati 😥. Rilassati, riprova o contatta l'assistenza 🌿"
-    )
   }
 
   const handleSearch = async () => {
