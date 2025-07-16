@@ -41,7 +41,9 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
       setError("")
       try {
         const res = await fetch(
-          "http://localhost:8080/tasks?page=0&size=5&sort=dataCreazioneTask,desc",
+          `${
+            import.meta.env.VITE_API_URL
+          }/tasks?page=0&size=5&sort=dataCreazioneTask,desc`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

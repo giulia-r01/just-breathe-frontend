@@ -24,14 +24,14 @@ const UltimoMood = () => {
   useEffect(() => {
     const fetchMood = async () => {
       try {
-        const res = await fetch("http://localhost:8080/moods", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/moods`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         const data = await res.json()
         if (data.content && data.content.length > 0) {
           const ultimoMood = data.content[0]
           const resBrani = await fetch(
-            `http://localhost:8080/brani/mood/${ultimoMood.id}`,
+            `${import.meta.env.VITE_API_URL}/brani/mood/${ultimoMood.id}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }

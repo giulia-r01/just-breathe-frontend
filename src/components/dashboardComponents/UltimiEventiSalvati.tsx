@@ -34,7 +34,9 @@ const UltimiEventiSalvati = ({
     const fetchEventi = async () => {
       try {
         const res = await fetch(
-          "http://localhost:8080/eventi/utente?page=0&size=5&sortBy=dataEvento",
+          `${
+            import.meta.env.VITE_API_URL
+          }/eventi/utente?page=0&size=5&sortBy=dataEvento`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
