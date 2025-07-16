@@ -40,7 +40,7 @@ const NavbarJB = function () {
           >
             <img
               alt="logo Just Breathe"
-              src="Just Breathe-Logo.png"
+              src="./src/assets/img/Just Breathe-Logo.png"
               width={100}
             />
           </Link>
