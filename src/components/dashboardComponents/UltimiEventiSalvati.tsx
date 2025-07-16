@@ -85,8 +85,6 @@ const UltimiEventiSalvati = ({
           </div>
         ) : (
           <div aria-live="polite" role="list">
-            <p className="text-warning">Token: {token || "Nessun token"}</p>
-            <p className="text-warning">Eventi caricati: {eventi.length}</p>
             {eventi.length === 0 ? (
               <Card.Text>Non hai ancora salvato eventi.</Card.Text>
             ) : (
