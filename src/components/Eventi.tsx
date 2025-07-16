@@ -26,6 +26,7 @@ const Eventi = () => {
   const [eventi, setEventi] = useState<EventoDto[]>([])
   const [salvati, setSalvati] = useState<EventoDto[]>([])
   const [loading, setLoading] = useState(false)
+  const [isError, setIsError] = useState("")
   const [reloadFlag, setReloadFlag] = useState(0)
 
   const token = localStorage.getItem("token")
@@ -48,6 +49,9 @@ const Eventi = () => {
     } catch (err) {
       console.error("Errore nel recupero eventi salvati:", err)
     }
+    setIsError(
+      "Qualcosa è andato storto nel recupero degli eventi salvati 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+    )
   }
 
   const handleSearch = async () => {
@@ -68,6 +72,9 @@ const Eventi = () => {
       setEventi(data)
     } catch (err) {
       console.error("Errore nella ricerca eventi:", err)
+      setIsError(
+        "Qualcosa è andato storto nella ricerca degli eventi 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+      )
     } finally {
       setLoading(false)
     }
@@ -102,6 +109,9 @@ const Eventi = () => {
         }
       } catch (err) {
         console.error("Errore nella rimozione evento:", err)
+        setIsError(
+          "Qualcosa è andato storto nella rimozione dell'evento salvato 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+        )
       }
     } else {
       try {
@@ -119,6 +129,9 @@ const Eventi = () => {
         }
       } catch (err) {
         console.error("Errore nel salvataggio evento:", err)
+        setIsError(
+          "Qualcosa è andato storto nel salvataggio dell'evento 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+        )
       }
     }
   }
@@ -150,6 +163,16 @@ const Eventi = () => {
               Cerca
             </Button>
           </Form.Group>
+
+          {isError && (
+            <div
+              role="alert"
+              className="alert alert-danger"
+              aria-live="assertive"
+            >
+              {isError}
+            </div>
+          )}
 
           {loading ? (
             <div className="text-center my-5" role="status" aria-live="polite">

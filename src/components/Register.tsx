@@ -51,9 +51,12 @@ const Register = function () {
 
       if (!response.ok) {
         const data = await response.json()
-        setError(data.message || "Errore durante la registrazione")
+        setError(
+          data.message ||
+            "Errore durante la registrazione 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        )
       } else {
-        setSuccess("Registrazione avvenuta con successo!")
+        setSuccess("Registrazione avvenuta con successo 🥳!")
         setFormData({
           nome: "",
           cognome: "",

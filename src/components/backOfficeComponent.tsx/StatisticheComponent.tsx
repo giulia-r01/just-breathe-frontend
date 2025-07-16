@@ -48,7 +48,9 @@ const StatisticheComponent = ({ token }: Props) => {
         ])
 
         if (!resMedia.ok || !resMood.ok || !resDettagli.ok) {
-          throw new Error("Errore nel recupero delle statistiche")
+          throw new Error(
+            "Qualcosa è andato storto nel recupero delle statistiche 😥"
+          )
         }
 
         const mediaData = await resMedia.json()

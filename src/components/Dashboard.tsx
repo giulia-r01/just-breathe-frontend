@@ -32,7 +32,10 @@ const Dashboard = function () {
       },
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Errore nel recupero utente")
+        if (!res.ok)
+          throw new Error(
+            "Errore nel recupero dei tuoi dati 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+          )
         return res.json()
       })
       .then((data) => {

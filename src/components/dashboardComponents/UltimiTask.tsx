@@ -48,7 +48,10 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
             headers: { Authorization: `Bearer ${token}` },
           }
         )
-        if (!res.ok) throw new Error("Errore nel caricamento degli ultimi task")
+        if (!res.ok)
+          throw new Error(
+            "Errore nel caricamento degli ultimi task 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+          )
         const data = await res.json()
         const filteredTasks = escludiFatti
           ? (data.content || data).filter(
@@ -58,7 +61,7 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
         setTasks(filteredTasks)
       } catch (err) {
         console.log(err)
-        setError("Impossibile caricare gli ultimi task")
+        setError("Impossibile caricare gli ultimi task 😥")
       } finally {
         setLoading(false)
       }

@@ -46,14 +46,17 @@ const Diario = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       )
-      if (!res.ok) throw new Error("Errore nel recupero dei diari")
+      if (!res.ok)
+        throw new Error(
+          "Qualcosa è andato storto nel recupero dei tuoi diari 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+        )
       const data = await res.json()
       setDiari(data.content)
       setTotalPages(data.totalPages)
       setCurrentPage(data.number)
     } catch (err) {
       console.log(err)
-      setError("Impossibile caricare i diari")
+      setError("Impossibile caricare i diari 😥")
     } finally {
       setLoading(false)
     }
@@ -102,16 +105,19 @@ const Diario = () => {
         },
         body: JSON.stringify(formData),
       })
-      if (!res.ok) throw new Error("Errore durante il salvataggio del diario")
+      if (!res.ok)
+        throw new Error(
+          "Errore durante il salvataggio del diario 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+        )
       setSuccess(
-        editingId ? "Diario modificato!" : "Diario salvato con successo!"
+        editingId ? "Diario modificato! 🥳" : "Diario salvato con successo! 🥳"
       )
       setFormData({ titolo: "", contenuto: "" })
       setEditingId(null)
       fetchDiari(currentPage)
     } catch (err) {
       console.log(err)
-      setError("Errore durante il salvataggio")
+      setError("Errore durante il salvataggio 😥")
     }
   }
 
@@ -128,11 +134,11 @@ const Diario = () => {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       })
-      if (!res.ok) throw new Error("Errore durante l'eliminazione")
-      setSuccess("Diario eliminato")
+      if (!res.ok) throw new Error("Errore durante l'eliminazione 😥")
+      setSuccess("Diario eliminato ✨")
       fetchDiari(currentPage)
     } catch {
-      setError("Errore nell'eliminazione")
+      setError("Errore nell'eliminazione 😥")
     }
   }
 

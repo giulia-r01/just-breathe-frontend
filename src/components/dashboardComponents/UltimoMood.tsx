@@ -17,6 +17,7 @@ interface Brano {
 
 const UltimoMood = () => {
   const [loading, setLoading] = useState(true)
+  const [isError, setIsError] = useState("")
   const [mood, setMood] = useState<Mood | null>(null)
   const token = localStorage.getItem("token")
   const navigate = useNavigate()
@@ -41,6 +42,9 @@ const UltimoMood = () => {
         }
       } catch (error) {
         console.error("Errore nel caricamento del mood:", error)
+        setIsError(
+          "Qualcosa è andato storto nel caricamento dei mood 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+        )
       } finally {
         setLoading(false)
       }
@@ -53,7 +57,15 @@ const UltimoMood = () => {
     <Card className="mynav text-white">
       <Card.Body>
         <Card.Title as="h4">Mood</Card.Title>
-
+        {isError && (
+          <div
+            role="alert"
+            className="alert alert-danger"
+            aria-live="assertive"
+          >
+            {isError}
+          </div>
+        )}
         {loading ? (
           <div className="text-center py-3" role="status" aria-live="polite">
             <Spinner animation="border" variant="success" />

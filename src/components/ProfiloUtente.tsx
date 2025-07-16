@@ -74,7 +74,7 @@ const ProfiloUtente = () => {
       )
       if (res.ok) {
         const updatedUser = await res.json()
-        setSuccess("Immagine aggiornata con successo")
+        setSuccess("Immagine aggiornata con successo 🥳")
         localStorage.setItem(
           "imgProfilo",
           updatedUser.imgProfilo || "./src/assets/img/user.svg"
@@ -107,7 +107,7 @@ const ProfiloUtente = () => {
         }
       )
       if (res.ok) {
-        setSuccess("Username aggiornato con successo")
+        setSuccess("Username aggiornato con successo 🥳")
         localStorage.removeItem("token")
         setTimeout(() => {
           navigate("/login")
@@ -120,7 +120,9 @@ const ProfiloUtente = () => {
         } else if (errorText.includes("diverso")) {
           setError("Il nuovo username deve essere diverso dal precedente.")
         } else {
-          setError("Errore durante l'aggiornamento dello username.")
+          setError(
+            "Errore durante l'aggiornamento dello username 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          )
         }
       }
     } catch (err) {
@@ -147,7 +149,7 @@ const ProfiloUtente = () => {
         }
       )
       if (res.ok) {
-        setSuccess("Password aggiornata con successo")
+        setSuccess("Password aggiornata con successo 🥳")
         setVecchiaPassword("")
         setNuovaPassword("")
         localStorage.removeItem("token")
@@ -161,7 +163,9 @@ const ProfiloUtente = () => {
         } else if (res.status === 400 && errorText.includes("nuova password")) {
           setError("La nuova password deve essere diversa dalla precedente.")
         } else {
-          setError("Errore durante l'aggiornamento della password.")
+          setError(
+            "Errore durante l'aggiornamento della password 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          )
         }
       }
     } catch (err) {
@@ -191,7 +195,7 @@ const ProfiloUtente = () => {
         }
       )
       if (res.ok) {
-        setSuccess("Utente eliminato con successo")
+        setSuccess("Utente eliminato con successo 🥳")
         setError("")
         localStorage.removeItem("token")
         setTimeout(() => {
@@ -199,7 +203,9 @@ const ProfiloUtente = () => {
         }, 2000)
       }
     } catch (err) {
-      setError("Errore nell'eliminazione dell'utente")
+      setError(
+        "Errore nell'eliminazione dell'utente 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+      )
       console.error("Errore eliminazione account:", err)
     }
   }

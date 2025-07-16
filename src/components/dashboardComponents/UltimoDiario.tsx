@@ -33,12 +33,15 @@ const UltimoDiario = () => {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/dashboard`, {
           headers: { Authorization: `Bearer ${token}` },
         })
-        if (!res.ok) throw new Error("Errore nel caricamento della dashboard")
+        if (!res.ok)
+          throw new Error(
+            "Errore nel caricamento della dashboard 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+          )
         const data: DashboardResponse = await res.json()
         setDashboardData(data)
       } catch (err) {
         console.error(err)
-        setError("Impossibile caricare l'ultimo diario")
+        setError("Impossibile caricare l'ultimo diario 😥")
       } finally {
         setLoading(false)
       }

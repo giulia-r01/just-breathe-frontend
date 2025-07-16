@@ -29,7 +29,10 @@ const RecuperoPsw = function () {
 
       if (!response.ok) {
         const data = await response.text()
-        setError(data || "Errore durante il recupero password")
+        setError(
+          data ||
+            "Errore durante il recupero password 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        )
       } else {
         setSuccess(
           "Abbiamo inviato le istruzioni per il recupero password alla tua mail, se non la trovi, controlla nella cartella spam"

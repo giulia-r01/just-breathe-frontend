@@ -58,10 +58,13 @@ const ResetPsw = function () {
       .then(async (res) => {
         if (!res.ok) {
           const text = await res.text()
-          throw new Error(text || "Errore durante il reset password")
+          throw new Error(
+            text ||
+              "Errore durante il reset password 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          )
         }
         setSuccess(
-          "Password resettata con successo! Ora verrai reindirizzato al login..."
+          "Password resettata con successo 🥳! Ora verrai reindirizzato al login..."
         )
         setPassword("")
         setConfirmPassword("")

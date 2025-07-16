@@ -43,7 +43,10 @@ const Login = function () {
 
       if (!response.ok) {
         const data = await response.json()
-        setError(data.message || "Credenziali non valide")
+        setError(
+          data.message ||
+            "Credenziali non valide. Rilassati, riprova o resetta la tua password cliccando sul link 'Hai scordato la tua password?' 🌿"
+        )
       } else {
         const data = await response.json()
         localStorage.setItem("token", data.token)
@@ -66,7 +69,7 @@ const Login = function () {
           localStorage.setItem("imgProfilo", "user.svg")
         }
 
-        setSuccess("Login effettuato con successo!")
+        setSuccess("Login effettuato con successo! 🥳")
         setTimeout(() => navigate("/index"), 1500)
       }
     } catch (err: unknown) {

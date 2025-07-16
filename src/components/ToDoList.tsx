@@ -64,12 +64,15 @@ const ToDoList = () => {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
           headers: { Authorization: `Bearer ${token}` },
         })
-        if (!res.ok) throw new Error("Errore nel caricamento dei task")
+        if (!res.ok)
+          throw new Error(
+            "Errore nel caricamento dei task 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          )
         const data = await res.json()
         setTasks(data.content || data)
       } catch (err) {
         console.error(err)
-        setError("Impossibile caricare i task")
+        setError("Impossibile caricare i task 😥.")
       } finally {
         setLoading(false)
       }
@@ -171,7 +174,10 @@ const ToDoList = () => {
         body: JSON.stringify(formattedTask),
       })
 
-      if (!res.ok) throw new Error("Errore nel salvataggio del task")
+      if (!res.ok)
+        throw new Error(
+          "Errore nel salvataggio del task 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        )
       const savedTask = await res.json()
 
       setTasks((prev) =>
@@ -181,7 +187,7 @@ const ToDoList = () => {
       )
       handleCloseModal()
     } catch (error) {
-      alert("Errore durante il salvataggio")
+      alert("Errore durante il salvataggio 😥.")
       console.error(error)
     }
   }
@@ -193,10 +199,13 @@ const ToDoList = () => {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       })
-      if (!res.ok) throw new Error("Errore durante eliminazione task")
+      if (!res.ok)
+        throw new Error(
+          "Errore durante eliminazione task 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        )
       setTasks((prev) => prev.filter((t) => t.id !== id))
     } catch (error) {
-      alert("Errore durante l'eliminazione")
+      alert("Errore durante l'eliminazione 😥.")
       console.error(error)
     }
   }

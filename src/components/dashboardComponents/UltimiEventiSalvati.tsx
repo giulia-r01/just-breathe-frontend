@@ -27,6 +27,7 @@ const UltimiEventiSalvati = ({
 }: UltimiEventiSalvatiProps) => {
   const [eventi, setEventi] = useState<Evento[]>([])
   const [loading, setLoading] = useState(true)
+  const [isError, setIsError] = useState("")
   const [token, setToken] = useState<string | null>(null)
   const navigate = useNavigate()
 
@@ -57,7 +58,13 @@ const UltimiEventiSalvati = ({
           setEventi(data.content || [])
         }
       } catch (err) {
-        console.error("Errore nel recupero eventi salvati:", err)
+        console.error(
+          "Qualcosa è andato storto nel recupero eventi salvati: ",
+          err
+        )
+        setIsError(
+          "Qualcosa è andato storto nel recupero degli eventi salvati 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+        )
       } finally {
         setLoading(false)
       }
@@ -77,6 +84,16 @@ const UltimiEventiSalvati = ({
         <Card.Subtitle className="fs-5 pb-4 pt-2">
           Ultimi eventi salvati:
         </Card.Subtitle>
+
+        {isError && (
+          <div
+            role="alert"
+            className="alert alert-danger"
+            aria-live="assertive"
+          >
+            {isError}
+          </div>
+        )}
 
         {loading || token === null ? (
           <div className="text-center py-4" role="status" aria-live="polite">

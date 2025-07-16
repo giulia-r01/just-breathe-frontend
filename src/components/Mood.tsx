@@ -75,7 +75,9 @@ const Mood = () => {
         }
       } catch (e) {
         console.error("Errore fetch moods", e)
-        setError("Impossibile caricare i mood")
+        setError(
+          "Impossibile caricare i mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        )
       } finally {
         setLoading(false)
       }
@@ -98,7 +100,9 @@ const Mood = () => {
         return data || []
       } catch (e) {
         console.error("Errore fetch brani", e)
-        setError("Impossibile caricare i brani")
+        setError(
+          "Impossibile caricare i brani 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        )
         return []
       }
     }
@@ -137,7 +141,9 @@ const Mood = () => {
       setSelectedMood({ ...mood, brani })
     } catch (e) {
       console.error("Errore fetch brani mood", e)
-      setError("Impossibile caricare i brani del mood")
+      setError(
+        "Impossibile caricare i brani del mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+      )
     } finally {
       setLoading(false)
     }
@@ -154,14 +160,19 @@ const Mood = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       )
-      if (!res.ok) throw new Error("Errore creazione mood")
+      if (!res.ok)
+        throw new Error(
+          "Errore creazione mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        )
       const createdMood = await res.json()
       setMoods((prev) => [...prev, { ...createdMood, brani: [] }])
       setSelectedMood({ ...createdMood, brani: [] })
       setNewTipoMood("")
     } catch (e) {
       console.error(e)
-      setError("Impossibile creare il mood")
+      setError(
+        "Impossibile creare il mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+      )
     }
   }
 
@@ -180,7 +191,10 @@ const Mood = () => {
           body: JSON.stringify({ titoloBrano: newBrano }),
         }
       )
-      if (!res.ok) throw new Error("Errore aggiunta brano")
+      if (!res.ok)
+        throw new Error(
+          "Errore aggiunta brano 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        )
       const nuovoBrano = await res.json()
       setSelectedMood((prev) =>
         prev ? { ...prev, brani: [...(prev.brani || []), nuovoBrano] } : prev
@@ -188,7 +202,9 @@ const Mood = () => {
       setNewBrano("")
     } catch (e) {
       console.error(e)
-      setError("Impossibile aggiungere il brano")
+      setError(
+        "Impossibile aggiungere il brano 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+      )
     }
   }
 
@@ -226,7 +242,10 @@ const Mood = () => {
           }
         )
 
-        if (!res.ok) throw new Error("Errore durante la modifica del brano")
+        if (!res.ok)
+          throw new Error(
+            "Errore durante la modifica del brano 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          )
 
         updatedBrano = await res.json()
       }
@@ -244,7 +263,10 @@ const Mood = () => {
           }
         )
 
-        if (!res.ok) throw new Error("Errore durante il cambio mood")
+        if (!res.ok)
+          throw new Error(
+            "Errore durante il cambio mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          )
 
         updatedBrano = await res.json()
       }
@@ -311,7 +333,10 @@ const Mood = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       )
-      if (!res.ok) throw new Error("Errore eliminazione brano")
+      if (!res.ok)
+        throw new Error(
+          "Errore eliminazione brano 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        )
 
       setSelectedMood((prev) =>
         prev
@@ -323,7 +348,9 @@ const Mood = () => {
       )
     } catch (e) {
       console.error(e)
-      setError("Impossibile eliminare il brano")
+      setError(
+        "Impossibile eliminare il brano 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+      )
     }
   }
 
@@ -338,13 +365,18 @@ const Mood = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       )
-      if (!res.ok) throw new Error("Errore eliminazione mood")
+      if (!res.ok)
+        throw new Error(
+          "Errore eliminazione mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        )
 
       setMoods((prev) => prev.filter((m) => m.id !== selectedMood.id))
       setSelectedMood(null)
     } catch (e) {
       console.error(e)
-      setError("Impossibile eliminare il mood")
+      setError(
+        "Impossibile eliminare il mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+      )
     }
   }
 

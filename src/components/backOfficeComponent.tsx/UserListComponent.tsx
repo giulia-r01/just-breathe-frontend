@@ -70,7 +70,7 @@ const UserListComponent = ({ token, myId }: Props) => {
         prev.map((u) => (u.id === id ? { ...u, attivo: !attivo } : u))
       )
     } catch {
-      alert("Errore durante la modifica dello stato attivo")
+      alert("Errore durante la modifica dello stato 😥")
     }
   }
 

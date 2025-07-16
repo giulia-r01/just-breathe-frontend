@@ -48,11 +48,14 @@ const RespiriAdminComponent = () => {
           "Content-Type": "application/json",
         },
       })
-      if (!res.ok) throw new Error("Errore nel recupero delle respirazioni")
+      if (!res.ok)
+        throw new Error(
+          "Qualcosa è andato storto nel recupero delle respirazioni 😥"
+        )
       const data = await res.json()
       setRespiri(data)
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Errore sconosciuto")
+      setError(e instanceof Error ? e.message : "Errore sconosciuto 😞")
     } finally {
       setLoading(false)
     }
@@ -139,14 +142,14 @@ const RespiriAdminComponent = () => {
         const errorData = await res.json().catch(() => null)
         const msg =
           errorData?.message ||
-          "Errore durante il salvataggio della respirazione"
+          "Errore durante il salvataggio della respirazione 😥"
         throw new Error(msg)
       }
 
       await fetchRespiri()
       setShowModal(false)
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Errore sconosciuto")
+      setError(e instanceof Error ? e.message : "Errore sconosciuto 😞")
     } finally {
       setIsSaving(false)
     }
@@ -169,10 +172,10 @@ const RespiriAdminComponent = () => {
           },
         }
       )
-      if (!res.ok) throw new Error("Errore durante l'eliminazione")
+      if (!res.ok) throw new Error("Errore durante l'eliminazione 😥")
       await fetchRespiri()
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Errore sconosciuto")
+      setError(e instanceof Error ? e.message : "Errore sconosciuto 😞")
     } finally {
       setLoading(false)
     }

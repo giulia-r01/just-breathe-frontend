@@ -9,6 +9,7 @@ const NavbarJB = function () {
   const [token, setToken] = useState<string | null>(null)
   const [ruolo, setRuolo] = useState<string | null>(null)
   const [imgProfilo, setImgProfilo] = useState<string>("user.svg")
+  const [expanded, setExpanded] = useState(false)
 
   useEffect(() => {
     const t = localStorage.getItem("token")
@@ -27,7 +28,14 @@ const NavbarJB = function () {
 
   return (
     <header>
-      <Navbar expand="lg" className="mynav" data-bs-theme="dark" fixed="top">
+      <Navbar
+        expand="lg"
+        className="mynav"
+        data-bs-theme="dark"
+        fixed="top"
+        expanded={expanded}
+        onToggle={() => setExpanded(!expanded)}
+      >
         <Container>
           <Link
             aria-label={
@@ -37,6 +45,7 @@ const NavbarJB = function () {
             }
             to={token ? "/index" : "/"}
             className="ms-0"
+            onClick={() => setExpanded(false)}
           >
             <img
               alt="logo Just Breathe"
@@ -64,6 +73,7 @@ const NavbarJB = function () {
                           : "text-white"
                       }`}
                       to="/diario"
+                      onClick={() => setExpanded(false)}
                     >
                       Diario
                     </Link>
@@ -78,6 +88,7 @@ const NavbarJB = function () {
                           : "text-white"
                       }`}
                       to="/todolist"
+                      onClick={() => setExpanded(false)}
                     >
                       ToDo List - Calendario
                     </Link>
@@ -92,6 +103,7 @@ const NavbarJB = function () {
                           : "text-white"
                       }`}
                       to="/mood"
+                      onClick={() => setExpanded(false)}
                     >
                       Mood
                     </Link>
@@ -106,6 +118,7 @@ const NavbarJB = function () {
                           : "text-white"
                       }`}
                       to="/eventi"
+                      onClick={() => setExpanded(false)}
                     >
                       Eventi
                     </Link>
@@ -122,6 +135,7 @@ const NavbarJB = function () {
                           : "text-white"
                       }`}
                       to="/respirazioni"
+                      onClick={() => setExpanded(false)}
                     >
                       Respirazioni guidate
                     </Link>
@@ -142,10 +156,12 @@ const NavbarJB = function () {
                     id="dropdown-profilo"
                     align="end"
                     menuVariant="dark"
+                    onClick={() => setExpanded(false)}
                   >
                     <NavDropdown.Item
                       as={Link}
                       to="/profilo"
+                      onClick={() => setExpanded(false)}
                       aria-label="Profilo - Vai alle impostazioni del tuo profilo"
                     >
                       Profilo
@@ -160,6 +176,7 @@ const NavbarJB = function () {
                         }
                         as={Link}
                         to="/backoffice"
+                        onClick={() => setExpanded(false)}
                         aria-label="Backoffice - Vai alla sezione dedicata all'admin"
                       >
                         Backoffice
@@ -182,6 +199,7 @@ const NavbarJB = function () {
                       }
                       className="nav-link mt-2"
                       to="/login"
+                      onClick={() => setExpanded(false)}
                       aria-label="Login - accedi al sito"
                     >
                       Login
@@ -192,6 +210,7 @@ const NavbarJB = function () {
                       }
                       className="nav-link mt-2"
                       to="/register"
+                      onClick={() => setExpanded(false)}
                       aria-label="Registrati - registrati al sito"
                     >
                       Registrati

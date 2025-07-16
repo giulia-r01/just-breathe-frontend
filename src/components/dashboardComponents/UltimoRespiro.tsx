@@ -34,7 +34,10 @@ const UltimoRespiro = () => {
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/respirazioni`)
       .then((res) => {
-        if (!res.ok) throw new Error("Errore nel recupero delle respirazioni")
+        if (!res.ok)
+          throw new Error(
+            "Errore nel recupero delle respirazioni😥. Rilassati, riprova o contatta l'assistenza 🌿"
+          )
         return res.json()
       })
       .then((data: Respiro[]) => {
