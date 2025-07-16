@@ -19,7 +19,7 @@ const RecuperoPsw = function () {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/auth/password/recupero",
+        `${import.meta.env.VITE_API_URL}/auth/password/recupero`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

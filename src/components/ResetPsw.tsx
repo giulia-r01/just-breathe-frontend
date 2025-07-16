@@ -50,7 +50,7 @@ const ResetPsw = function () {
 
     setLoading(true)
 
-    fetch("http://localhost:8080/auth/password/reset", {
+    fetch(`${import.meta.env.VITE_API_URL}/auth/password/reset`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, nuovaPassword: password }),

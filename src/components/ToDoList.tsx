@@ -61,7 +61,7 @@ const ToDoList = () => {
       setLoading(true)
       setError("")
       try {
-        const res = await fetch("http://localhost:8080/tasks", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         if (!res.ok) throw new Error("Errore nel caricamento dei task")
@@ -152,8 +152,8 @@ const ToDoList = () => {
     try {
       const method = currentTask.id ? "PUT" : "POST"
       const url = currentTask.id
-        ? `http://localhost:8080/tasks/${currentTask.id}`
-        : "http://localhost:8080/tasks"
+        ? `${import.meta.env.VITE_API_URL}/tasks/${currentTask.id}`
+        : `${import.meta.env.VITE_API_URL}/tasks`
 
       const formattedTask = {
         ...currentTask,
@@ -189,7 +189,7 @@ const ToDoList = () => {
   const handleDeleteTask = async (id: number) => {
     if (!window.confirm("Sei sicuro di voler eliminare questo task?")) return
     try {
-      const res = await fetch(`http://localhost:8080/tasks/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       })

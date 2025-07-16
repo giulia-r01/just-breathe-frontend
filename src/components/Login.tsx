@@ -32,11 +32,14 @@ const Login = function () {
     setLoading(true)
 
     try {
-      const response = await fetch("http://localhost:8080/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      })
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      )
 
       if (!response.ok) {
         const data = await response.json()
@@ -46,11 +49,14 @@ const Login = function () {
         localStorage.setItem("token", data.token)
         localStorage.setItem("ruolo", data.ruolo)
 
-        const profiloRes = await fetch("http://localhost:8080/utenti/me", {
-          headers: {
-            Authorization: `Bearer ${data.token}`,
-          },
-        })
+        const profiloRes = await fetch(
+          `${import.meta.env.VITE_API_URL}/utenti/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${data.token}`,
+            },
+          }
+        )
 
         if (profiloRes.ok) {
           const utente = await profiloRes.json()

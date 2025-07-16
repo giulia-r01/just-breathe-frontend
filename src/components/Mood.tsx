@@ -61,7 +61,7 @@ const Mood = () => {
       setLoading(true)
       try {
         setError("")
-        const res = await fetch("http://localhost:8080/moods", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/moods`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         const data = await res.json()
@@ -84,9 +84,12 @@ const Mood = () => {
     const fetchBrani = async (moodId: number): Promise<Brano[]> => {
       try {
         setError("")
-        const res = await fetch(`http://localhost:8080/brani/mood/${moodId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/brani/mood/${moodId}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
         if (!res.ok) {
           console.error("Errore fetch brani", res.status)
           return []
@@ -124,9 +127,12 @@ const Mood = () => {
     setLoading(true)
     try {
       setError("")
-      const res = await fetch(`http://localhost:8080/brani/mood/${mood.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/brani/mood/${mood.id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       const brani = (await res.json()) || []
       setSelectedMood({ ...mood, brani })
     } catch (e) {
@@ -142,7 +148,7 @@ const Mood = () => {
     try {
       setError("")
       const res = await fetch(
-        `http://localhost:8080/moods?tipoMood=${newTipoMood}`,
+        `${import.meta.env.VITE_API_URL}/moods?tipoMood=${newTipoMood}`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
@@ -164,7 +170,7 @@ const Mood = () => {
     try {
       setError("")
       const res = await fetch(
-        `http://localhost:8080/brani/${selectedMood.id}`,
+        `${import.meta.env.VITE_API_URL}/brani/${selectedMood.id}`,
         {
           method: "POST",
           headers: {
@@ -206,7 +212,7 @@ const Mood = () => {
         (editingBrano.link || "") !== editLink
       ) {
         const res = await fetch(
-          `http://localhost:8080/brani/${editingBrano.id}`,
+          `${import.meta.env.VITE_API_URL}/brani/${editingBrano.id}`,
           {
             method: "PUT",
             headers: {
@@ -227,7 +233,9 @@ const Mood = () => {
 
       if (editMoodId !== selectedMood?.id) {
         const res = await fetch(
-          `http://localhost:8080/brani/${editingBrano.id}/mood/${editMoodId}`,
+          `${import.meta.env.VITE_API_URL}/brani/${
+            editingBrano.id
+          }/mood/${editMoodId}`,
           {
             method: "PATCH",
             headers: {
@@ -296,10 +304,13 @@ const Mood = () => {
     if (!token || !selectedMood) return
     try {
       setError("")
-      const res = await fetch(`http://localhost:8080/brani/${branoId}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/brani/${branoId}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       if (!res.ok) throw new Error("Errore eliminazione brano")
 
       setSelectedMood((prev) =>
@@ -321,7 +332,7 @@ const Mood = () => {
     try {
       setError("")
       const res = await fetch(
-        `http://localhost:8080/moods/${selectedMood.id}`,
+        `${import.meta.env.VITE_API_URL}/moods/${selectedMood.id}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },

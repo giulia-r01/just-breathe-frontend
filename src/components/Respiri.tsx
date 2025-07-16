@@ -38,7 +38,7 @@ const Respiri = () => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    fetch("http://localhost:8080/respirazioni")
+    fetch(`${import.meta.env.VITE_API_URL}/respirazioni`)
       .then((res) => {
         if (!res.ok) throw new Error("Errore nel recupero delle respirazioni")
         return res.json()

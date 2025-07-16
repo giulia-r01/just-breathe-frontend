@@ -21,7 +21,7 @@ const UserListComponent = ({ token, myId }: Props) => {
   const [errore, setErrore] = useState("")
 
   useEffect(() => {
-    fetch("http://localhost:8080/backoffice", {
+    fetch(`${import.meta.env.VITE_API_URL}/backoffice`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -35,7 +35,9 @@ const UserListComponent = ({ token, myId }: Props) => {
   const cambiaRuolo = async (id: number, nuovoRuolo: string) => {
     try {
       await fetch(
-        `http://localhost:8080/backoffice/${id}/ruolo?nuovoRuolo=${nuovoRuolo}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/backoffice/${id}/ruolo?nuovoRuolo=${nuovoRuolo}`,
         {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },
@@ -55,7 +57,9 @@ const UserListComponent = ({ token, myId }: Props) => {
   const toggleAttivo = async (id: number, attivo: boolean) => {
     try {
       await fetch(
-        `http://localhost:8080/backoffice/${id}/attivo?attivo=${!attivo}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/backoffice/${id}/attivo?attivo=${!attivo}`,
         {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },

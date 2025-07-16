@@ -40,9 +40,12 @@ const Diario = () => {
     setLoading(true)
     setError("")
     try {
-      const res = await fetch(`http://localhost:8080/diari?page=${page}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/diari?page=${page}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       if (!res.ok) throw new Error("Errore nel recupero dei diari")
       const data = await res.json()
       setDiari(data.content)
@@ -85,8 +88,8 @@ const Diario = () => {
     setError("")
     setSuccess("")
     const endpoint = editingId
-      ? `http://localhost:8080/diari/${editingId}`
-      : "http://localhost:8080/diari"
+      ? `${import.meta.env.VITE_API_URL}/diari/${editingId}`
+      : `${import.meta.env.VITE_API_URL}/diari`
 
     const method = editingId ? "PUT" : "POST"
 
@@ -121,7 +124,7 @@ const Diario = () => {
   const handleDelete = async (id: number) => {
     if (!window.confirm("Sei sicuro di voler eliminare questo diario?")) return
     try {
-      const res = await fetch(`http://localhost:8080/diari/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/diari/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       })

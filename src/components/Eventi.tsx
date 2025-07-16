@@ -36,7 +36,7 @@ const Eventi = () => {
 
   const fetchSalvati = async () => {
     try {
-      const res = await fetch("http://localhost:8080/eventi/utente", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/eventi/utente`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -55,9 +55,9 @@ const Eventi = () => {
     setLoading(true)
     try {
       const res = await fetch(
-        `http://localhost:8080/eventi/esterni?citta=${encodeURIComponent(
-          citta
-        )}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/eventi/esterni?citta=${encodeURIComponent(citta)}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -88,7 +88,7 @@ const Eventi = () => {
     if (eventoSalvato && eventoSalvato.id) {
       try {
         const res = await fetch(
-          `http://localhost:8080/eventi/${eventoSalvato.id}`,
+          `${import.meta.env.VITE_API_URL}/eventi/${eventoSalvato.id}`,
           {
             method: "DELETE",
             headers: {
@@ -105,7 +105,7 @@ const Eventi = () => {
       }
     } else {
       try {
-        const res = await fetch("http://localhost:8080/eventi", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/eventi`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

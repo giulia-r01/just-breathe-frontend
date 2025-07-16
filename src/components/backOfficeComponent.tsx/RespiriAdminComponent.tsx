@@ -38,12 +38,11 @@ const RespiriAdminComponent = () => {
   const [isSaving, setIsSaving] = useState(false)
   const [editingId, setEditingId] = useState<number | null>(null)
 
-  // Fetch lista respiri
   const fetchRespiri = async () => {
     setLoading(true)
     setError("")
     try {
-      const res = await fetch("http://localhost:8080/respirazioni", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/respirazioni`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
           "Content-Type": "application/json",
@@ -83,12 +82,11 @@ const RespiriAdminComponent = () => {
   }
 
   const closeModal = () => {
-    if (isSaving) return // non chiude se sta salvando
+    if (isSaving) return
     setShowModal(false)
     setError("")
   }
 
-  // Gestione input form
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -101,7 +99,6 @@ const RespiriAdminComponent = () => {
     }))
   }
 
-  // Validazione semplice
   const validate = (): string | null => {
     if (!formData.nome.trim()) return "Il nome è obbligatorio"
     if (!categorie.includes(formData.categoria)) return "Categoria non valida"
@@ -114,7 +111,6 @@ const RespiriAdminComponent = () => {
     return null
   }
 
-  // Salva o aggiorna
   const handleSave = async () => {
     const validationError = validate()
     if (validationError) {
@@ -127,8 +123,8 @@ const RespiriAdminComponent = () => {
     try {
       const method = editingId ? "PUT" : "POST"
       const url = editingId
-        ? `http://localhost:8080/respirazioni/${editingId}`
-        : "http://localhost:8080/respirazioni"
+        ? `${import.meta.env.VITE_API_URL}/respirazioni/${editingId}`
+        : `${import.meta.env.VITE_API_URL}/respirazioni`
 
       const res = await fetch(url, {
         method,
@@ -147,7 +143,6 @@ const RespiriAdminComponent = () => {
         throw new Error(msg)
       }
 
-      // aggiorna lista e chiudi modal
       await fetchRespiri()
       setShowModal(false)
     } catch (e) {
@@ -157,7 +152,6 @@ const RespiriAdminComponent = () => {
     }
   }
 
-  // Elimina respirazione
   const handleDelete = async (id?: number) => {
     if (!id) return
     if (!window.confirm("Sei sicuro di voler eliminare questa respirazione?"))
@@ -166,12 +160,15 @@ const RespiriAdminComponent = () => {
     setLoading(true)
     setError("")
     try {
-      const res = await fetch(`http://localhost:8080/respirazioni/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
-        },
-      })
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/respirazioni/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+          },
+        }
+      )
       if (!res.ok) throw new Error("Errore durante l'eliminazione")
       await fetchRespiri()
     } catch (e) {

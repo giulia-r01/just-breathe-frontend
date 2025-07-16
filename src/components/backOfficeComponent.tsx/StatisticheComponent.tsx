@@ -27,16 +27,20 @@ const StatisticheComponent = ({ token }: Props) => {
       try {
         const [resMedia, resMood, resDettagli] = await Promise.all([
           fetch(
-            "http://localhost:8080/backoffice/statistiche/media-attivita-utente",
+            `${
+              import.meta.env.VITE_API_URL
+            }/backoffice/statistiche/media-attivita-utente`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
           ),
-          fetch("http://localhost:8080/backoffice/mood-statistiche", {
+          fetch(`${import.meta.env.VITE_API_URL}/backoffice/mood-statistiche`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
           fetch(
-            "http://localhost:8080/backoffice/statistiche/attivita-utenti",
+            `${
+              import.meta.env.VITE_API_URL
+            }/backoffice/statistiche/attivita-utenti`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }

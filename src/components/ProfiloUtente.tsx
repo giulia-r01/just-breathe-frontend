@@ -35,7 +35,7 @@ const ProfiloUtente = () => {
   useEffect(() => {
     const fetchProfilo = async () => {
       try {
-        const res = await fetch("http://localhost:8080/utenti/me", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/utenti/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -62,13 +62,16 @@ const ProfiloUtente = () => {
     formData.append("file", file)
 
     try {
-      const res = await fetch(`http://localhost:8080/utenti/${utente.id}`, {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      })
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/utenti/${utente.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      )
       if (res.ok) {
         const updatedUser = await res.json()
         setSuccess("Immagine aggiornata con successo")
@@ -90,7 +93,7 @@ const ProfiloUtente = () => {
     if (!utente || !nuovoUsername.trim()) return
     try {
       const res = await fetch(
-        `http://localhost:8080/utenti/${
+        `${import.meta.env.VITE_API_URL}/utenti/${
           utente.id
         }/username?nuovoUsername=${encodeURIComponent(nuovoUsername)}`,
         {
@@ -128,7 +131,7 @@ const ProfiloUtente = () => {
     if (!utente || !vecchiaPassword || !nuovaPassword) return
     try {
       const res = await fetch(
-        `http://localhost:8080/utenti/${
+        `${import.meta.env.VITE_API_URL}/utenti/${
           utente.id
         }/password?vecchiaPassword=${encodeURIComponent(
           vecchiaPassword
@@ -175,12 +178,15 @@ const ProfiloUtente = () => {
     )
       return
     try {
-      const res = await fetch(`http://localhost:8080/utenti/${utente.id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/utenti/${utente.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       if (res.ok) {
         setSuccess("Utente eliminato con successo")
         setError("")
