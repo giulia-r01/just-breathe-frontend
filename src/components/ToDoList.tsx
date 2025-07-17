@@ -158,6 +158,10 @@ const ToDoList = () => {
     setCurrentTask({ ...currentTask, [e.target.name]: e.target.value })
   }
 
+  function toLocalISOString(dateString: string) {
+    return dateString + "T00:00:00"
+  }
+
   const handleSaveTask = async () => {
     if (!currentTask?.titolo || !currentTask?.dataCreazioneTask) {
       alert("Titolo e data sono obbligatori")
@@ -170,13 +174,9 @@ const ToDoList = () => {
         ? `${import.meta.env.VITE_API_URL}/tasks/${currentTask.id}`
         : `${import.meta.env.VITE_API_URL}/tasks`
 
-      const formattedDate = new Date(currentTask.dataCreazioneTask)
-        .toISOString()
-        .split("T")[0]
-
       const formattedTask = {
         ...currentTask,
-        dataCreazioneTask: formattedDate,
+        dataCreazioneTask: toLocalISOString(currentTask.dataCreazioneTask),
       }
 
       const res = await fetch(url, {
