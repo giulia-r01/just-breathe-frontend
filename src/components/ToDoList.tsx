@@ -172,9 +172,7 @@ const ToDoList = () => {
 
       const formattedTask = {
         ...currentTask,
-        dataCreazioneTask: new Date(currentTask.dataCreazioneTask)
-          .toISOString()
-          .slice(0, 10),
+        dataCreazioneTask: currentTask.dataCreazioneTask,
       }
 
       const res = await fetch(url, {
