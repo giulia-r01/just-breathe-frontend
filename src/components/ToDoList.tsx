@@ -170,9 +170,13 @@ const ToDoList = () => {
         ? `${import.meta.env.VITE_API_URL}/tasks/${currentTask.id}`
         : `${import.meta.env.VITE_API_URL}/tasks`
 
+      const formattedDate = new Date(currentTask.dataCreazioneTask)
+        .toISOString()
+        .split("T")[0]
+
       const formattedTask = {
         ...currentTask,
-        dataCreazioneTask: currentTask.dataCreazioneTask,
+        dataCreazioneTask: formattedDate,
       }
 
       const res = await fetch(url, {
