@@ -140,7 +140,10 @@ const ToDoList = () => {
   }
 
   const handleEditTaskClick = (task: ToDo) => {
-    setCurrentTask(task)
+    setCurrentTask({
+      ...task,
+      dataCreazioneTask: task.dataCreazioneTask.split("T")[0],
+    })
     setShowModal(true)
   }
 
