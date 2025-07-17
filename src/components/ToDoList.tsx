@@ -158,10 +158,6 @@ const ToDoList = () => {
     setCurrentTask({ ...currentTask, [e.target.name]: e.target.value })
   }
 
-  function toLocalISOString(dateString: string) {
-    return dateString + "T00:00:00"
-  }
-
   const handleSaveTask = async () => {
     if (!currentTask?.titolo || !currentTask?.dataCreazioneTask) {
       alert("Titolo e data sono obbligatori")
@@ -176,7 +172,7 @@ const ToDoList = () => {
 
       const formattedTask = {
         ...currentTask,
-        dataCreazioneTask: toLocalISOString(currentTask.dataCreazioneTask),
+        dataCreazioneTask: currentTask.dataCreazioneTask,
       }
 
       const res = await fetch(url, {
