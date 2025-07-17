@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { FaCamera, FaTrashAlt } from "react-icons/fa"
+import { FaEye, FaEyeSlash } from "react-icons/fa"
 
 interface Utente {
   id: number
@@ -28,6 +29,8 @@ const ProfiloUtente = () => {
   const [nuovoUsername, setNuovoUsername] = useState("")
   const [vecchiaPassword, setVecchiaPassword] = useState("")
   const [nuovaPassword, setNuovaPassword] = useState("")
+  const [showNewPassword, setShowNewPassword] = useState(false)
+  const [showOldPassword, setShowOldPassword] = useState(false)
 
   const token = localStorage.getItem("token")
   const navigate = useNavigate()
@@ -307,22 +310,46 @@ const ProfiloUtente = () => {
 
               <Form.Group className="mb-3" controlId="oldPassword">
                 <Form.Label>Vecchia Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  autoComplete="new-password"
-                  value={vecchiaPassword}
-                  onChange={(e) => setVecchiaPassword(e.target.value)}
-                />
+                <div className="input-group">
+                  <Form.Control
+                    type={showOldPassword ? "text" : "password"}
+                    autoComplete="off"
+                    value={vecchiaPassword}
+                    onChange={(e) => setVecchiaPassword(e.target.value)}
+                  />
+                  <Button
+                    variant="success"
+                    onClick={() => setShowOldPassword(!showOldPassword)}
+                    tabIndex={-1}
+                    aria-label={
+                      showOldPassword ? "Nascondi password" : "Mostra password"
+                    }
+                  >
+                    {showOldPassword ? <FaEyeSlash /> : <FaEye />}
+                  </Button>
+                </div>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="newPassword">
                 <Form.Label>Nuova Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  autoComplete="new-password"
-                  value={nuovaPassword}
-                  onChange={(e) => setNuovaPassword(e.target.value)}
-                />
+                <div className="input-group">
+                  <Form.Control
+                    type={showNewPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    value={nuovaPassword}
+                    onChange={(e) => setNuovaPassword(e.target.value)}
+                  />
+                  <Button
+                    variant="success"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                    tabIndex={-1}
+                    aria-label={
+                      showNewPassword ? "Nascondi password" : "Mostra password"
+                    }
+                  >
+                    {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+                  </Button>
+                </div>
                 <Button
                   variant="success"
                   className="mt-2"

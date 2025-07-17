@@ -9,6 +9,7 @@ import {
   Form,
 } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+import { FaEye, FaEyeSlash } from "react-icons/fa"
 
 const ResetPsw = function () {
   const [token, setToken] = useState("")
@@ -17,6 +18,9 @@ const ResetPsw = function () {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -98,24 +102,50 @@ const ResetPsw = function () {
           <Form onSubmit={handleSubmit} noValidate>
             <Form.Group className="mb-3" controlId="password">
               <Form.Label>Nuova password</Form.Label>
-              <Form.Control
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoComplete="new-password"
-              />
+              <div className="input-group">
+                <Form.Control
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  autoComplete="off"
+                />
+                <Button
+                  variant="success"
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={
+                    showPassword ? "Nascondi password" : "Mostra password"
+                  }
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </Button>
+              </div>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="confirmPassword">
               <Form.Label>Conferma nuova password</Form.Label>
-              <Form.Control
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                autoComplete="new-password"
-              />
+              <div className="input-group">
+                <Form.Control
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  autoComplete="off"
+                />
+                <Button
+                  variant="success"
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  aria-label={
+                    showConfirmPassword
+                      ? "Nascondi password"
+                      : "Mostra password"
+                  }
+                >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </Button>
+              </div>
             </Form.Group>
 
             <Button
