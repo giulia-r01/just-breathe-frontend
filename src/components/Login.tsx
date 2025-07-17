@@ -102,6 +102,7 @@ const Login = function () {
                 autoComplete="new-username"
                 name="username"
                 className="form-control"
+                placeholder="Inserisci il tuo username"
                 value={formData.username}
                 onChange={handleChange}
                 required
@@ -123,6 +124,7 @@ const Login = function () {
                   onChange={handleChange}
                   required
                   minLength={6}
+                  placeholder="Inserisci la tua password"
                 />
                 <button
                   type="button"

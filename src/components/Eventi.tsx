@@ -146,11 +146,11 @@ const Eventi = () => {
         <Col md={5} lg={6}>
           <Form.Group controlId="inputCitta" className="d-flex mb-3">
             <Form.Label className="visually-hidden">
-              Cerca eventi nella tua città
+              Cerca eventi nella tua città, digita il nome della città
             </Form.Label>
             <Form.Control
               type="text"
-              placeholder="Cerca eventi nella tua città"
+              placeholder="Digita il nome della città"
               value={citta}
               onChange={(e) => setCitta(e.target.value)}
               className="me-2"

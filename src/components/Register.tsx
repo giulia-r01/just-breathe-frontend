@@ -113,6 +113,7 @@ const Register = function () {
                 value={formData.nome}
                 onChange={handleChange}
                 required
+                placeholder="Digita il tuo nome"
               />
             </div>
 
@@ -128,6 +129,7 @@ const Register = function () {
                 value={formData.cognome}
                 onChange={handleChange}
                 required
+                placeholder="Digita il tuo cognome"
               />
             </div>
 
@@ -144,6 +146,7 @@ const Register = function () {
                 value={formData.username}
                 onChange={handleChange}
                 required
+                placeholder="Digita il tuo username"
               />
             </div>
 
@@ -159,6 +162,7 @@ const Register = function () {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                placeholder="Digita la tua mail"
               />
             </div>
 
@@ -177,6 +181,7 @@ const Register = function () {
                   onChange={handleChange}
                   required
                   minLength={6}
+                  placeholder="Digita la password: min 6 caratteri"
                 />
                 <button
                   type="button"

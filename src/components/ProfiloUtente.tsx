@@ -259,7 +259,7 @@ const ProfiloUtente = () => {
                 </Alert>
               )}
 
-              <Form.Group controlId="fileInput" className="mb-3">
+              <Form.Group className="mb-3">
                 <Form.Label
                   htmlFor="fileInputControl"
                   className="btn btn-outline-light btn-sm"
@@ -290,12 +290,13 @@ const ProfiloUtente = () => {
             </div>
 
             <Form className="mt-4" autoComplete="off">
-              <Form.Group className="mb-3" controlId="usernameInput">
+              <Form.Group className="mb-3">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
                   type="text"
                   autoComplete="new-username"
                   value={nuovoUsername}
+                  placeholder="Digita il nuovo username"
                   onChange={(e) => setNuovoUsername(e.target.value)}
                 />
                 <Button
@@ -308,13 +309,14 @@ const ProfiloUtente = () => {
                 </Button>
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="oldPassword">
+              <Form.Group className="mb-3">
                 <Form.Label>Vecchia Password</Form.Label>
                 <div className="input-group">
                   <Form.Control
                     type={showOldPassword ? "text" : "password"}
                     autoComplete="off"
                     value={vecchiaPassword}
+                    placeholder="Digita la tua vecchia password"
                     onChange={(e) => setVecchiaPassword(e.target.value)}
                   />
                   <Button
@@ -330,13 +332,14 @@ const ProfiloUtente = () => {
                 </div>
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="newPassword">
+              <Form.Group className="mb-3">
                 <Form.Label>Nuova Password</Form.Label>
                 <div className="input-group">
                   <Form.Control
                     type={showNewPassword ? "text" : "password"}
                     autoComplete="new-password"
                     value={nuovaPassword}
+                    placeholder="Digita la tua nuova password"
                     onChange={(e) => setNuovaPassword(e.target.value)}
                   />
                   <Button

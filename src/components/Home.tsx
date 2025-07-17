@@ -10,6 +10,11 @@ const Home = function () {
         <Col md={6} className="mynav rounded text-white py-3">
           <h1 className="mb-4">🌿 Benvenut* su Just Breathe</h1>
           <p className="mb-4">
+            Rilassati e libera i tuoi pensieri con respirazioni guidate, diario
+            personale, gestione del tempo, playlist in base al mood ed eventi
+            nelle principali città italiane.
+          </p>
+          <p>
             Organizza la mente, libera il respiro.
             <br /> Inizia il tuo viaggio verso il benessere digitale.
           </p>

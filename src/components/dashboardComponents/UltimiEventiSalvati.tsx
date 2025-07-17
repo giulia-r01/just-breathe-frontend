@@ -41,8 +41,6 @@ const UltimiEventiSalvati = ({
   useEffect(() => {
     const fetchEventi = async () => {
       try {
-        console.log("TOKEN:", token)
-
         const res = await fetch(
           `${
             import.meta.env.VITE_API_URL
