@@ -229,7 +229,7 @@ const ProfiloUtente = () => {
                 Modifica il tuo profilo
               </h3>
               <img
-                src={utente?.imgProfilo || "user.svg"}
+                src={utente?.imgProfilo || "/user.svg"}
                 alt={`Immagine del profilo di ${utente?.nome ?? "utente"}`}
                 className="rounded-circle mb-3 imgProfilo"
               />
