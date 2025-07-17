@@ -184,7 +184,10 @@ const NavbarJB = function () {
 
                     <NavDropdown.Divider />
                     <NavDropdown.Item
-                      onClick={handleLogout}
+                      onClick={() => {
+                        handleLogout()
+                        setExpanded(false)
+                      }}
                       aria-label="Logout - esci dal sito"
                     >
                       Logout

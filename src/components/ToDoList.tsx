@@ -83,6 +83,7 @@ const ToDoList = () => {
 
   const tasksOfDay = tasks.filter((task) => {
     const taskDate = new Date(task.dataCreazioneTask)
+
     return (
       taskDate.getFullYear() === selectedDate.getFullYear() &&
       taskDate.getMonth() === selectedDate.getMonth() &&
