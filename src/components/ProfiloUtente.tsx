@@ -75,10 +75,7 @@ const ProfiloUtente = () => {
       if (res.ok) {
         const updatedUser = await res.json()
         setSuccess("Immagine aggiornata con successo 🥳")
-        localStorage.setItem(
-          "imgProfilo",
-          updatedUser.imgProfilo || "./src/assets/img/user.svg"
-        )
+        localStorage.setItem("imgProfilo", updatedUser.imgProfilo || "user.svg")
         setTimeout(() => window.location.reload(), 1000)
       } else {
         const errorText = await res.text()
