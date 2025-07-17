@@ -43,7 +43,7 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
         const res = await fetch(
           `${
             import.meta.env.VITE_API_URL
-          }/tasks?page=0&size=5&sort=dataCreazioneTask,desc`,
+          }/tasks?page=0&sort=dataCreazioneTask,desc`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -53,6 +53,7 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
             "Errore nel caricamento degli ultimi task 😥. Rilassati, riprova o contatta l'assistenza 🌿"
           )
         const data = await res.json()
+        console.log("Risposta task:", data)
         const filteredTasks = escludiFatti
           ? (data.content || data).filter(
               (task: ToDo) => task.tipoTask !== "FATTO"
