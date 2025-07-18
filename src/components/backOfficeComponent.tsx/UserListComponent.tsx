@@ -1,5 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react"
-import { Table, Button, Spinner, Form, Col, Alert } from "react-bootstrap"
+import {
+  Table,
+  Button,
+  Spinner,
+  Form,
+  Col,
+  Alert,
+  Pagination,
+} from "react-bootstrap"
 
 interface BackOfficeUser {
   id: number
@@ -19,18 +28,37 @@ const UserListComponent = ({ token, myId }: Props) => {
   const [utenti, setUtenti] = useState<BackOfficeUser[]>([])
   const [loading, setLoading] = useState(true)
   const [errore, setErrore] = useState("")
+  const [currentPage, setCurrentPage] = useState(0)
+  const [totalPages, setTotalPages] = useState(1)
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/backoffice`, {
+  const fetchUtenti = (page: number) => {
+    setLoading(true)
+    setErrore("")
+    fetch(`${import.meta.env.VITE_API_URL}/backoffice?page=${page}&size=10`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((res) => res.json())
-      .then((data) => setUtenti(data.content))
+      .then((res) => {
+        if (!res.ok) throw new Error("Errore nel caricamento utenti")
+        return res.json()
+      })
+      .then((data) => {
+        setUtenti(data.content)
+        setTotalPages(data.totalPages ?? 1)
+        setCurrentPage(page)
+      })
       .catch(() => setErrore("Errore nel caricamento utenti"))
       .finally(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    if (token) fetchUtenti(0)
   }, [token])
+
+  const handlePageChange = (page: number) => {
+    fetchUtenti(page)
+  }
 
   const cambiaRuolo = async (id: number, nuovoRuolo: string) => {
     try {
@@ -158,6 +186,20 @@ const UserListComponent = ({ token, myId }: Props) => {
           ))}
         </tbody>
       </Table>
+      {totalPages > 1 && (
+        <Pagination className="justify-content-center mt-0 my-pagination">
+          {[...Array(totalPages)].map((_, i) => (
+            <Pagination.Item
+              key={i}
+              active={i === currentPage}
+              onClick={() => handlePageChange(i)}
+              aria-label={`Pagina ${i + 1}`}
+            >
+              {i + 1}
+            </Pagination.Item>
+          ))}
+        </Pagination>
+      )}
     </Col>
   )
 }

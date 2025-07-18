@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react"
-import { Card, Spinner, Button } from "react-bootstrap"
+import { Card, Spinner, Button, Pagination } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { FaTrashAlt } from "react-icons/fa"
 
@@ -30,6 +31,8 @@ const UltimiEventiSalvati = ({
   const [isError, setIsError] = useState("")
   const [token, setToken] = useState<string | null>(null)
   const navigate = useNavigate()
+  const [currentPage, setCurrentPage] = useState(0)
+  const [totalPages, setTotalPages] = useState(1)
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token")
@@ -38,38 +41,43 @@ const UltimiEventiSalvati = ({
     }
   }, [])
 
-  useEffect(() => {
-    const fetchEventi = async () => {
-      try {
-        const res = await fetch(
-          `${
-            import.meta.env.VITE_API_URL
-          }/eventi/utente?page=0&size=5&sortBy=dataEvento`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        if (res.ok) {
-          const data = await res.json()
-          setEventi(data.content || [])
+  const fetchEventi = async (page: number) => {
+    setLoading(true)
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/eventi/utente?page=${page}&size=5`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      } catch (err) {
-        console.error(
-          "Qualcosa è andato storto nel recupero eventi salvati: ",
-          err
-        )
-        setIsError(
-          "Qualcosa è andato storto nel recupero degli eventi salvati 😥. Rilassati, riprova o contatta l'assistenza 🌿"
-        )
-      } finally {
-        setLoading(false)
+      )
+      if (res.ok) {
+        const data = await res.json()
+        setEventi(data.content || [])
+        setTotalPages(data.totalPages ?? 1)
+        setCurrentPage(page)
       }
+    } catch (err) {
+      console.error(
+        "Qualcosa è andato storto nel recupero eventi salvati: ",
+        err
+      )
+      setIsError(
+        "Qualcosa è andato storto nel recupero degli eventi salvati 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+      )
+    } finally {
+      setLoading(false)
     }
+  }
 
-    if (token) fetchEventi()
+  useEffect(() => {
+    if (token) fetchEventi(0)
   }, [token, reloadFlag])
+
+  const handlePageChange = (page: number) => {
+    fetchEventi(page)
+  }
 
   return (
     <Card className="mynav text-white">
@@ -148,6 +156,20 @@ const UltimiEventiSalvati = ({
                   )}
                 </div>
               ))
+            )}
+            {totalPages > 1 && (
+              <Pagination className="justify-content-center mt-4 my-pagination2">
+                {[...Array(totalPages)].map((_, i) => (
+                  <Pagination.Item
+                    key={i}
+                    active={i === currentPage}
+                    onClick={() => handlePageChange(i)}
+                    aria-label={`Pagina ${i + 1}`}
+                  >
+                    {i + 1}
+                  </Pagination.Item>
+                ))}
+              </Pagination>
             )}
 
             {showButton && (

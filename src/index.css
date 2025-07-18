@@ -21,6 +21,18 @@ body {
   border: none !important;
 }
 
+.my-pagination2 .page-link {
+  background-color: #fff !important;
+  color: rgb(5, 73, 60) !important;
+  border-color: #fff !important;
+}
+
+.my-pagination2 .page-item.active .page-link {
+  background-color: rgb(5, 73, 60) !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
 .mytext {
   color: #066051 !important;
 }

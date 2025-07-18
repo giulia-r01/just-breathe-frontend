@@ -48,7 +48,6 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
             "Errore nel caricamento degli ultimi task 😥. Rilassati, riprova o contatta l'assistenza 🌿"
           )
         const data = await res.json()
-        console.log("Risposta task:", data)
         const filteredTasks = escludiFatti
           ? (data.content || data).filter(
               (task: ToDo) => task.tipoTask !== "FATTO"
