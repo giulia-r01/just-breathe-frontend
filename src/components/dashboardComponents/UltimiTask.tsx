@@ -40,14 +40,9 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
       setLoading(true)
       setError("")
       try {
-        const res = await fetch(
-          `${
-            import.meta.env.VITE_API_URL
-          }/tasks?page=0&sort=dataCreazioneTask,desc`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        )
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
         if (!res.ok)
           throw new Error(
             "Errore nel caricamento degli ultimi task 😥. Rilassati, riprova o contatta l'assistenza 🌿"

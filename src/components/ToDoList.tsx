@@ -193,11 +193,14 @@ const ToDoList = () => {
         )
       const savedTask = await res.json()
 
-      setTasks((prev) =>
-        method === "POST"
-          ? [...prev, savedTask]
-          : prev.map((t) => (t.id === savedTask.id ? savedTask : t))
-      )
+      setTasks((prev) => {
+        if (method === "POST") {
+          return [...prev, savedTask]
+        } else {
+          return prev.map((t) => (t.id === savedTask.id ? savedTask : t))
+        }
+      })
+
       handleCloseModal()
     } catch (error) {
       alert("Errore durante il salvataggio 😥.")
@@ -334,7 +337,7 @@ const ToDoList = () => {
                       </div>
                     </Card.Title>
                     <Card.Text>{task.descrizione}</Card.Text>
-                    <Card.Text className="text-muted fs-5">
+                    <Card.Text className="text-muted">
                       {new Date(task.dataCreazioneTask).toLocaleDateString(
                         "it-IT"
                       )}{" "}
