@@ -89,7 +89,9 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
       <Card.Title as="h4">Ultimi Task in calendario</Card.Title>
 
       {tasks.length === 0 ? (
-        <p role="alert">Nessun task salvato.</p>
+        <p role="alert">
+          Nessun task, da fare o in corso, salvato nel calendario.
+        </p>
       ) : (
         <div
           role="list"

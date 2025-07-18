@@ -82,14 +82,11 @@ const Dashboard = function () {
         </Col>
 
         <Col md={6}>
-          <UltimoMood />
-        </Col>
-
-        <Col md={6}>
           <UltimiTask escludiFatti={true} />
         </Col>
 
         <Col md={6}>
+          <UltimoMood />
           <UltimiEventiSalvati />
         </Col>
       </Row>

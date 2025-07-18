@@ -25,9 +25,14 @@ const UltimoMood = () => {
   useEffect(() => {
     const fetchMood = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/moods`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
+        const res = await fetch(
+          `${
+            import.meta.env.VITE_API_URL
+          }/moods?page=0&size=1&sortBy=dataCreazione`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
         const data = await res.json()
         if (data.content && data.content.length > 0) {
           const ultimoMood = data.content[0]
@@ -54,7 +59,7 @@ const UltimoMood = () => {
   }, [token])
 
   return (
-    <Card className="mynav text-white">
+    <Card className="mynav text-white mb-5">
       <Card.Body>
         <Card.Title as="h4">Mood</Card.Title>
         {isError && (
