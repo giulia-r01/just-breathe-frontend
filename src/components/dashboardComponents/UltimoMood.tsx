@@ -98,11 +98,16 @@ const UltimoMood = () => {
                 className="mb-3 rounded"
                 aria-label="Lista dei brani associati all'ultimo mood"
               >
-                {mood.brani.map((brano) => (
+                {mood.brani.slice(0, 6).map((brano) => (
                   <ListGroup.Item key={brano.id} className="text-dark py-1">
                     🎵 {brano.titoloBrano}
                   </ListGroup.Item>
                 ))}
+                {mood.brani.length > 6 && (
+                  <ListGroup.Item className="text-dark py-1">
+                    🎵 ...
+                  </ListGroup.Item>
+                )}
               </ListGroup>
             ) : (
               <Card.Text className="fst-italic">
