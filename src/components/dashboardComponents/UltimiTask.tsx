@@ -114,7 +114,7 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
         </div>
       )}
 
-      <div className="text-end mt-2">
+      <div className="text-start mt-2">
         <Button
           variant="success"
           onClick={() => navigate("/todolist")}

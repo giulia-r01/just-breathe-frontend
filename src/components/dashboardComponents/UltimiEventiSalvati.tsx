@@ -173,7 +173,7 @@ const UltimiEventiSalvati = ({
             )}
 
             {showButton && (
-              <div className="text-end mt-3">
+              <div className="text-start mt-3">
                 <Button
                   variant="success"
                   onClick={() => navigate("/eventi")}

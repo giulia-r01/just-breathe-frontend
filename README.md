@@ -49,13 +49,17 @@
 - PostgreSQL
 
 ---
+
 ## 🧭 Istruzioni per avviare il progetto
+
 ### 📦 Clona i repository
+
 git clone https://github.com/tuo-username/just-breathe-frontend.git
 
 git clone https://github.com/tuo-username/just-breathe-backend.git
 
 ### ▶️ Avvio del frontend
+
 Posizionati nella cartella del frontend:
 
 cd just-breathe-frontend
@@ -71,6 +75,7 @@ npm run dev
 L'applicazione sarà disponibile all’indirizzo http://localhost:5173.
 
 ### ⚙️ Avvio del Backend
+
 Spostati nella cartella del backend:
 
 cd ../just-breathe-backend
@@ -83,17 +88,18 @@ Maven
 
 PostgreSQL (in esecuzione)
 
-
 Configura le credenziali in un file src/main/resources/application.properties. Un esempio di configurazione potrebbe essere:
 
 ```
-spring.datasource.url=jdbc:postgresql://localhost:5432/justbreathe_db
-spring.datasource.username=tuo_username
-spring.datasource.password=la_tua_password
-jwt.secret=unaChiaveSegretaSicura
-cloudinary.cloud-name=nome
-cloudinary.api-key=chiave
-cloudinary.api-secret=segreto
+spring.datasource.url=...
+spring.datasource.username=...
+spring.datasource.password=...
+
+# Configurazioni aggiuntive:
+jwt.secret=...
+cloudinary.cloud-name=...
+cloudinary.api-key=...
+cloudinary.api-secret=...
 ```
 
 Avvia l’app Spring Boot con Maven:
@@ -106,7 +112,6 @@ Il backend sarà disponibile all’indirizzo http://localhost:8080.
 
 🔗 [Vai al repository del backend](https://github.com/giulia-r01/just-breathe-backend)
 
-
 ---
 
 ## 👤 Autrice
@@ -115,3 +120,4 @@ Il backend sarà disponibile all’indirizzo http://localhost:8080.
 🔗 [LinkedIn](https://www.linkedin.com/in/giulia-rizzo-4782bb102/)  
 💻 [GitHub](https://github.com/giulia-r01)  
 📧 [girzzo@gmail.com](mailto:girzzo@gmail.com?subject=Richiesta%20di%20assistenza)
+🔗 [Link online Just-Breathe-app](https://just-breathe.vercel.app/)

@@ -93,7 +93,7 @@ const UltimoDiario = () => {
         <Card.Text>{dashboardData.messaggioDiario}</Card.Text>
       )}
 
-      <div className="d-flex justify-content-end mt-3">
+      <div className="d-flex justify-content-start mt-3">
         <Button
           variant="success"
           onClick={() => navigate("/diario")}
