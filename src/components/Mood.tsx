@@ -42,6 +42,7 @@ const Mood = () => {
 
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
   const [moods, setMoods] = useState<Mood[]>([])
   const [selectedMood, setSelectedMood] = useState<Mood | null>(null)
   const [newTipoMood, setNewTipoMood] = useState("")
@@ -109,6 +110,13 @@ const Mood = () => {
 
     fetchMoods()
   }, [token])
+
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => setSuccess(""), 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [success])
 
   const extractYouTubeEmbedUrl = (
     url: string | undefined | null
@@ -200,6 +208,7 @@ const Mood = () => {
         prev ? { ...prev, brani: [...(prev.brani || []), nuovoBrano] } : prev
       )
       setNewBrano("")
+      setSuccess("🎵 Brano aggiunto con successo!")
     } catch (e) {
       console.error(e)
       setError(
@@ -393,6 +402,13 @@ const Mood = () => {
           <span className="visually-hidden">Caricamento...</span>
         </div>
       )}
+      {success && (
+        <div role="alert">
+          <Alert variant="success" className="text-center">
+            {success}
+          </Alert>
+        </div>
+      )}
       {error && (
         <div role="alert">
           <Alert variant="danger" className="text-center">
@@ -519,6 +535,7 @@ const Mood = () => {
                 </Form.Group>
                 <Button
                   variant="success"
+                  type="button"
                   onClick={handleAddBrano}
                   disabled={showEditModal}
                   aria-label="Aggiungi - clicca per aggiungere un brano al mood selezionato"
