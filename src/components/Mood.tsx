@@ -113,7 +113,7 @@ const Mood = () => {
 
   useEffect(() => {
     if (success) {
-      const timer = setTimeout(() => setSuccess(""), 3000)
+      const timer = setTimeout(() => setSuccess(""), 5000)
       return () => clearTimeout(timer)
     }
   }, [success])
