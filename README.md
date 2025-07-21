@@ -120,5 +120,4 @@ Il backend sarà disponibile all’indirizzo http://localhost:8080.
 🔗 [LinkedIn](https://www.linkedin.com/in/giulia-rizzo-4782bb102/)  
 💻 [GitHub](https://github.com/giulia-r01)  
 📧 [girzzo@gmail.com](mailto:just.breathe.tam@gmail.com?subject=Richiesta%20di%20assistenza)
-
 🔗 [Link online Just-Breathe-app](https://just-breathe.vercel.app/)
