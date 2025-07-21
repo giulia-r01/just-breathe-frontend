@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react"
-import { Card, Spinner, Col, Table, Row, Alert } from "react-bootstrap"
+import {
+  Card,
+  Spinner,
+  Col,
+  Table,
+  Row,
+  Alert,
+  Pagination,
+} from "react-bootstrap"
 import { ListGroup } from "react-bootstrap"
 
 interface Props {
@@ -21,6 +29,9 @@ const StatisticheComponent = ({ token }: Props) => {
   const [dettagliUtenti, setDettagliUtenti] = useState<DettaglioUtente[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [currentPage, setCurrentPage] = useState(0)
+  const [totalPages, setTotalPages] = useState(1)
+  const pageSize = 10
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -40,7 +51,7 @@ const StatisticheComponent = ({ token }: Props) => {
           fetch(
             `${
               import.meta.env.VITE_API_URL
-            }/backoffice/statistiche/attivita-utenti`,
+            }/backoffice/statistiche/attivita-utenti?page=${currentPage}&size=${pageSize}&sort=username`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -59,7 +70,8 @@ const StatisticheComponent = ({ token }: Props) => {
 
         setMedia(mediaData)
         setMoodStats(moodData)
-        setDettagliUtenti(dettagliData)
+        setDettagliUtenti(dettagliData.content)
+        setTotalPages(dettagliData.totalPages)
       } catch (err) {
         console.error(err)
         setError("Impossibile caricare le statistiche")
@@ -69,7 +81,7 @@ const StatisticheComponent = ({ token }: Props) => {
     }
 
     fetchStats()
-  }, [token])
+  }, [token, currentPage])
 
   if (loading)
     return (
@@ -126,6 +138,20 @@ const StatisticheComponent = ({ token }: Props) => {
             })}
           </tbody>
         </Table>
+        {totalPages > 1 && (
+          <Pagination className="justify-content-center mt-0 my-pagination">
+            {[...Array(totalPages)].map((_, i) => (
+              <Pagination.Item
+                key={i}
+                active={i === currentPage}
+                onClick={() => setCurrentPage(i)}
+                aria-label={`Pagina ${i + 1}`}
+              >
+                {i + 1}
+              </Pagination.Item>
+            ))}
+          </Pagination>
+        )}
 
         <h5 className="fs-5 mb-4 mytext">
           📊 Media attività per utente:{" "}
