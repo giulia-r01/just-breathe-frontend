@@ -42,7 +42,7 @@ const FooterJB = function () {
       <p className="mb-0 text-white">
         Assistenza: Hai bisogno di aiuto? Scrivici una{" "}
         <a
-          href="mailto:girzzo@gmail.com?subject=Richiesta%20di%20assistenza"
+          href="mailto:just.breathe.tam@gmail.com?subject=Richiesta%20di%20assistenza"
           className="text-white"
           aria-label="mail - Invia una mail, oggetto: Richiesta di assistenza"
         >
