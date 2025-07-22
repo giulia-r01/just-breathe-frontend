@@ -1,10 +1,29 @@
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa"
+import { Link } from "react-router-dom"
 
 const FooterJB = function () {
   return (
     <footer className="text-center mynav py-2">
       <p className="mb-0 text-white">
         🌿 Just Breathe - &copy; <span>{new Date().getFullYear()} 🌿</span>
+      </p>
+      <p className="mb-0">
+        <Link
+          className="text-white"
+          to="/chi-siamo"
+          aria-label="Chi siamo - Scopri di più su Just Breathe - Vai alla pagina dedicata"
+        >
+          Chi siamo
+        </Link>
+      </p>
+      <p className="mb-0">
+        <Link
+          className="text-white"
+          to="/privacy-policy"
+          aria-label="Privacy Policy - Leggi la nostra policy - Vai alla pagina dedicata"
+        >
+          Privacy Policy
+        </Link>
       </p>
       <p className="mb-0 text-white">
         Seguici:{" "}

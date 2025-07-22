@@ -17,6 +17,9 @@ import Mood from "./components/Mood"
 import Eventi from "./components/Eventi"
 import ProfiloUtente from "./components/ProfiloUtente"
 import BackOffice from "./components/BackOffice"
+import ChiSiamo from "./components/ChiSiamo"
+import PrivacyPolicy from "./components/PrivacyPolicy"
+import NotFound from "./components/NotFound"
 
 function App() {
   return (
@@ -38,6 +41,9 @@ function App() {
             <Route path="/eventi" element={<Eventi />} />
             <Route path="/profilo" element={<ProfiloUtente />} />
             <Route path="/backoffice" element={<BackOffice />} />
+            <Route path="/chi-siamo" element={<ChiSiamo />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <FooterJB />
