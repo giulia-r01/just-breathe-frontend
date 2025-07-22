@@ -4,7 +4,7 @@ const PrivacyPolicy = function () {
   return (
     <Container role="main">
       <h1 className="visually-hidden">Privacy Policy</h1>
-      <Row className="justify-content-center">
+      <Row className="justify-content-center mx-1">
         <Col md={8} className="text-white mynav rounded py-4 my-4">
           <h2 className="text-center pb-3">La tua privacy conta</h2>
 
