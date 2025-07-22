@@ -94,19 +94,54 @@ Maven
 
 PostgreSQL (in esecuzione)
 
-Configura le credenziali in un file src/main/resources/application.properties. Un esempio di configurazione potrebbe essere:
+Configura le credenziali in un file src/main/resources/application.properties come nell'esempio:
 
 ```
-spring.datasource.url=...
-spring.datasource.username=...
-spring.datasource.password=...
+spring.config.import=optional:file:env.properties
+spring.application.name=just-breathe-backend
+spring.datasource.url=${POSTGRESQL_URL}
+spring.datasource.username=${POSTGRESQL_USERNAME}
+spring.datasource.password=${POSTGRESQL_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.default_schema=public
 
-# Configurazioni aggiuntive:
-jwt.secret=...
-cloudinary.cloud-name=...
-cloudinary.api-key=...
-cloudinary.api-secret=...
+
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+cloudinary.cloud_name=${CLOUD_NAME}
+cloudinary.api_key=${API_KEY}
+cloudinary.api_secret=${API_SECRET}
+
+gmail.mail.transport.protocol=smtp
+gmail.mail.smtp.auth=true
+gmail.mail.smtp.starttls.enable=true
+gmail.mail.debug=true
+gmail.mail.from=${GMAIL_FROM}
+gmail.mail.from.password=${GMAIL_PASSWORD}
+gmail.smtp.ssl.enable=true
+gmail.smtp.host=smtp.gmail.com
+gmail.smtp.port=587
+
+
+
+jwt.duration=31557600000
+jwt.secret=${JWT_SECRET}
+
+
+youtube.api.key=${YOUTUBE_API_KEY}
+
+
+ticketmaster.api.key=${TICKETMASTER_API_KEY}
+
+
+app.frontend.base-url=${APP_FRONTEND_BASE_URL}
+
+
 ```
+
+🔐 Crea un file env.properties nella root del backend per mantenere separati e sicuri i valori sensibili (come le chiavi API e le credenziali). Assicurati che sia incluso nel .gitignore.
 
 Avvia l’app Spring Boot con Maven:
 
