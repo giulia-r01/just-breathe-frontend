@@ -293,7 +293,6 @@ const Diario = () => {
         </Pagination>
       )}
 
-      {/* MODALE */}
       <Modal
         show={showModal}
         onHide={handleCloseModal}

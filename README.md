@@ -64,15 +64,21 @@ Posizionati nella cartella del frontend:
 
 cd just-breathe-frontend
 
-Installa le dipendenze:
+⚙️ Configura il file .env.local
 
-npm install
+Per eseguire correttamente il frontend in locale, crea un file `.env.local` nella root del progetto e inserisci la seguente variabile:
 
-Avvia l’app:
+VITE_BACKEND_URL=http://localhost:8080
+
+Assicurati che il backend sia in esecuzione su quella porta, altrimenti modifica l’URL di conseguenza.
+
+Avvia l’app con Vite:
 
 npm run dev
 
 L'applicazione sarà disponibile all’indirizzo http://localhost:5173.
+
+📁 Nella cartella del progetto è presente anche il file `.env.production` già configurato per la versione online deployata su Vercel.
 
 ### ⚙️ Avvio del Backend
 
@@ -119,5 +125,5 @@ Il backend sarà disponibile all’indirizzo http://localhost:8080.
 **Giulia Rizzo**  
 🔗 [LinkedIn](https://www.linkedin.com/in/giulia-rizzo-4782bb102/)  
 💻 [GitHub](https://github.com/giulia-r01)  
-📧 [girzzo@gmail.com](mailto:just.breathe.tam@gmail.com?subject=Richiesta%20di%20assistenza)
+📧 [just.breathe.tam@gmail.com](mailto:just.breathe.tam@gmail.com?subject=Richiesta%20di%20assistenza)
 🔗 [Link online Just-Breathe-app](https://just-breathe.vercel.app/)
