@@ -21,6 +21,13 @@ interface Diario {
   dataUltimaModifica: string
 }
 
+function parseLocalDate(dateString: string): Date {
+  if (dateString.endsWith("Z")) {
+    dateString = dateString.slice(0, -1)
+  }
+  return new Date(dateString)
+}
+
 const Diario = () => {
   const [formData, setFormData] = useState({ titolo: "", contenuto: "" })
   const [diari, setDiari] = useState<Diario[]>([])
@@ -251,7 +258,7 @@ const Diario = () => {
                   </Card.Title>
                   <Card.Subtitle as="h4" className="h5 mb-2 text-white">
                     {(() => {
-                      const dataInserita = new Date(
+                      const dataInserita = parseLocalDate(
                         d.dataInserimento
                       ).toLocaleString("it-IT", {
                         timeZone: "Europe/Rome",
@@ -262,7 +269,7 @@ const Diario = () => {
                         minute: "2-digit",
                       })
 
-                      const dataModificata = new Date(
+                      const dataModificata = parseLocalDate(
                         d.dataUltimaModifica
                       ).toLocaleString("it-IT", {
                         timeZone: "Europe/Rome",
