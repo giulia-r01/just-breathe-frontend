@@ -21,37 +21,6 @@ interface Diario {
   dataUltimaModifica: string
 }
 
-function parseDateAsLocal(dateString: string): Date {
-  const trimmed = dateString.split(".")[0]
-  return new Date(trimmed)
-}
-
-/**
- * Restituisce la data e ora corrente in formato ISO "locale" Europe/Rome,
- * senza timezone "Z" finale, così che venga interpretata come locale da backend Java.
- */
-function getRomeLocalIsoString(): string {
-  const now = new Date()
-  const formatter = new Intl.DateTimeFormat("it-IT", {
-    timeZone: "Europe/Rome",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  })
-
-  const parts = formatter.formatToParts(now)
-  const get = (type: string) =>
-    parts.find((p) => p.type === type)?.value.padStart(2, "0") || "00"
-
-  return `${get("year")}-${get("month")}-${get("day")}T${get("hour")}:${get(
-    "minute"
-  )}:${get("second")}`
-}
-
 const Diario = () => {
   const [formData, setFormData] = useState({ titolo: "", contenuto: "" })
   const [diari, setDiari] = useState<Diario[]>([])
@@ -128,33 +97,18 @@ const Diario = () => {
     const method = editingId ? "PUT" : "POST"
 
     try {
-      const romeIso = getRomeLocalIsoString()
-
-      const body = editingId
-        ? {
-            ...formData,
-            dataUltimaModifica: romeIso,
-          }
-        : {
-            ...formData,
-            dataInserimento: romeIso,
-            dataUltimaModifica: romeIso,
-          }
-
       const res = await fetch(endpoint, {
         method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify(formData),
       })
-
       if (!res.ok)
         throw new Error(
           "Errore durante il salvataggio del diario 😥. Rilassati, riprova o contatta l'assistenza 🌿"
         )
-
       setSuccess(
         editingId ? "Diario modificato! 🥳" : "Diario salvato con successo! 🥳"
       )
@@ -278,35 +232,14 @@ const Diario = () => {
                     {d.titolo}
                   </Card.Title>
                   <Card.Subtitle as="h4" className="h5 mb-2 text-white">
-                    {(() => {
-                      const dataInserita = parseDateAsLocal(
-                        d.dataInserimento
-                      ).toLocaleString("it-IT", {
-                        timeZone: "Europe/Rome",
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })
-
-                      const dataModificata = parseDateAsLocal(
-                        d.dataUltimaModifica
-                      ).toLocaleString("it-IT", {
-                        timeZone: "Europe/Rome",
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })
-
-                      return d.dataUltimaModifica !== d.dataInserimento
-                        ? `Ultima modifica: ${dataModificata}`
-                        : `Creato il: ${dataInserita}`
-                    })()}
+                    {d.dataUltimaModifica !== d.dataInserimento
+                      ? `Ultima modifica: ${new Date(
+                          d.dataUltimaModifica
+                        ).toLocaleString()}`
+                      : `Creato il: ${new Date(
+                          d.dataInserimento
+                        ).toLocaleString()}`}
                   </Card.Subtitle>
-
                   <hr />
                   <Card.Text className="fs-5">
                     {d.contenuto.length > 150
