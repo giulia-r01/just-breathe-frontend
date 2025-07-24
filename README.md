@@ -163,6 +163,10 @@ Il backend sarà disponibile all’indirizzo http://localhost:8080.
 
 ---
 
+[Video dimostrativo del funzionamento dell'app](https://drive.google.com/file/d/1XrpptshPoXsngsjcHzjpWfLgqxDC6rgw/view?usp=sharing)
+
+---
+
 ## 👤 Autrice
 
 **Giulia Rizzo**  
