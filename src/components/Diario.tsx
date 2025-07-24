@@ -97,18 +97,36 @@ const Diario = () => {
     const method = editingId ? "PUT" : "POST"
 
     try {
+      const romeDateString = new Date().toLocaleString("sv-SE", {
+        timeZone: "Europe/Rome",
+      })
+      const romeDate = new Date(romeDateString)
+
+      const body = editingId
+        ? {
+            ...formData,
+            dataUltimaModifica: romeDate.toISOString(),
+          }
+        : {
+            ...formData,
+            dataInserimento: romeDate.toISOString(),
+            dataUltimaModifica: romeDate.toISOString(),
+          }
+
       const res = await fetch(endpoint, {
         method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(body),
       })
+
       if (!res.ok)
         throw new Error(
           "Errore durante il salvataggio del diario 😥. Rilassati, riprova o contatta l'assistenza 🌿"
         )
+
       setSuccess(
         editingId ? "Diario modificato! 🥳" : "Diario salvato con successo! 🥳"
       )
