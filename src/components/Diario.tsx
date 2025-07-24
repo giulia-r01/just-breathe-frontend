@@ -26,6 +26,32 @@ function parseDateAsLocal(dateString: string): Date {
   return new Date(trimmed)
 }
 
+/**
+ * Restituisce la data e ora corrente in formato ISO "locale" Europe/Rome,
+ * senza timezone "Z" finale, così che venga interpretata come locale da backend Java.
+ */
+function getRomeLocalIsoString(): string {
+  const now = new Date()
+  const formatter = new Intl.DateTimeFormat("it-IT", {
+    timeZone: "Europe/Rome",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  })
+
+  const parts = formatter.formatToParts(now)
+  const get = (type: string) =>
+    parts.find((p) => p.type === type)?.value.padStart(2, "0") || "00"
+
+  return `${get("year")}-${get("month")}-${get("day")}T${get("hour")}:${get(
+    "minute"
+  )}:${get("second")}`
+}
+
 const Diario = () => {
   const [formData, setFormData] = useState({ titolo: "", contenuto: "" })
   const [diari, setDiari] = useState<Diario[]>([])
@@ -102,20 +128,17 @@ const Diario = () => {
     const method = editingId ? "PUT" : "POST"
 
     try {
-      const romeDateString = new Date().toLocaleString("sv-SE", {
-        timeZone: "Europe/Rome",
-      })
-      const romeDate = new Date(romeDateString)
+      const romeIso = getRomeLocalIsoString()
 
       const body = editingId
         ? {
             ...formData,
-            dataUltimaModifica: romeDate.toISOString(),
+            dataUltimaModifica: romeIso,
           }
         : {
             ...formData,
-            dataInserimento: romeDate.toISOString(),
-            dataUltimaModifica: romeDate.toISOString(),
+            dataInserimento: romeIso,
+            dataUltimaModifica: romeIso,
           }
 
       const res = await fetch(endpoint, {
