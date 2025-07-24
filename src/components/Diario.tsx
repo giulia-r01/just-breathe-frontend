@@ -21,6 +21,18 @@ interface Diario {
   dataUltimaModifica: string
 }
 
+function formatDataItaliana(dateStr: string): string {
+  const date = new Date(dateStr)
+  return date.toLocaleString("it-IT", {
+    timeZone: "Europe/Rome",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  })
+}
+
 const Diario = () => {
   const [formData, setFormData] = useState({ titolo: "", contenuto: "" })
   const [diari, setDiari] = useState<Diario[]>([])
@@ -233,13 +245,12 @@ const Diario = () => {
                   </Card.Title>
                   <Card.Subtitle as="h4" className="h5 mb-2 text-white">
                     {d.dataUltimaModifica !== d.dataInserimento
-                      ? `Ultima modifica: ${new Date(
+                      ? `Ultima modifica: ${formatDataItaliana(
                           d.dataUltimaModifica
-                        ).toLocaleString()}`
-                      : `Creato il: ${new Date(
-                          d.dataInserimento
-                        ).toLocaleString()}`}
+                        )}`
+                      : `Creato il: ${formatDataItaliana(d.dataInserimento)}`}
                   </Card.Subtitle>
+
                   <hr />
                   <Card.Text className="fs-5">
                     {d.contenuto.length > 150
