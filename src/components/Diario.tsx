@@ -232,18 +232,35 @@ const Diario = () => {
                     {d.titolo}
                   </Card.Title>
                   <Card.Subtitle as="h4" className="h5 mb-2 text-white">
-                    {d.dataUltimaModifica !== d.dataInserimento
-                      ? `Ultima modifica: ${new Date(
-                          d.dataUltimaModifica
-                        ).toLocaleString("it-IT", {
-                          timeZone: "Europe/Rome",
-                        })}`
-                      : `Creato il: ${new Date(
-                          d.dataInserimento
-                        ).toLocaleString("it-IT", {
-                          timeZone: "Europe/Rome",
-                        })}`}
+                    {(() => {
+                      const dataInserita = new Date(
+                        d.dataInserimento
+                      ).toLocaleString("it-IT", {
+                        timeZone: "Europe/Rome",
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
+
+                      const dataModificata = new Date(
+                        d.dataUltimaModifica
+                      ).toLocaleString("it-IT", {
+                        timeZone: "Europe/Rome",
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
+
+                      return d.dataUltimaModifica !== d.dataInserimento
+                        ? `Ultima modifica: ${dataModificata}`
+                        : `Creato il: ${dataInserita}`
+                    })()}
                   </Card.Subtitle>
+
                   <hr />
                   <Card.Text className="fs-5">
                     {d.contenuto.length > 150
