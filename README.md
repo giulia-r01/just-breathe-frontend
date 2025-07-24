@@ -52,6 +52,14 @@
 
 ## 🧭 Istruzioni per avviare il progetto
 
+### 🔐 Accesso come Admin
+
+Per accedere al backoffice è necessario che l’utente possieda il ruolo ADMIN.
+
+🛠️ Dopo aver completato la registrazione, apri la tabella utente nel database PostgreSQL e modifica manualmente il campo ruolo dell’utente da USER a ADMIN.
+
+Una volta aggiornato il ruolo, potrai effettuare il login e accedere all’area amministrativa con le stesse credenziali.
+
 ### 📦 Clona i repository
 
 git clone https://github.com/tuo-username/just-breathe-frontend.git
