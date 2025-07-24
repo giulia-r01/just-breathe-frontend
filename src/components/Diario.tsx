@@ -235,10 +235,14 @@ const Diario = () => {
                     {d.dataUltimaModifica !== d.dataInserimento
                       ? `Ultima modifica: ${new Date(
                           d.dataUltimaModifica
-                        ).toLocaleString()}`
+                        ).toLocaleString("it-IT", {
+                          timeZone: "Europe/Rome",
+                        })}`
                       : `Creato il: ${new Date(
                           d.dataInserimento
-                        ).toLocaleString()}`}
+                        ).toLocaleString("it-IT", {
+                          timeZone: "Europe/Rome",
+                        })}`}
                   </Card.Subtitle>
                   <hr />
                   <Card.Text className="fs-5">
