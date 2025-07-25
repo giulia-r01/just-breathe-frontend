@@ -36,9 +36,6 @@ const Diario = () => {
 
   const token = localStorage.getItem("token")
 
-  const isLocalhost = window.location.hostname === "localhost"
-  const timeZone = isLocalhost ? "Europe/Rome" : "UTC"
-
   const fetchDiari = async (page = 0) => {
     setLoading(true)
     setError("")
@@ -238,10 +235,14 @@ const Diario = () => {
                     {d.dataUltimaModifica !== d.dataInserimento
                       ? `Ultima modifica: ${new Date(
                           d.dataUltimaModifica
-                        ).toLocaleString("it-IT", { timeZone })}`
+                        ).toLocaleString("it-IT", {
+                          timeZone: "Europe/Rome",
+                        })}`
                       : `Creato il: ${new Date(
                           d.dataInserimento
-                        ).toLocaleString("it-IT", { timeZone })}`}
+                        ).toLocaleString("it-IT", {
+                          timeZone: "Europe/Rome",
+                        })}`}
                   </Card.Subtitle>
                   <hr />
                   <Card.Text className="fs-5">
