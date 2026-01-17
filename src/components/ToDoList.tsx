@@ -13,6 +13,7 @@ import {
   Alert,
 } from "react-bootstrap"
 import "../assets/cssVari/toDoList.css"
+import CalendarModal from "./CalendarModal"
 
 interface ToDo {
   id: number
@@ -40,6 +41,7 @@ const ToDoList = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date())
   const [showModal, setShowModal] = useState(false)
   const [currentTask, setCurrentTask] = useState<TaskDraft | null>(null)
+  const [showCalendarModal, setShowCalendarModal] = useState(false)
 
   const token = localStorage.getItem("token")
 
@@ -77,7 +79,7 @@ const ToDoList = () => {
         })
         if (!res.ok)
           throw new Error(
-            "Errore nel caricamento dei task 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+            "Errore nel caricamento dei task 😥. Rilassati e riprova o contatta l'assistenza 🌿",
           )
         const data = await res.json()
         setTasks(data.content || data)
@@ -121,7 +123,7 @@ const ToDoList = () => {
     .sort(
       (a, b) =>
         new Date(a.dataCreazioneTask).getTime() -
-        new Date(b.dataCreazioneTask).getTime()
+        new Date(b.dataCreazioneTask).getTime(),
     )
 
   const handleAddTaskClick = () => {
@@ -155,7 +157,7 @@ const ToDoList = () => {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     if (!currentTask) return
     setCurrentTask({ ...currentTask, [e.target.name]: e.target.value })
@@ -189,7 +191,7 @@ const ToDoList = () => {
 
       if (!res.ok)
         throw new Error(
-          "Errore nel salvataggio del task 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          "Errore nel salvataggio del task 😥. Rilassati e riprova o contatta l'assistenza 🌿",
         )
       const savedTask = await res.json()
 
@@ -217,7 +219,7 @@ const ToDoList = () => {
       })
       if (!res.ok)
         throw new Error(
-          "Errore durante eliminazione task 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          "Errore durante eliminazione task 😥. Rilassati e riprova o contatta l'assistenza 🌿",
         )
       setTasks((prev) => prev.filter((t) => t.id !== id))
     } catch (error) {
@@ -248,7 +250,7 @@ const ToDoList = () => {
             className="my-3"
             onClick={handleAddTaskClick}
             aria-label={`Aggiungi un nuovo task per il ${selectedDate.toLocaleDateString(
-              "it-IT"
+              "it-IT",
             )}`}
           >
             + Aggiungi task per il {selectedDate.toLocaleDateString("it-IT")}
@@ -339,7 +341,7 @@ const ToDoList = () => {
                     <Card.Text>{task.descrizione}</Card.Text>
                     <Card.Text className="text-muted">
                       {new Date(task.dataCreazioneTask).toLocaleDateString(
-                        "it-IT"
+                        "it-IT",
                       )}{" "}
                       – <strong>{labelTipoTask(task.tipoTask)}</strong>
                     </Card.Text>
@@ -348,6 +350,17 @@ const ToDoList = () => {
               ))}
             </>
           )}
+          <Button
+            variant="success"
+            className="my-3"
+            onClick={() => setShowCalendarModal(true)}
+          >
+            📅 Sincronizza il calendario
+          </Button>
+          <CalendarModal
+            show={showCalendarModal}
+            handleClose={() => setShowCalendarModal(false)}
+          />
         </Col>
       </Row>
 

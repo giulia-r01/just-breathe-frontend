@@ -1,8 +1,16 @@
+import { useEffect } from "react"
 import { Button, Col, Container, Row } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 
 const Home = function () {
+  const token = localStorage.getItem("token")
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (token) {
+      navigate("/index")
+    }
+  }, [token, navigate])
 
   return (
     <Container className="text-center mt-5" role="main">
