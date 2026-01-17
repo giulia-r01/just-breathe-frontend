@@ -49,28 +49,33 @@ const CalendarModal = ({ show, handleClose }: CalendarModalProps) => {
           <li className="mb-3">
             <span>
               🪟 <strong className="text-primary">Outlook:</strong> apri il file
-              scaricato e scegli "Sottoscrivi calendario".
+              scaricato e scegli "Sottoscrivi calendario". Quando vorrai
+              caricare un calendario nuovo potrai riscaricarlo dal bottone
+              sottostante → Outlook → Calendario → Aggiungi calendario → Carica
+              da un file → Sfoglia e seleziona → Importa.
             </span>
           </li>
           <li className="mb-3">
             <span>
               📅 <strong className="mytext">Google Calendar:</strong> vai su
-              Google Calendar → "Altri calendari" → "Aggiungi tramite file" e
-              seleziona il file scaricato.
+              Google Calendar → "Altri calendari" → "Importa" e seleziona il
+              file scaricato.
             </span>
           </li>
           <li className="mb-3">
             <span>
-              🍏 <strong className="text-secondary">iPhone/iPad:</strong>{" "}
-              Impostazioni → Calendar → Account → Aggiungi account → Altro →
-              "Aggiungi calendario sottoscritto" → seleziona il file scaricato.
+              🍏 <strong className="text-secondary">iPhone/iPad:</strong> Ti
+              basterà cliccare sul pulsante qui sotto e seguire le istruzioni
+              mostrate dopo aver accettato il download.
             </span>
           </li>
         </ul>
         <p>
-          Dopo la prima volta, il calendario si aggiornerà automaticamente con i
-          tuoi task, così potrai <strong>respirare tranquillo</strong> 🌸
+          ⚠️ Questo calendario mostra i task fino a oggi. Per avere gli ultimi
+          aggiornamenti, scarica di nuovo il file ogni volta che aggiungi nuovi
+          task e non temere, verranno aggiunti solo i nuovi appuntamenti.
         </p>
+        <p>Rimani sempre aggiornato senza stress 🌸</p>
         <Button variant="success" onClick={downloadICS}>
           📥 Scarica e aggiungi al calendario
         </Button>
