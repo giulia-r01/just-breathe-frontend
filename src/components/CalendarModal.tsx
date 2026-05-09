@@ -64,7 +64,7 @@ const CalendarModal = ({ show, handleClose }: CalendarModalProps) => {
           </li>
           <li className="mb-3">
             <span>
-              🍏 <strong className="text-secondary">iPhone/iPad:</strong> Ti
+              🍏 <strong className="text-secondary">iPhone/iPad:</strong> Se stai usando Safari, ti
               basterà cliccare sul pulsante qui sotto e seguire le istruzioni
               mostrate dopo aver accettato il download.
             </span>
