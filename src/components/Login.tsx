@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Container, Row, Col, Button } from "react-bootstrap"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { Link, useNavigate } from "react-router-dom"
+import { SESSION_EXPIRED_MESSAGE_KEY } from "../utils/authInterceptor"
 
 interface LoginFormData {
   username: string
@@ -19,6 +20,14 @@ const Login = function () {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const expiredMessage = sessionStorage.getItem(SESSION_EXPIRED_MESSAGE_KEY)
+    if (!expiredMessage) return
+
+    setError(expiredMessage)
+    sessionStorage.removeItem(SESSION_EXPIRED_MESSAGE_KEY)
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
