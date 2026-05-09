@@ -3,67 +3,67 @@ import { Link } from "react-router-dom"
 
 const FooterJB = function () {
   return (
-    <footer className="text-center mynav py-2">
-      <p className="mb-0 text-white">
-        🌿 Just Breathe - &copy; <span>{new Date().getFullYear()} 🌿</span>
+    <footer className="jb-footer text-center py-3 mt-4">
+      <p className="mb-1">
+        Just Breathe - &copy; <span>{new Date().getFullYear()}</span>
       </p>
-      <p className="mb-0">
+      <p className="mb-1">
         <Link
-          className="text-white"
+          className="jb-footer-link"
           to="/chi-siamo"
-          aria-label="Chi siamo - Scopri di più su Just Breathe - Vai alla pagina dedicata"
+          aria-label="Chi siamo - Scopri di piu su Just Breathe"
         >
           Chi siamo
         </Link>
       </p>
-      <p className="mb-0">
+      <p className="mb-1">
         <Link
-          className="text-white"
+          className="jb-footer-link"
           to="/privacy-policy"
-          aria-label="Privacy Policy - Leggi la nostra policy - Vai alla pagina dedicata"
+          aria-label="Privacy Policy - Leggi la nostra policy"
         >
           Privacy Policy
         </Link>
       </p>
-      <p className="mb-0 text-white">
-        Seguici:{" "}
+      <p className="mb-1">
+        Seguici:
         <a
           title="Apri su Instagram"
-          className="mx-2"
+          className="jb-footer-icon mx-2"
           href="https://www.instagram.com/giuliarizzo00/"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Profilo instagram di Just Breathe - Collegamento a sito esterno - Apertura in nuova scheda"
+          aria-label="Profilo Instagram di Just Breathe"
         >
           <FaInstagram aria-hidden="true" />
-        </a>{" "}
+        </a>
         <a
           title="Apri su LinkedIn"
-          className="mx-2"
+          className="jb-footer-icon mx-2"
           href="https://www.linkedin.com/in/giulia-rizzo-4782bb102/"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Profilo LinkedIn di Just Breathe - Collegamento a sito esterno - Apertura in nuova scheda"
+          aria-label="Profilo LinkedIn di Just Breathe"
         >
           <FaLinkedin aria-hidden="true" />
-        </a>{" "}
+        </a>
         <a
           title="Apri su GitHub"
-          className="mx-2"
+          className="jb-footer-icon mx-2"
           href="https://github.com/giulia-r01"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Profilo GitHub di Just Breathe - Collegamento a sito esterno - Apertura in nuova scheda"
+          aria-label="Profilo GitHub di Just Breathe"
         >
           <FaGithub aria-hidden="true" />
         </a>
       </p>
-      <p className="mb-0 text-white">
-        Assistenza: Hai bisogno di aiuto? Scrivici una{" "}
+      <p className="mb-0">
+        Assistenza: Hai bisogno di aiuto? Scrivici una
         <a
           href="mailto:just.breathe.tam@gmail.com?subject=Richiesta%20di%20assistenza"
-          className="text-white"
-          aria-label="mail - Invia una mail, oggetto: Richiesta di assistenza"
+          className="jb-footer-link ms-1"
+          aria-label="Invia una mail di assistenza"
         >
           mail
         </a>
@@ -71,4 +71,5 @@ const FooterJB = function () {
     </footer>
   )
 }
+
 export default FooterJB

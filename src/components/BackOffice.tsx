@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
-import { Container, Row, Col, Spinner } from "react-bootstrap"
+import { Container, Row, Col } from "react-bootstrap"
 import UserListComponent from "./backOfficeComponent.tsx/UserListComponent"
 import StatisticheComponent from "./backOfficeComponent.tsx/StatisticheComponent"
 import RespiriAdminComponent from "./backOfficeComponent.tsx/RespiriAdminComponent"
+import LoadingSkeleton from "./common/LoadingSkeleton"
 
 const BackOffice = () => {
   const [token, setToken] = useState<string | null>(null)
@@ -22,12 +23,7 @@ const BackOffice = () => {
   }, [])
 
   if (loading) {
-    return (
-      <div className="text-center mt-5" role="status" aria-live="polite">
-        <Spinner animation="border" />
-        <span className="visually-hidden">Caricamento...</span>
-      </div>
-    )
+    return <LoadingSkeleton className="mt-5 mx-auto w-100" lines={2} />
   }
 
   if (!token || !myId) {

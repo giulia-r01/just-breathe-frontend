@@ -8,10 +8,10 @@ import {
   Form,
   Pagination,
   Row,
-  Spinner,
   Alert,
   Modal,
 } from "react-bootstrap"
+import LoadingSkeleton from "./common/LoadingSkeleton"
 
 interface Diario {
   id: number
@@ -44,11 +44,11 @@ const Diario = () => {
         `${import.meta.env.VITE_API_URL}/diari?page=${page}`,
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       )
       if (!res.ok)
         throw new Error(
-          "Qualcosa è andato storto nel recupero dei tuoi diari 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+          "Qualcosa è andato storto nel recupero dei tuoi diari 😥. Rilassati, riprova o contatta l'assistenza 🌿",
         )
       const data = await res.json()
       setDiari(data.content)
@@ -81,7 +81,7 @@ const Diario = () => {
   }, [error])
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
@@ -107,10 +107,10 @@ const Diario = () => {
       })
       if (!res.ok)
         throw new Error(
-          "Errore durante il salvataggio del diario 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+          "Errore durante il salvataggio del diario 😥. Rilassati, riprova o contatta l'assistenza 🌿",
         )
       setSuccess(
-        editingId ? "Diario modificato! 🥳" : "Diario salvato con successo! 🥳"
+        editingId ? "Diario modificato! 🥳" : "Diario salvato con successo! 🥳",
       )
       setFormData({ titolo: "", contenuto: "" })
       setEditingId(null)
@@ -161,10 +161,10 @@ const Diario = () => {
       <Row className="justify-content-center">
         <Col md={8}>
           <h1 className="visually-hidden">Diario</h1>
-          <h2 className="text-center text-white mb-4 mynav rounded mt-3 py-3">
+          <h2 className="text-center mb-4 jb-page-header rounded mt-3 py-3">
             Scrivi il tuo Diario
           </h2>
-          <Card className="mynav text-white p-4 mb-4">
+          <Card className="jb-surface p-4 mb-4">
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="titolo" className="mb-3">
                 <Form.Label>Titolo</Form.Label>
@@ -212,34 +212,29 @@ const Diario = () => {
         </Col>
       </Row>
 
-      <h3 className="text-white mt-5 mb-3 mynav rounded py-3 px-3">
+      <h3 className="mt-5 mb-3 jb-section-title rounded py-3 px-3">
         Diari precedenti
       </h3>
 
       <Row>
-        {loading && (
-          <div role="status" aria-live="polite">
-            <Spinner animation="border" variant="success" />
-            <span className="visually-hidden">Caricamento...</span>
-          </div>
-        )}
+        {loading && <LoadingSkeleton className="mb-3" lines={4} />}
         {!loading &&
           diari.map((d) => (
             <Col sm={12} md={6} lg={4} key={d.id}>
-              <Card className="mynav text-white mb-3">
+              <Card className="jb-surface mb-3">
                 <Card.Body>
                   <Card.Title as="h3" className="h4 pb-2">
                     {d.titolo}
                   </Card.Title>
-                  <Card.Subtitle as="h4" className="h5 mb-2 text-white">
+                  <Card.Subtitle as="h4" className="h5 mb-2">
                     {d.dataUltimaModifica !== d.dataInserimento
                       ? `Ultima modifica: ${new Date(
-                          d.dataUltimaModifica
+                          d.dataUltimaModifica,
                         ).toLocaleString("it-IT", {
                           timeZone: "Europe/Rome",
                         })}`
                       : `Creato il: ${new Date(
-                          d.dataInserimento
+                          d.dataInserimento,
                         ).toLocaleString("it-IT", {
                           timeZone: "Europe/Rome",
                         })}`}
@@ -261,7 +256,7 @@ const Diario = () => {
                   </Button>
                   <Button
                     aria-label="Modifica il tuo diario"
-                    variant="outline-light"
+                    variant="secondary"
                     size="sm"
                     onClick={() => handleEdit(d)}
                     className="me-2"

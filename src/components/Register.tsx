@@ -7,7 +7,7 @@ interface RegisterFormData {
 }
 
 import { useState } from "react"
-import { Button, Col, Container, Row, Spinner } from "react-bootstrap"
+import { Button, Col, Container, Row } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 
@@ -87,12 +87,12 @@ const Register = function () {
     <Container className="container mt-4">
       <h1 className="visually-hidden">Pagina di registrazione</h1>
       <Row className="justify-content-center px-4">
-        <Col md={6} lg={4} className="mynav py-3 my-4 rounded text-white">
+        <Col md={6} lg={4} className="jb-surface jb-auth-card py-3 my-4 rounded">
           <h2>Registrati</h2>
-          <p className="text-white pt-2">
+          <p className="pt-2">
             Hai già un account?
             <br />
-            <Link to="/login" className="text-white" aria-label="Accedi">
+            <Link to="/login" className="jb-footer-link" aria-label="Accedi">
               Accedi
             </Link>
           </p>
@@ -205,13 +205,7 @@ const Register = function () {
             >
               {loading ? (
                 <>
-                  <Spinner
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    className="me-2"
-                    aria-hidden="true"
-                  />
+                  <span className="jb-inline-skeleton me-2" aria-hidden="true" />
                   Caricamento...
                 </>
               ) : (

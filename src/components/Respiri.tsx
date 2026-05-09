@@ -7,11 +7,11 @@ import {
   Col,
   Container,
   Row,
-  Spinner,
   Modal,
 } from "react-bootstrap"
 import CircleAnimation from "../animations/CircleAnimation"
 import "../animations/CircleAnimation.css"
+import LoadingSkeleton from "./common/LoadingSkeleton"
 
 interface Respiri {
   id: number
@@ -30,7 +30,7 @@ const Respiri = () => {
   const [error, setError] = useState("")
   const [showModal, setShowModal] = useState(false)
   const [respiroSelezionato, setRespiroSelezionato] = useState<Respiri | null>(
-    null
+    null,
   )
   const [fase, setFase] = useState<
     "fermo" | "inspira" | "trattieni" | "espira"
@@ -42,7 +42,7 @@ const Respiri = () => {
       .then((res) => {
         if (!res.ok)
           throw new Error(
-            "Errore nel recupero delle respirazioni 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+            "Errore nel recupero delle respirazioni 😥. Rilassati e riprova o contatta l'assistenza 🌿",
           )
         return res.json()
       })
@@ -124,16 +124,11 @@ const Respiri = () => {
         Respirazioni guidate
       </h1>
 
-      <h2 className="text-center mb-4 text-white mynav rounded py-3">
+      <h2 className="mb-4 jb-page-header py-3">
         Esercizi di Respirazione Guidata
       </h2>
 
-      {loading && (
-        <div className="text-center my-5" role="status" aria-live="polite">
-          <Spinner animation="border" variant="success" />
-          <span className="visually-hidden">Caricamento...</span>
-        </div>
-      )}
+      {loading && <LoadingSkeleton className="my-4" lines={4} />}
 
       {error && (
         <Alert variant="danger" role="alert">
@@ -144,12 +139,12 @@ const Respiri = () => {
       <Row className="g-4 py-5">
         {respiri.map((respiro) => (
           <Col md={6} lg={4} key={respiro.id}>
-            <Card className="mynav text-white h-100">
+            <Card className="jb-surface h-100">
               <Card.Body>
                 <Card.Title className="fs-2">{respiro.nome}</Card.Title>
                 <Badge
                   className={`mb-2 fs-6 text-uppercase ${getColorClass(
-                    respiro.categoria
+                    respiro.categoria,
                   )}`}
                 >
                   {respiro.categoria}
@@ -160,7 +155,7 @@ const Respiri = () => {
                   variant="success"
                   onClick={() => apriModale(respiro)}
                   aria-label={`Avvia respirazione guidata: ${getSrText(
-                    respiro
+                    respiro,
                   )}`}
                 >
                   Avvia respirazione
@@ -216,7 +211,7 @@ const Respiri = () => {
         <Modal.Footer>
           {fase === "fermo" ? (
             <Button
-              variant="primary"
+              variant="success"
               onClick={startRespirazione}
               className={
                 respiroSelezionato

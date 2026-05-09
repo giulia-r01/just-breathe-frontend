@@ -3,7 +3,6 @@ import {
   Container,
   Row,
   Col,
-  Spinner,
   Card,
   Button,
   Form,
@@ -11,6 +10,7 @@ import {
   Modal,
   Alert,
 } from "react-bootstrap"
+import LoadingSkeleton from "./common/LoadingSkeleton"
 
 interface Brano {
   id: number
@@ -77,7 +77,7 @@ const Mood = () => {
       } catch (e) {
         console.error("Errore fetch moods", e)
         setError(
-          "Impossibile caricare i mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          "Impossibile caricare i mood 😥. Rilassati e riprova o contatta l'assistenza 🌿",
         )
       } finally {
         setLoading(false)
@@ -91,7 +91,7 @@ const Mood = () => {
           `${import.meta.env.VITE_API_URL}/brani/mood/${moodId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
-          }
+          },
         )
         if (!res.ok) {
           console.error("Errore fetch brani", res.status)
@@ -102,7 +102,7 @@ const Mood = () => {
       } catch (e) {
         console.error("Errore fetch brani", e)
         setError(
-          "Impossibile caricare i brani 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          "Impossibile caricare i brani 😥. Rilassati e riprova o contatta l'assistenza 🌿",
         )
         return []
       }
@@ -119,7 +119,7 @@ const Mood = () => {
   }, [success])
 
   const extractYouTubeEmbedUrl = (
-    url: string | undefined | null
+    url: string | undefined | null,
   ): string | null => {
     if (!url) return null
     const regexes = [
@@ -143,14 +143,14 @@ const Mood = () => {
         `${import.meta.env.VITE_API_URL}/brani/mood/${mood.id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       )
       const brani = (await res.json()) || []
       setSelectedMood({ ...mood, brani })
     } catch (e) {
       console.error("Errore fetch brani mood", e)
       setError(
-        "Impossibile caricare i brani del mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        "Impossibile caricare i brani del mood 😥. Rilassati e riprova o contatta l'assistenza 🌿",
       )
     } finally {
       setLoading(false)
@@ -166,11 +166,11 @@ const Mood = () => {
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       )
       if (!res.ok)
         throw new Error(
-          "Errore creazione mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          "Errore creazione mood 😥. Rilassati e riprova o contatta l'assistenza 🌿",
         )
       const createdMood = await res.json()
       setMoods((prev) => [...prev, { ...createdMood, brani: [] }])
@@ -179,7 +179,7 @@ const Mood = () => {
     } catch (e) {
       console.error(e)
       setError(
-        "Impossibile creare il mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        "Impossibile creare il mood 😥. Rilassati e riprova o contatta l'assistenza 🌿",
       )
     }
   }
@@ -197,22 +197,22 @@ const Mood = () => {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ titoloBrano: newBrano }),
-        }
+        },
       )
       if (!res.ok)
         throw new Error(
-          "Errore aggiunta brano 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          "Errore aggiunta brano 😥. Rilassati e riprova o contatta l'assistenza 🌿",
         )
       const nuovoBrano = await res.json()
       setSelectedMood((prev) =>
-        prev ? { ...prev, brani: [...(prev.brani || []), nuovoBrano] } : prev
+        prev ? { ...prev, brani: [...(prev.brani || []), nuovoBrano] } : prev,
       )
       setNewBrano("")
       setSuccess("🎵 Brano aggiunto con successo!")
     } catch (e) {
       console.error(e)
       setError(
-        "Impossibile aggiungere il brano 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        "Impossibile aggiungere il brano 😥. Rilassati e riprova o contatta l'assistenza 🌿",
       )
     }
   }
@@ -248,12 +248,12 @@ const Mood = () => {
               titoloBrano: editTitolo,
               link: editLink,
             }),
-          }
+          },
         )
 
         if (!res.ok)
           throw new Error(
-            "Errore durante la modifica del brano 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+            "Errore durante la modifica del brano 😥. Rilassati e riprova o contatta l'assistenza 🌿",
           )
 
         updatedBrano = await res.json()
@@ -269,12 +269,12 @@ const Mood = () => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
+          },
         )
 
         if (!res.ok)
           throw new Error(
-            "Errore durante il cambio mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+            "Errore durante il cambio mood 😥. Rilassati e riprova o contatta l'assistenza 🌿",
           )
 
         updatedBrano = await res.json()
@@ -287,16 +287,16 @@ const Mood = () => {
                 ...m,
                 brani: (m.brani ?? []).filter((b) => b.id !== updatedBrano.id),
               }
-            : m
-        )
+            : m,
+        ),
       )
 
       setMoods((prev) =>
         prev.map((m) =>
           m.id === editMoodId
             ? { ...m, brani: [...(m.brani || []), updatedBrano] }
-            : m
-        )
+            : m,
+        ),
       )
 
       if (selectedMood?.id === editMoodId) {
@@ -309,7 +309,7 @@ const Mood = () => {
                   updatedBrano,
                 ],
               }
-            : prev
+            : prev,
         )
       } else {
         setSelectedMood((prev) =>
@@ -317,10 +317,10 @@ const Mood = () => {
             ? {
                 ...prev,
                 brani: (prev.brani ?? []).filter(
-                  (b) => b.id !== updatedBrano.id
+                  (b) => b.id !== updatedBrano.id,
                 ),
               }
-            : prev
+            : prev,
         )
       }
 
@@ -340,11 +340,11 @@ const Mood = () => {
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       )
       if (!res.ok)
         throw new Error(
-          "Errore eliminazione brano 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          "Errore eliminazione brano 😥. Rilassati e riprova o contatta l'assistenza 🌿",
         )
 
       setSelectedMood((prev) =>
@@ -353,12 +353,12 @@ const Mood = () => {
               ...prev,
               brani: (prev.brani || []).filter((b) => b.id !== branoId),
             }
-          : prev
+          : prev,
       )
     } catch (e) {
       console.error(e)
       setError(
-        "Impossibile eliminare il brano 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        "Impossibile eliminare il brano 😥. Rilassati e riprova o contatta l'assistenza 🌿",
       )
     }
   }
@@ -372,11 +372,11 @@ const Mood = () => {
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       )
       if (!res.ok)
         throw new Error(
-          "Errore eliminazione mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+          "Errore eliminazione mood 😥. Rilassati e riprova o contatta l'assistenza 🌿",
         )
 
       setMoods((prev) => prev.filter((m) => m.id !== selectedMood.id))
@@ -384,7 +384,7 @@ const Mood = () => {
     } catch (e) {
       console.error(e)
       setError(
-        "Impossibile eliminare il mood 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+        "Impossibile eliminare il mood 😥. Rilassati e riprova o contatta l'assistenza 🌿",
       )
     }
   }
@@ -392,15 +392,12 @@ const Mood = () => {
   return (
     <Container className="py-4 px-3 rounded my-5" role="main">
       <h1 className="visually-hidden">Mood</h1>
-      <h2 className="text-center mb-4 mynav p-3 rounded text-white ">
-        Come ti senti oggi? Crea la tua playlist
+      <h2 className="mb-4 jb-page-header p-2">
+        Trasforma il tuo mood in musica
       </h2>
 
       {loading && (
-        <div className="text-center py-5" role="status" aria-live="polite">
-          <Spinner animation="border" variant="success" />
-          <span className="visually-hidden">Caricamento...</span>
-        </div>
+        <LoadingSkeleton className="my-4" lines={5} />
       )}
       {success && (
         <div role="alert">
@@ -419,7 +416,7 @@ const Mood = () => {
 
       <Row className="justify-content-center g-3">
         <Col md={4} lg={6}>
-          <h3 className="mynav rounded p-3 text-white">I tuoi mood</h3>
+          <h3 className="jb-section-title rounded p-3">I tuoi mood</h3>
           <ListGroup>
             {moods.length === 0 && (
               <p className="bg-white rounded p-2 mytext fw-semibold">
@@ -464,7 +461,7 @@ const Mood = () => {
             <Form.Select
               value={newTipoMood}
               onChange={(e) => setNewTipoMood(e.target.value)}
-              className="me-2"
+              className="me-2 jb-mood-select"
               disabled={showEditModal}
               aria-label="Seleziona un mood da creare"
             >
@@ -490,11 +487,11 @@ const Mood = () => {
         <Col md={8} lg={6}>
           {selectedMood ? (
             <>
-              <div className="mynav rounded">
-                <h3 className="p-3 text-white ">
+              <div className="jb-surface rounded">
+                <h3 className="p-3">
                   Mood selezionato: {selectedMood.tipoMood}
                 </h3>
-                <p className="text-white ps-3 pb-2">
+                <p className="ps-3 pb-2">
                   Salvato il:{" "}
                   {new Date(selectedMood.dataCreazione).toLocaleDateString(
                     "it-IT",
@@ -503,11 +500,11 @@ const Mood = () => {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
-                    }
+                    },
                   )}
                 </p>
                 {(!selectedMood.brani || selectedMood.brani.length === 0) && (
-                  <p className="text-white fw-bold ps-3 pb-2">
+                  <p className="fw-bold ps-3 pb-2">
                     Nessun brano associato a questo mood.
                   </p>
                 )}
@@ -644,6 +641,7 @@ const Mood = () => {
             <Form.Group className="mb-3" controlId="editMoodId">
               <Form.Label>Assegna a un altro mood</Form.Label>
               <Form.Select
+                className="jb-mood-select"
                 value={editMoodId || ""}
                 onChange={(e) => setEditMoodId(Number(e.target.value))}
               >

@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react"
-import { Button, Col, Container, Row, Spinner } from "react-bootstrap"
+import { Button, Col, Container, Row } from "react-bootstrap"
 
 const RecuperoPsw = function () {
   const [email, setEmail] = useState<string>("")
@@ -50,7 +50,7 @@ const RecuperoPsw = function () {
   return (
     <Container className="container mt-4">
       <Row className="justify-content-center px-4">
-        <Col md={6} lg={4} className="mynav py-3 my-4 rounded text-white">
+        <Col md={6} lg={4} className="jb-surface py-3 my-4 rounded">
           <h1 className="visually-hidden">Recupero password</h1>
           <h2>Recupera Password</h2>
 
@@ -81,7 +81,7 @@ const RecuperoPsw = function () {
                 aria-describedby="emailHelp"
                 disabled={loading}
               />
-              <small id="emailHelp" className="form-text text-light">
+              <small id="emailHelp" className="form-text profile-subtitle">
                 Riceverai un'email con le istruzioni per il recupero
               </small>
             </div>
@@ -95,7 +95,7 @@ const RecuperoPsw = function () {
             >
               {loading ? (
                 <div role="status" aria-live="polite">
-                  <Spinner animation="border" size="sm" className="me-2" />
+                  <span className="jb-inline-skeleton me-2" aria-hidden="true" />
                   Invio in corso...
                 </div>
               ) : (

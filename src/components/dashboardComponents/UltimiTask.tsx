@@ -1,8 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 import { useEffect, useState } from "react"
-import { Card, Spinner, Alert, Button } from "react-bootstrap"
+import { Alert, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+import DashboardCard from "./DashboardCard"
+import DashboardSkeleton from "./DashboardSkeleton"
 
 interface ToDo {
   id: number
@@ -15,6 +15,19 @@ interface UltimiTaskProps {
   escludiFatti?: boolean
 }
 
+const labelTipoTask = (tipo: string) => {
+  switch (tipo) {
+    case "DA_FARE":
+      return "Da fare"
+    case "IN_CORSO":
+      return "In corso"
+    case "FATTO":
+      return "Fatto"
+    default:
+      return tipo
+  }
+}
+
 const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
   const [tasks, setTasks] = useState<ToDo[]>([])
   const [loading, setLoading] = useState(false)
@@ -22,108 +35,86 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
   const token = localStorage.getItem("token")
   const navigate = useNavigate()
 
-  const labelTipoTask = (tipo: string) => {
-    switch (tipo) {
-      case "DA_FARE":
-        return "Da fare"
-      case "IN_CORSO":
-        return "In corso"
-      case "FATTO":
-        return "Fatto"
-      default:
-        return tipo
-    }
-  }
-
   useEffect(() => {
+    const controller = new AbortController()
+
     const fetchUltimiTasks = async () => {
       setLoading(true)
       setError("")
       try {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
           headers: { Authorization: `Bearer ${token}` },
+          signal: controller.signal,
         })
-        if (!res.ok)
-          throw new Error(
-            "Errore nel caricamento degli ultimi task 😥. Rilassati, riprova o contatta l'assistenza 🌿"
-          )
+        if (!res.ok) throw new Error("Errore nel caricamento degli ultimi task")
         const data = await res.json()
+        const source = data.content || data
         const filteredTasks = escludiFatti
-          ? (data.content || data).filter(
-              (task: ToDo) => task.tipoTask !== "FATTO"
-            )
-          : data.content || data
-        setTasks(filteredTasks)
+          ? source.filter((task: ToDo) => task.tipoTask !== "FATTO")
+          : source
+
+        setTasks(filteredTasks.slice(0, 3))
       } catch (err) {
-        console.log(err)
-        setError("Impossibile caricare gli ultimi task 😥")
+        if ((err as Error).name !== "AbortError") {
+          setError("Impossibile caricare gli ultimi task")
+        }
       } finally {
         setLoading(false)
       }
     }
-    if (token) fetchUltimiTasks()
-  }, [token])
 
-  if (loading)
-    return (
-      <div className="text-center py-3" role="status" aria-live="polite">
-        <Spinner animation="border" variant="success" />
-        <span className="visually-hidden">Caricamento...</span>
-      </div>
-    )
-  if (error)
+    if (token) fetchUltimiTasks()
+
+    return () => controller.abort()
+  }, [token, escludiFatti])
+
+  if (loading) {
+    return <DashboardSkeleton title="Ultime Task in calendario" iconClassName="bi bi-calendar3" lines={4} />
+  }
+
+  if (error) {
     return (
       <Alert variant="danger" role="alert">
         {error}
       </Alert>
     )
+  }
 
   return (
-    <Card className="mb-3 p-3 shadow-sm mynav text-white">
-      <Card.Title as="h4">Ultimi Task in calendario</Card.Title>
-
+    <DashboardCard
+      title="Ultime Task in calendario"
+      iconClassName="bi bi-calendar3"
+      footer={
+        <Button
+          className="dashboard-cta dashboard-cta-outline"
+          onClick={() => navigate("/todolist")}
+          aria-label="Vai al calendario"
+        >
+          <i className="bi bi-plus-lg" aria-hidden="true" /> Aggiungi task
+        </Button>
+      }
+    >
       {tasks.length === 0 ? (
-        <p role="alert">
-          Nessun task, da fare o in corso, salvato nel calendario.
+        <p className="mb-0" role="status">
+          Nessun task da fare o in corso.
         </p>
       ) : (
-        <div
-          role="list"
-          aria-live="polite"
-          aria-label="Lista degli ultimi task in calendario"
-        >
+        <ul className="dashboard-task-list" aria-label="Lista degli ultimi task in calendario">
           {tasks.map((task) => (
-            <Card.Body
-              key={task.id}
-              className="mt-3 mb-2 p-2 fs-5 bg-white text-dark rounded"
-              role="listitem"
-            >
-              <div className="d-flex justify-content-between align-items-center">
-                <div>
-                  <strong>{task.titolo}</strong> <br />
-                  <small className="text-muted">
-                    {new Date(task.dataCreazioneTask).toLocaleDateString(
-                      "it-IT"
-                    )}{" "}
-                    - <strong>{labelTipoTask(task.tipoTask)}</strong>
-                  </small>
-                </div>
-              </div>
-            </Card.Body>
+            <li key={task.id} className="dashboard-task-item">
+              <i className="bi bi-list-task dashboard-task-icon" aria-hidden="true" />
+              <span>
+                {task.titolo}
+                <small className="d-block text-muted">
+                  {new Date(task.dataCreazioneTask).toLocaleDateString("it-IT")} -{" "}
+                  <strong>{labelTipoTask(task.tipoTask)}</strong>
+                </small>
+              </span>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
-
-      <div className="text-start mt-2">
-        <Button
-          variant="success"
-          onClick={() => navigate("/todolist")}
-          aria-label="Vai al calendario - vai alla sezione ToDoList Calendario"
-        >
-          Vai al calendario
-        </Button>
-      </div>
-    </Card>
+    </DashboardCard>
   )
 }
 

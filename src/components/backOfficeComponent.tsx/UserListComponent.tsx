@@ -3,12 +3,12 @@ import { useEffect, useState } from "react"
 import {
   Table,
   Button,
-  Spinner,
   Form,
   Col,
   Alert,
   Pagination,
 } from "react-bootstrap"
+import LoadingSkeleton from "../common/LoadingSkeleton"
 
 interface BackOfficeUser {
   id: number
@@ -112,12 +112,7 @@ const UserListComponent = ({ token, myId }: Props) => {
     })
 
   if (loading)
-    return (
-      <div className="text-center py-3" role="status" aria-live="polite">
-        <Spinner animation="border" variant="success" />
-        <span className="visually-hidden">Caricamento...</span>
-      </div>
-    )
+    return <LoadingSkeleton compact lines={3} />
   if (errore)
     return (
       <Alert className="text-danger" role="alert">

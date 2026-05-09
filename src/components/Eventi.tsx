@@ -1,16 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react"
-import {
-  Form,
-  Button,
-  ListGroup,
-  Spinner,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap"
+import { Form, Button, ListGroup, Container, Row, Col } from "react-bootstrap"
 import { FaRegStar, FaStar } from "react-icons/fa"
 import UltimiEventiSalvati from "./dashboardComponents/UltimiEventiSalvati"
+import LoadingSkeleton from "./common/LoadingSkeleton"
 
 interface EventoDto {
   id?: number
@@ -49,7 +42,7 @@ const Eventi = () => {
     } catch (err) {
       console.error("Errore nel recupero eventi salvati:", err)
       setIsError(
-        "Qualcosa è andato storto nel recupero degli eventi salvati 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+        "Qualcosa è andato storto nel recupero degli eventi salvati 😥. Rilassati, riprova o contatta l'assistenza 🌿",
       )
     }
   }
@@ -66,14 +59,14 @@ const Eventi = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       )
       const data = await res.json()
       setEventi(data)
     } catch (err) {
       console.error("Errore nella ricerca eventi:", err)
       setIsError(
-        "Qualcosa è andato storto nella ricerca degli eventi 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+        "Qualcosa è andato storto nella ricerca degli eventi 😥. Rilassati, riprova o contatta l'assistenza 🌿",
       )
     } finally {
       setLoading(false)
@@ -85,7 +78,7 @@ const Eventi = () => {
       (e) =>
         e.nome === evento.nome &&
         e.luogo === evento.luogo &&
-        e.dataEvento === evento.dataEvento
+        e.dataEvento === evento.dataEvento,
     )
   }
 
@@ -101,7 +94,7 @@ const Eventi = () => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
+          },
         )
         if (res.ok) {
           setSalvati((prev) => prev.filter((e) => e.id !== eventoSalvato.id))
@@ -110,7 +103,7 @@ const Eventi = () => {
       } catch (err) {
         console.error("Errore nella rimozione evento:", err)
         setIsError(
-          "Qualcosa è andato storto nella rimozione dell'evento salvato 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+          "Qualcosa è andato storto nella rimozione dell'evento salvato 😥. Rilassati, riprova o contatta l'assistenza 🌿",
         )
       }
     } else {
@@ -130,7 +123,7 @@ const Eventi = () => {
       } catch (err) {
         console.error("Errore nel salvataggio evento:", err)
         setIsError(
-          "Qualcosa è andato storto nel salvataggio dell'evento 😥. Rilassati, riprova o contatta l'assistenza 🌿"
+          "Qualcosa è andato storto nel salvataggio dell'evento 😥. Rilassati, riprova o contatta l'assistenza 🌿",
         )
       }
     }
@@ -140,7 +133,7 @@ const Eventi = () => {
     <Container role="main">
       <Row className="align-items-start py-4 g-2">
         <h1 className="visually-hidden">Eventi</h1>
-        <h2 className="text-center text-white mb-4 mynav rounded mt-3 py-3">
+        <h2 className="mb-4 jb-page-header mt-3 py-3">
           Scopri gli eventi disponibili nella tua città
         </h2>
         <Col md={5} lg={6}>
@@ -175,22 +168,19 @@ const Eventi = () => {
           )}
 
           {loading ? (
-            <div className="text-center my-5" role="status" aria-live="polite">
-              <Spinner animation="border" variant="success" />
-              <span className="visually-hidden">Caricamento...</span>
-            </div>
+            <LoadingSkeleton className="my-4" lines={4} />
           ) : eventi.length === 1 && !eventi[0].id ? (
-            <label className="bg-white mytext rounded p-2 fw-bold">
+            <label className="jb-surface rounded p-2 fw-bold d-block">
               {eventi[0].nome}
             </label>
           ) : (
-            <ListGroup>
+            <ListGroup className="gap-2">
               {eventi.map((evento, i) => {
                 const isSalvato = !!trovaEventoSalvato(evento)
                 return (
                   <ListGroup.Item
                     key={i}
-                    className="d-flex justify-content-between align-items-start"
+                    className="jb-surface d-flex justify-content-between align-items-start border-0 rounded"
                   >
                     <div>
                       <div className="fw-bold">{evento.nome}</div>

@@ -7,11 +7,11 @@ import {
   Container,
   Form,
   Row,
-  Spinner,
 } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { FaCamera, FaTrashAlt } from "react-icons/fa"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
+import LoadingSkeleton from "./common/LoadingSkeleton"
 
 interface Utente {
   id: number
@@ -211,26 +211,24 @@ const ProfiloUtente = () => {
   }
 
   if (loading) {
-    return (
-      <div className="text-center mt-5" role="status" aria-live="polite">
-        <Spinner animation="border" variant="success" />
-        <span className="visually-hidden">Caricamento...</span>
-      </div>
-    )
+    return <LoadingSkeleton className="mt-5 mx-auto w-100" lines={3} />
   }
 
   return (
     <Container className="py-5" role="main">
       <h1 className="visually-hidden">Profilo utente</h1>
+      <h2 className="text-center mb-4 jb-page-header rounded py-3">
+        Il tuo profilo
+      </h2>
 
       <Row className="justify-content-center">
         <Col md={8} lg={6}>
-          <Card className="p-4 mynav text-white">
+          <Card className="p-4 jb-surface">
             <div className="text-center">
-              <h2 className="text-white text-start">{utente?.nome}</h2>
-              <h3 className="fs-5 text-white text-start">
+              <h3 className="text-start mb-1">{utente?.nome}</h3>
+              <p className="fs-6 text-start mb-3 profile-subtitle">
                 Modifica il tuo profilo
-              </h3>
+              </p>
               <img
                 src={utente?.imgProfilo || "/user.svg"}
                 alt={`Immagine del profilo di ${utente?.nome ?? "utente"}`}
@@ -262,7 +260,7 @@ const ProfiloUtente = () => {
               <Form.Group className="mb-3">
                 <Form.Label
                   htmlFor="fileInputControl"
-                  className="btn btn-outline-light btn-sm"
+                  className="btn btn-outline-success btn-sm"
                 >
                   <FaCamera className="me-2" /> Cambia immagine
                 </Form.Label>

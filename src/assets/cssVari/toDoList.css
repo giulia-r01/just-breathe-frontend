@@ -1,10 +1,11 @@
 .react-calendar {
   width: 100%;
   max-width: 600px;
-  background: #f9f8f6;
-  border-radius: 8px;
-  box-shadow: 0 6px 12px rgba(34, 34, 34, 0.1);
-  color: #066554;
+  background: #edf4f1;
+  border: 1px solid #c7dbd2;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(15, 75, 60, 0.1);
+  color: #1f4e43;
   padding: 1rem;
 }
 
@@ -17,16 +18,17 @@
 .react-calendar__navigation button {
   background: transparent;
   border: none;
-  color: #066554;
+  color: #1f4e43;
   font-weight: 700;
   font-size: 1.2em;
   padding: 0.25rem 0.5rem;
   border-radius: 10px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .react-calendar__navigation button:hover {
-  background-color: #c9d6c4;
+  background-color: #d7e7e1;
+  color: #15463b;
   cursor: pointer;
 }
 
@@ -34,43 +36,50 @@
   text-transform: uppercase;
   font-weight: 700;
   font-size: 1em;
-  color: #066554;
-  border-bottom: 1px solid #066554;
+  color: #285e51;
+  border-bottom: 1px solid #bfd5cb;
 }
 
 .react-calendar__tile {
   border-radius: 12px;
   padding: 1em 0;
-  background: #f9f8f6;
-  color: #066554;
+  background: #edf4f1;
+  color: #245548;
   font-weight: 700;
   font-size: 1.2em;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .react-calendar__tile:hover {
-  background: #c9d6c4;
-  color: #ffffff;
+  background: #cfe3db;
+  color: #153f35;
   cursor: pointer;
 }
 
+.react-calendar__tile:focus-visible {
+  background: #c0dbd1;
+  color: #ffffff;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(12, 139, 104, 0.25);
+}
+
 .react-calendar__tile--active {
-  background: #066554 !important;
+  background: #0c8b68 !important;
   color: white;
   font-weight: 700;
 }
 
 .react-calendar__tile--disabled {
-  color: #bdb4c4;
-  background: #f0efe7;
+  color: #8aa59b;
+  background: #e6efeb;
   cursor: not-allowed;
 }
 
 .react-calendar__navigation__label {
   font-size: 1em;
-  color: #475841;
+  color: #2b5f52;
 }
 
 .react-calendar__navigation button:enabled:hover svg {
-  fill: #066554;
+  fill: #1f4e43;
 }

@@ -30,8 +30,7 @@ const NavbarJB = function () {
     <header>
       <Navbar
         expand="lg"
-        className="mynav"
-        data-bs-theme="dark"
+        className="jb-navbar"
         fixed="top"
         expanded={expanded}
         onToggle={() => setExpanded(!expanded)}
@@ -41,7 +40,7 @@ const NavbarJB = function () {
             aria-label={
               token
                 ? "Just Breathe - Vai alla dashboard"
-                : "Just Breate - Accedi o iscriviti"
+                : "Just Breathe - Accedi o iscriviti"
             }
             to={token ? "/index" : "/"}
             className="ms-0"
@@ -49,14 +48,17 @@ const NavbarJB = function () {
           >
             <img
               alt="logo Just Breathe"
-              src="Just Breathe-Logo.png"
-              width={100}
+              src="/jb-logo.svg"
+              width={52}
+              height={52}
             />
           </Link>
+
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             aria-label="Apri il menu di navigazione"
           />
+
           <Navbar.Collapse id="basic-navbar-nav">
             <div className="w-100 d-flex justify-content-between">
               <Nav className="mt-2">
@@ -67,11 +69,7 @@ const NavbarJB = function () {
                         location.pathname === "/diario" ? "page" : undefined
                       }
                       aria-label="Diario - Scrivi il tuo diario"
-                      className={`nav-link ${
-                        location.pathname === "/diario"
-                          ? "text-custom-active fw-bold"
-                          : "text-white"
-                      }`}
+                      className={`nav-link ${location.pathname === "/diario" ? "text-custom-active fw-bold" : "text-white"}`}
                       to="/diario"
                       onClick={() => setExpanded(false)}
                     >
@@ -82,11 +80,7 @@ const NavbarJB = function () {
                         location.pathname === "/todolist" ? "page" : undefined
                       }
                       aria-label="ToDo List - Calendario - Organizza il tuo tempo"
-                      className={`nav-link ${
-                        location.pathname === "/todolist"
-                          ? "text-custom-active fw-bold"
-                          : "text-white"
-                      }`}
+                      className={`nav-link ${location.pathname === "/todolist" ? "text-custom-active fw-bold" : "text-white"}`}
                       to="/todolist"
                       onClick={() => setExpanded(false)}
                     >
@@ -97,11 +91,7 @@ const NavbarJB = function () {
                         location.pathname === "/mood" ? "page" : undefined
                       }
                       aria-label="Mood - Crea la tua playlist in base al tuo mood"
-                      className={`nav-link ${
-                        location.pathname === "/mood"
-                          ? "text-custom-active fw-bold"
-                          : "text-white"
-                      }`}
+                      className={`nav-link ${location.pathname === "/mood" ? "text-custom-active fw-bold" : "text-white"}`}
                       to="/mood"
                       onClick={() => setExpanded(false)}
                     >
@@ -112,11 +102,7 @@ const NavbarJB = function () {
                         location.pathname === "/eventi" ? "page" : undefined
                       }
                       aria-label="Eventi - Scopri gli eventi nella tua città"
-                      className={`nav-link ${
-                        location.pathname === "/eventi"
-                          ? "text-custom-active fw-bold"
-                          : "text-white"
-                      }`}
+                      className={`nav-link ${location.pathname === "/eventi" ? "text-custom-active fw-bold" : "text-white"}`}
                       to="/eventi"
                       onClick={() => setExpanded(false)}
                     >
@@ -128,12 +114,8 @@ const NavbarJB = function () {
                           ? "page"
                           : undefined
                       }
-                      aria-label="Respirazioni guidate - Scegli la respirazione che più fa per te"
-                      className={`nav-link ${
-                        location.pathname === "/respirazioni"
-                          ? "text-custom-active fw-bold"
-                          : "text-white"
-                      }`}
+                      aria-label="Respirazioni guidate - Scegli la respirazione più adatta a te"
+                      className={`nav-link ${location.pathname === "/respirazioni" ? "text-custom-active fw-bold" : "text-white"}`}
                       to="/respirazioni"
                       onClick={() => setExpanded(false)}
                     >
@@ -155,7 +137,7 @@ const NavbarJB = function () {
                     }
                     id="dropdown-profilo"
                     align="end"
-                    menuVariant="dark"
+                    className="jb-dropdown"
                   >
                     <NavDropdown.Item
                       as={Link}

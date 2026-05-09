@@ -9,11 +9,11 @@ import {
   Form,
   Modal,
   Card,
-  Spinner,
   Alert,
 } from "react-bootstrap"
 import "../assets/cssVari/toDoList.css"
 import CalendarModal from "./CalendarModal"
+import LoadingSkeleton from "./common/LoadingSkeleton"
 
 interface ToDo {
   id: number
@@ -230,7 +230,7 @@ const ToDoList = () => {
 
   return (
     <Container role="main">
-      <h1 className="text-center mynav text-white py-3 mt-5 rounded">
+      <h1 className="text-center jb-page-header py-3 mt-5 rounded">
         To Do List - Calendario
       </h1>
       <Row className="justify-content-center my-5 g-3">
@@ -257,12 +257,9 @@ const ToDoList = () => {
           </Button>
         </Col>
 
-        <Col sm={12} lg={6} className="text-white mynav rounded px-3">
+        <Col sm={12} lg={6} className="jb-surface rounded px-3">
           {loading && (
-            <div className="text-center py-3" role="status" aria-live="polite">
-              <Spinner animation="border" variant="success" />
-              <span className="visually-hidden">Caricamento...</span>
-            </div>
+            <LoadingSkeleton compact lines={3} className="my-3" />
           )}
           {error && (
             <Alert variant="danger" role="alert">

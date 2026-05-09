@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
-import { Spinner, Button, ListGroup, Card } from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+import DashboardCard from "./DashboardCard"
+import DashboardSkeleton from "./DashboardSkeleton"
 
 interface Mood {
   id: number
@@ -23,123 +25,113 @@ const UltimoMood = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    const controller = new AbortController()
+
     const fetchMood = async () => {
       try {
         const res = await fetch(
-          `${
-            import.meta.env.VITE_API_URL
-          }/moods?page=0&size=1&sortBy=dataCreazione`,
+          `${import.meta.env.VITE_API_URL}/moods?page=0&size=1&sortBy=dataCreazione`,
           {
             headers: { Authorization: `Bearer ${token}` },
-          }
+            signal: controller.signal,
+          },
         )
         const data = await res.json()
+
         if (data.content && data.content.length > 0) {
           const ultimoMood = data.content[0]
           const resBrani = await fetch(
             `${import.meta.env.VITE_API_URL}/brani/mood/${ultimoMood.id}`,
             {
               headers: { Authorization: `Bearer ${token}` },
-            }
+              signal: controller.signal,
+            },
           )
           const braniData = await resBrani.json()
           setMood({ ...ultimoMood, brani: braniData })
         }
       } catch (error) {
-        console.error("Errore nel caricamento del mood:", error)
-        setIsError(
-          "Qualcosa è andato storto nel caricamento dei mood 😥. Rilassati, riprova o contatta l'assistenza 🌿"
-        )
+        if ((error as Error).name !== "AbortError") {
+          setIsError("Qualcosa e andato storto nel caricamento dei mood.")
+        }
       } finally {
         setLoading(false)
       }
     }
 
     if (token) fetchMood()
+
+    return () => controller.abort()
   }, [token])
 
+  if (loading) {
+    return (
+      <DashboardSkeleton
+        title="Mood"
+        iconClassName="bi bi-music-note-beamed"
+        lines={4}
+      />
+    )
+  }
+
   return (
-    <Card className="mynav text-white mb-5">
-      <Card.Body>
-        <Card.Title as="h4">Mood</Card.Title>
-        {isError && (
-          <div
-            role="alert"
-            className="alert alert-danger"
-            aria-live="assertive"
-          >
-            {isError}
-          </div>
-        )}
-        {loading ? (
-          <div className="text-center py-3" role="status" aria-live="polite">
-            <Spinner animation="border" variant="success" />
-            <span className="visually-hidden">Caricamento...</span>
-          </div>
-        ) : mood ? (
-          <>
-            <Card.Text className="mb-2">
-              Ultimo mood:{" "}
-              <strong>
-                {mood.tipoMood.charAt(0) + mood.tipoMood.slice(1).toLowerCase()}
-              </strong>
-              <br />
-              Salvato il:{" "}
-              {new Date(mood.dataCreazione).toLocaleDateString("it-IT", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
-            </Card.Text>
-
-            {mood.brani.length > 0 ? (
-              <ListGroup
-                variant="flush"
-                className="mb-3 rounded"
-                aria-label="Lista dei brani associati all'ultimo mood"
-              >
-                {mood.brani.slice(0, 6).map((brano) => (
-                  <ListGroup.Item key={brano.id} className="text-dark py-1">
-                    🎵 {brano.titoloBrano}
-                  </ListGroup.Item>
-                ))}
-                {mood.brani.length > 6 && (
-                  <ListGroup.Item className="text-dark py-1">
-                    🎵 ...
-                  </ListGroup.Item>
-                )}
-              </ListGroup>
-            ) : (
-              <Card.Text className="fst-italic">
-                Nessun brano associato.
-              </Card.Text>
-            )}
-
-            <Button
-              variant="success"
-              onClick={() => navigate("/mood")}
-              aria-label="Vai ai mood - Crea le tue playlist in base al mood"
-            >
-              Vai ai mood
-            </Button>
-          </>
-        ) : (
-          <>
-            <Card.Text>
-              Ascolta la musica che preferisci in base al tuo mood e crea la tua
-              playlist!
-            </Card.Text>
-            <Button
-              variant="success"
-              onClick={() => navigate("/mood")}
-              aria-label="Crea il tuo mood - Vai alla sezione mood"
-            >
-              Crea il tuo mood
-            </Button>
-          </>
-        )}
-      </Card.Body>
-    </Card>
+    <DashboardCard
+      title="Mood"
+      iconClassName="bi bi-music-note-beamed"
+      footer={
+        <Button
+          className="dashboard-cta dashboard-cta-soft"
+          onClick={() => navigate("/mood")}
+          aria-label="Esplora i tuoi mood"
+        >
+          Esplora i tuoi mood
+        </Button>
+      }
+    >
+      {isError ? (
+        <div
+          role="alert"
+          className="alert alert-danger mb-0"
+          aria-live="assertive"
+        >
+          {isError}
+        </div>
+      ) : mood ? (
+        <>
+          <p className="mb-2">
+            Ultimo mood:{" "}
+            <strong>
+              {mood.tipoMood.charAt(0) + mood.tipoMood.slice(1).toLowerCase()}
+            </strong>
+          </p>
+          <p className="mb-2">
+            Salvato il:{" "}
+            {new Date(mood.dataCreazione).toLocaleDateString("it-IT", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+          {mood.brani.length > 0 ? (
+            <ul className="dashboard-mood-list mb-0" aria-label="Lista dei brani associati all'ultimo mood">
+              {mood.brani.slice(0, 6).map((brano) => (
+                <li key={brano.id} className="dashboard-mood-item text-truncate">
+                  <i className="bi bi-music-note-beamed" aria-hidden="true" />{" "}
+                  {brano.titoloBrano}
+                </li>
+              ))}
+              {mood.brani.length > 6 ? <li className="dashboard-mood-more">...</li> : null}
+            </ul>
+          ) : (
+            <p className="mb-0">Nessun brano associato.</p>
+          )}
+        </>
+      ) : (
+        <p className="mb-0">
+          Ascolta la musica che preferisci in base al tuo mood.
+        </p>
+      )}
+    </DashboardCard>
   )
 }
 

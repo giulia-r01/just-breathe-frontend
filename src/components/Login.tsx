@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Spinner, Container, Row, Col, Button } from "react-bootstrap"
+import { Container, Row, Col, Button } from "react-bootstrap"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -85,7 +85,7 @@ const Login = function () {
   return (
     <Container className="container mt-4" role="main">
       <Row className="justify-content-center px-4">
-        <Col md={6} lg={4} className="mynav py-3 my-4 rounded text-white">
+        <Col md={6} lg={4} className="jb-surface jb-auth-card py-3 my-4 rounded">
           <h1>Login</h1>
 
           {error && <div className="alert alert-danger">{error}</div>}
@@ -139,10 +139,10 @@ const Login = function () {
                 </button>
               </div>
             </div>
-            <p className="text-center text-white">
+            <p className="text-center">
               <Link
                 to="/auth/password/recupero"
-                className="text-white"
+                className="jb-footer-link"
                 aria-label="Hai scordato la tua password? - Recupera la password dimenticata"
               >
                 Hai scordato la tua password?
@@ -156,13 +156,7 @@ const Login = function () {
             >
               {loading ? (
                 <>
-                  <Spinner
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    className="me-2"
-                    aria-hidden="true"
-                  />
+                  <span className="jb-inline-skeleton me-2" aria-hidden="true" />
                   Caricamento...
                 </>
               ) : (

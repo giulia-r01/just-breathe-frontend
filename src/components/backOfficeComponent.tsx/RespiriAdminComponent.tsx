@@ -6,9 +6,9 @@ import {
   Form,
   Modal,
   Row,
-  Spinner,
   Alert,
 } from "react-bootstrap"
+import LoadingSkeleton from "../common/LoadingSkeleton"
 
 interface Respiro {
   id?: number
@@ -198,10 +198,7 @@ const RespiriAdminComponent = () => {
       </Button>
 
       {loading && (
-        <div className="text-center" role="status" aria-live="polite">
-          <Spinner animation="border" variant="success" />
-          <span className="visually-hidden">Caricamento...</span>
-        </div>
+        <LoadingSkeleton compact lines={3} />
       )}
 
       {error && (

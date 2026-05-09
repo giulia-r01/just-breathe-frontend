@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import {
   Card,
-  Spinner,
   Col,
   Table,
   Row,
@@ -9,6 +8,7 @@ import {
   Pagination,
 } from "react-bootstrap"
 import { ListGroup } from "react-bootstrap"
+import LoadingSkeleton from "../common/LoadingSkeleton"
 
 interface Props {
   token: string
@@ -84,12 +84,7 @@ const StatisticheComponent = ({ token }: Props) => {
   }, [token, currentPage])
 
   if (loading)
-    return (
-      <div className="text-center py-3" role="status" aria-live="polite">
-        <Spinner animation="border" variant="success" />
-        <span className="visually-hidden">Caricamento...</span>
-      </div>
-    )
+    return <LoadingSkeleton compact lines={4} />
   if (error)
     return (
       <Alert className="text-danger" role="alert">

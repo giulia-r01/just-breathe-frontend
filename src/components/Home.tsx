@@ -15,12 +15,12 @@ const Home = function () {
   return (
     <Container className="text-center mt-5" role="main">
       <Row className="justify-content-center py-5 px-5">
-        <Col md={6} className="mynav rounded text-white py-3">
-          <h1 className="mb-4">🌿 Benvenut* su Just Breathe</h1>
+        <Col md={6} className="jb-surface jb-welcome-box rounded py-3">
+          <h1 className="mb-4 jb-welcome-title">Benvenut* su Just Breathe</h1>
           <p className="mb-4">
             Rilassati e libera i tuoi pensieri con respirazioni guidate, diario
             personale, gestione del tempo, playlist in base al mood ed eventi
-            nelle principali città italiane.
+            nelle principali citta italiane.
           </p>
           <p>
             Organizza la mente, libera il respiro.

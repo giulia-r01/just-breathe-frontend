@@ -5,7 +5,6 @@ import {
   Col,
   Container,
   Row,
-  Spinner,
   Form,
 } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
@@ -157,7 +156,7 @@ const ResetPsw = function () {
             >
               {loading ? (
                 <div role="status" aria-live="polite">
-                  <Spinner animation="border" size="sm" className="me-2" />
+                  <span className="jb-inline-skeleton me-2" aria-hidden="true" />
                   Caricamento...
                 </div>
               ) : (
