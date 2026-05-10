@@ -14,6 +14,72 @@ const hasAuthorizationHeader = (headers?: HeadersInit): boolean => {
   return Object.keys(headers).some((key) => key.toLowerCase() === "authorization")
 }
 
+const parseJwtPayload = (token: string): { exp?: number } | null => {
+  try {
+    const payloadBase64 = token.split(".")[1]
+    if (!payloadBase64) return null
+
+    const base64 = payloadBase64.replace(/-/g, "+").replace(/_/g, "/")
+    const normalized = base64.padEnd(Math.ceil(base64.length / 4) * 4, "=")
+    const decoded = atob(normalized)
+
+    return JSON.parse(decoded) as { exp?: number }
+  } catch {
+    return null
+  }
+}
+
+const clearAuthStorage = () => {
+  localStorage.removeItem("token")
+  localStorage.removeItem("ruolo")
+  localStorage.removeItem("imgProfilo")
+  localStorage.removeItem("userId")
+}
+
+const setExpiredMessage = () => {
+  if (!sessionStorage.getItem(SESSION_EXPIRED_MESSAGE_KEY)) {
+    sessionStorage.setItem(
+      SESSION_EXPIRED_MESSAGE_KEY,
+      "Sessione scaduta, effettua di nuovo il login."
+    )
+  }
+}
+
+const redirectToLogin = () => {
+  if (window.location.pathname !== "/login") {
+    window.location.assign("/login")
+  }
+}
+
+export const clearSessionAndRedirectToLoginIfNeeded = (
+  navigate?: (to: string, options?: { replace?: boolean }) => void,
+  currentPath?: string
+) => {
+  clearAuthStorage()
+  setExpiredMessage()
+
+  const path = currentPath ?? window.location.pathname
+
+  if (path === "/login") return
+
+  if (navigate) {
+    navigate("/login", { replace: true })
+    return
+  }
+
+  redirectToLogin()
+}
+
+export const isTokenExpired = (token: string): boolean => {
+  const payload = parseJwtPayload(token)
+  const exp = payload?.exp
+
+  if (!exp) return false
+
+  const nowInSeconds = Math.floor(Date.now() / 1000)
+  return nowInSeconds >= exp
+}
+
 export const setupAuthInterceptor = () => {
   const originalFetch = globalThis.fetch.bind(globalThis)
 
@@ -21,15 +87,7 @@ export const setupAuthInterceptor = () => {
     const response = await originalFetch(input, init)
 
     if (response.status === 401 && hasAuthorizationHeader(init?.headers)) {
-      localStorage.clear()
-      sessionStorage.setItem(
-        SESSION_EXPIRED_MESSAGE_KEY,
-        "Sessione scaduta, effettua di nuovo il login."
-      )
-
-      if (window.location.pathname !== "/login") {
-        window.location.assign("/login")
-      }
+      clearSessionAndRedirectToLoginIfNeeded()
     }
 
     return response

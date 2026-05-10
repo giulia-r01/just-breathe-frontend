@@ -60,8 +60,8 @@ const NavbarJB = function () {
           />
 
           <Navbar.Collapse id="basic-navbar-nav">
-            <div className="w-100 d-flex justify-content-between">
-              <Nav className="mt-2">
+            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center ms-lg-auto gap-3">
+              <Nav className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2 me-lg-3">
                 {token && (
                   <>
                     <Link
@@ -125,7 +125,7 @@ const NavbarJB = function () {
                 )}
               </Nav>
 
-              <Nav>
+              <Nav className="d-flex flex-row align-items-center justify-content-between justify-content-lg-end w-100">
                 {token ? (
                   <NavDropdown
                     title={

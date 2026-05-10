@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Container, Row, Col } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 import UserListComponent from "./backOfficeComponent.tsx/UserListComponent"
 import StatisticheComponent from "./backOfficeComponent.tsx/StatisticheComponent"
 import RespiriAdminComponent from "./backOfficeComponent.tsx/RespiriAdminComponent"
@@ -9,6 +10,7 @@ const BackOffice = () => {
   const [token, setToken] = useState<string | null>(null)
   const [myId, setMyId] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token")
@@ -22,16 +24,16 @@ const BackOffice = () => {
     setLoading(false)
   }, [])
 
-  if (loading) {
-    return <LoadingSkeleton className="mt-5 mx-auto w-100" lines={2} />
-  }
+  useEffect(() => {
+    if (loading) return
 
-  if (!token || !myId) {
-    return (
-      <p className="bg-white rounded p2 text-center mt-5 text-danger fw-bold">
-        Accesso non autorizzato. Effettua il login.
-      </p>
-    )
+    if (!token || !myId) {
+      navigate("/login", { replace: true })
+    }
+  }, [loading, token, myId, navigate])
+
+  if (loading || !token || !myId) {
+    return <LoadingSkeleton className="mt-5 mx-auto w-100" lines={2} />
   }
 
   return (
