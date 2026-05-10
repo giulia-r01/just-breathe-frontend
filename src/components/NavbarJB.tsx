@@ -59,9 +59,9 @@ const NavbarJB = function () {
             aria-label="Apri il menu di navigazione"
           />
 
-          <Navbar.Collapse id="basic-navbar-nav">
-            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center ms-lg-auto gap-3">
-              <Nav className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2 me-lg-3">
+          <Navbar.Collapse id="basic-navbar-nav" className="justify-content-lg-end">
+            <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center ms-lg-auto gap-2">
+              <Nav className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2 me-lg-1">
                 {token && (
                   <>
                     <Link
@@ -69,7 +69,7 @@ const NavbarJB = function () {
                         location.pathname === "/diario" ? "page" : undefined
                       }
                       aria-label="Diario - Scrivi il tuo diario"
-                      className={`nav-link ${location.pathname === "/diario" ? "text-custom-active fw-bold" : "text-white"}`}
+                      className={`nav-link text-nowrap ${location.pathname === "/diario" ? "text-custom-active fw-bold" : ""}`}
                       to="/diario"
                       onClick={() => setExpanded(false)}
                     >
@@ -80,7 +80,7 @@ const NavbarJB = function () {
                         location.pathname === "/todolist" ? "page" : undefined
                       }
                       aria-label="ToDo List - Calendario - Organizza il tuo tempo"
-                      className={`nav-link ${location.pathname === "/todolist" ? "text-custom-active fw-bold" : "text-white"}`}
+                      className={`nav-link text-nowrap ${location.pathname === "/todolist" ? "text-custom-active fw-bold" : ""}`}
                       to="/todolist"
                       onClick={() => setExpanded(false)}
                     >
@@ -91,7 +91,7 @@ const NavbarJB = function () {
                         location.pathname === "/mood" ? "page" : undefined
                       }
                       aria-label="Mood - Crea la tua playlist in base al tuo mood"
-                      className={`nav-link ${location.pathname === "/mood" ? "text-custom-active fw-bold" : "text-white"}`}
+                      className={`nav-link text-nowrap ${location.pathname === "/mood" ? "text-custom-active fw-bold" : ""}`}
                       to="/mood"
                       onClick={() => setExpanded(false)}
                     >
@@ -102,7 +102,7 @@ const NavbarJB = function () {
                         location.pathname === "/eventi" ? "page" : undefined
                       }
                       aria-label="Eventi - Scopri gli eventi nella tua città"
-                      className={`nav-link ${location.pathname === "/eventi" ? "text-custom-active fw-bold" : "text-white"}`}
+                      className={`nav-link text-nowrap ${location.pathname === "/eventi" ? "text-custom-active fw-bold" : ""}`}
                       to="/eventi"
                       onClick={() => setExpanded(false)}
                     >
@@ -115,7 +115,7 @@ const NavbarJB = function () {
                           : undefined
                       }
                       aria-label="Respirazioni guidate - Scegli la respirazione più adatta a te"
-                      className={`nav-link ${location.pathname === "/respirazioni" ? "text-custom-active fw-bold" : "text-white"}`}
+                      className={`nav-link text-nowrap ${location.pathname === "/respirazioni" ? "text-custom-active fw-bold" : ""}`}
                       to="/respirazioni"
                       onClick={() => setExpanded(false)}
                     >
@@ -125,7 +125,7 @@ const NavbarJB = function () {
                 )}
               </Nav>
 
-              <Nav className="d-flex flex-row align-items-center justify-content-between justify-content-lg-end w-100">
+              <Nav className="d-flex flex-row align-items-center justify-content-between justify-content-lg-end w-100 w-lg-auto">
                 {token ? (
                   <NavDropdown
                     title={

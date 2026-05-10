@@ -133,9 +133,17 @@ const Eventi = () => {
     <Container role="main">
       <Row className="align-items-start py-4 g-2">
         <h1 className="visually-hidden">Eventi</h1>
-        <h2 className="mb-4 jb-page-header mt-3 py-3">
-          Scopri gli eventi disponibili nella tua città
-        </h2>
+        <div className="jb-page-hero mt-3 mb-4">
+          <div className="jb-page-hero-icon" aria-hidden="true">
+            <i className="bi bi-calendar-event" />
+          </div>
+          <div>
+            <h2 className="jb-page-hero-title mb-1">Eventi in città</h2>
+            <p className="jb-page-hero-subtitle mb-0">
+              Scopri gli eventi disponibili vicino a te
+            </p>
+          </div>
+        </div>
         <Col md={5} lg={6}>
           <Form.Group controlId="inputCitta" className="d-flex mb-3">
             <Form.Label className="visually-hidden">

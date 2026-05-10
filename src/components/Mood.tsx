@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+﻿import { useEffect, useState } from "react"
 import {
   Container,
   Row,
@@ -6,11 +6,11 @@ import {
   Card,
   Button,
   Form,
-  ListGroup,
   Modal,
   Alert,
 } from "react-bootstrap"
 import LoadingSkeleton from "./common/LoadingSkeleton"
+import JBCard from "./common/JBCard"
 
 interface Brano {
   id: number
@@ -389,16 +389,26 @@ const Mood = () => {
     }
   }
 
-  return (
-    <Container className="py-4 px-3 rounded my-5" role="main">
-      <h1 className="visually-hidden">Mood</h1>
-      <h2 className="mb-4 jb-page-header p-2">
-        Trasforma il tuo mood in musica
-      </h2>
+  const getMoodTone = (tipoMood: string) => tipoMood.toLowerCase()
 
-      {loading && (
-        <LoadingSkeleton className="my-4" lines={5} />
-      )}
+  return (
+    <Container className="jb-mood-page py-4 px-3 rounded " role="main">
+      <h1 className="visually-hidden">Mood</h1>
+      <div className="jb-page-hero mb-4">
+        <div className="jb-page-hero-icon" aria-hidden="true">
+          <i className="bi bi-music-note-beamed" />
+        </div>
+        <div>
+          <h2 className="jb-page-hero-title mb-1">
+            Trasforma il tuo mood in musica
+          </h2>
+          <p className="jb-page-hero-subtitle mb-0">
+            Crea la playlist perfetta per ogni emozione
+          </p>
+        </div>
+      </div>
+
+      {loading && <LoadingSkeleton className="my-4" lines={5} />}
       {success && (
         <div role="alert">
           <Alert variant="success" className="text-center">
@@ -414,146 +424,179 @@ const Mood = () => {
         </div>
       )}
 
-      <Row className="justify-content-center g-3">
-        <Col md={4} lg={6}>
-          <h3 className="jb-section-title rounded p-3">I tuoi mood</h3>
-          <ListGroup>
-            {moods.length === 0 && (
-              <p className="bg-white rounded p-2 mytext fw-semibold">
-                Nessun mood salvato.
-              </p>
-            )}
-            {moods.map((mood) => (
-              <ListGroup.Item
-                key={mood.id}
-                action
-                active={selectedMood?.id === mood.id}
-                onClick={() => handleSelectMood(mood)}
-                as="div"
-                className={
-                  selectedMood?.id === mood.id
-                    ? "d-flex justify-content-between align-items-center text-white bg-success border border-success"
-                    : "d-flex justify-content-between align-items-center text-dark"
-                }
+      <Row className="justify-content-center g-4">
+        <Col lg={4}>
+          <aside className="jb-mood-shell jb-mood-sidebar">
+            <Form className="mb-4 d-flex">
+              <Form.Select
+                value={newTipoMood}
+                onChange={(e) => setNewTipoMood(e.target.value)}
+                className="me-2 jb-mood-select"
+                disabled={showEditModal}
+                aria-label="Seleziona un mood da creare"
               >
-                <span>
-                  {mood.tipoMood.charAt(0) +
-                    mood.tipoMood.slice(1).toLowerCase()}
-                </span>
-                {selectedMood?.id === mood.id && (
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleDeleteMood()
-                    }}
-                    disabled={showEditModal}
-                  >
-                    Elimina
-                  </Button>
+                <option value="">Crea un mood</option>
+                {tipiMood.map((tipo) => (
+                  <option key={tipo} value={tipo}>
+                    {tipo.charAt(0) + tipo.slice(1).toLowerCase()}
+                  </option>
+                ))}
+              </Form.Select>
+
+              <Button
+                variant="success"
+                onClick={handleCreateMood}
+                disabled={showEditModal}
+                aria-label="Crea - clicca per creare il tuo mood"
+              >
+                Crea
+              </Button>
+            </Form>
+            <h3 className="jb-mood-sidebar-title">I tuoi mood</h3>
+            <div className="jb-mood-items-wrap mt-2 pe-1">
+              <div className="jb-mood-list d-flex flex-column" role="list">
+                {moods.length === 0 && (
+                  <p className="bg-white rounded p-2 mytext fw-semibold mb-0">
+                    Nessun mood salvato.
+                  </p>
                 )}
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-
-          <Form className="mt-4 d-flex">
-            <Form.Select
-              value={newTipoMood}
-              onChange={(e) => setNewTipoMood(e.target.value)}
-              className="me-2 jb-mood-select"
-              disabled={showEditModal}
-              aria-label="Seleziona un mood da creare"
-            >
-              <option value="">Crea un mood</option>
-              {tipiMood.map((tipo) => (
-                <option key={tipo} value={tipo}>
-                  {tipo.charAt(0) + tipo.slice(1).toLowerCase()}
-                </option>
-              ))}
-            </Form.Select>
-
-            <Button
-              variant="success"
-              onClick={handleCreateMood}
-              disabled={showEditModal}
-              aria-label="Crea - clicca per creare il tuo mood"
-            >
-              Crea
-            </Button>
-          </Form>
+                {moods.map((mood) => (
+                  <div
+                    key={mood.id}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => handleSelectMood(mood)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault()
+                        handleSelectMood(mood)
+                      }
+                    }}
+                    className={`jb-mood-item d-flex justify-content-between align-items-center ${
+                      selectedMood?.id === mood.id ? "is-active" : ""
+                    }`}
+                    data-mood-tone={getMoodTone(mood.tipoMood)}
+                    aria-pressed={selectedMood?.id === mood.id}
+                  >
+                    <span>
+                      {mood.tipoMood.charAt(0) +
+                        mood.tipoMood.slice(1).toLowerCase()}
+                    </span>
+                    {selectedMood?.id === mood.id && (
+                      <div className="d-flex align-items-center gap-2">
+                        <span
+                          className="jb-mood-active-badge"
+                          aria-label="Mood attivo"
+                        >
+                          Attivo
+                        </span>
+                        <Button
+                          variant="light"
+                          size="sm"
+                          className="jb-mood-delete-icon-btn"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleDeleteMood()
+                          }}
+                          disabled={showEditModal}
+                          aria-label="Elimina mood selezionato"
+                        >
+                          <i className="bi bi-trash3" aria-hidden="true" />
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
         </Col>
 
-        <Col md={8} lg={6}>
+        <Col lg={8}>
           {selectedMood ? (
             <>
-              <div className="jb-surface rounded">
-                <h3 className="p-3">
-                  Mood selezionato: {selectedMood.tipoMood}
-                </h3>
-                <p className="ps-3 pb-2">
-                  Salvato il:{" "}
-                  {new Date(selectedMood.dataCreazione).toLocaleDateString(
-                    "it-IT",
-                    {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    },
-                  )}
+              <section className="jb-mood-shell jb-mood-main">
+                <div className="jb-mood-main-header">
+                  <h3 className="mb-1">
+                    Mood selezionato: <span>{selectedMood.tipoMood}</span>
+                  </h3>
+                  <p className="jb-mood-main-meta mb-2">
+                    Ultima modifica:{" "}
+                    {new Date(selectedMood.dataCreazione).toLocaleDateString(
+                      "it-IT",
+                      {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                      },
+                    )}{" "}
+                    {new Date(selectedMood.dataCreazione).toLocaleTimeString(
+                      "it-IT",
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      },
+                    )}
+                  </p>
+                </div>
+
+                <p className="jb-mood-main-label">
+                  Aggiungi una canzone dal Spotify o YouTube
                 </p>
+
+                <Form
+                  className="d-flex mb-4"
+                  role="form"
+                  aria-label="Aggiungi un nuovo brano al mood selezionato"
+                >
+                  <Form.Group
+                    controlId="nuovoBranoInput"
+                    className="flex-grow-1 me-2"
+                  >
+                    <Form.Label className="visually-hidden">
+                      Inserisci il titolo di un nuovo brano
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Incolla il link qui..."
+                      value={newBrano}
+                      onChange={(e) => setNewBrano(e.target.value)}
+                      disabled={showEditModal}
+                      aria-required="true"
+                      className="jb-mood-input"
+                    />
+                  </Form.Group>
+                  <Button
+                    variant="success"
+                    type="button"
+                    onClick={handleAddBrano}
+                    disabled={showEditModal}
+                    aria-label="Aggiungi - clicca per aggiungere un brano al mood selezionato"
+                    className="jb-mood-add-btn"
+                  >
+                    Aggiungi
+                  </Button>
+                </Form>
+
                 {(!selectedMood.brani || selectedMood.brani.length === 0) && (
-                  <p className="fw-bold ps-3 pb-2">
+                  <p className="fw-bold pb-2">
                     Nessun brano associato a questo mood.
                   </p>
                 )}
-              </div>
-              <Form
-                className="d-flex mb-3"
-                role="form"
-                aria-label="Aggiungi un nuovo brano al mood selezionato"
-              >
-                <Form.Group
-                  controlId="nuovoBranoInput"
-                  className="flex-grow-1 me-2"
-                >
-                  <Form.Label className="visually-hidden">
-                    Inserisci il titolo di un nuovo brano
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Aggiungi una canzone (es. Toxicity )"
-                    value={newBrano}
-                    onChange={(e) => setNewBrano(e.target.value)}
-                    disabled={showEditModal}
-                    aria-required="true"
-                  />
-                </Form.Group>
-                <Button
-                  variant="success"
-                  type="button"
-                  onClick={handleAddBrano}
-                  disabled={showEditModal}
-                  aria-label="Aggiungi - clicca per aggiungere un brano al mood selezionato"
-                >
-                  Aggiungi
-                </Button>
-              </Form>
-
-              <Row className="g-1">
-                {(selectedMood.brani || []).map((brano) => {
-                  const embedUrl = extractYouTubeEmbedUrl(brano.link)
-                  return (
-                    <Col md={6} key={brano.id} className="mb-4">
-                      <Card className="text-dark">
-                        <Card.Body>
-                          <Card.Title className="mytext">
-                            {brano.titoloBrano}
-                          </Card.Title>
-
-                          {embedUrl ? (
-                            <div className="ratio ratio-16x9">
+                <Row className="g-3">
+                  {(selectedMood.brani || []).map((brano) => {
+                    const embedUrl = extractYouTubeEmbedUrl(brano.link)
+                    return (
+                      <Col lg={4} md={6} key={brano.id} className="mb-1">
+                        <JBCard
+                          variantStyle="elevated"
+                          className="jb-track-card text-dark"
+                        >
+                          <div
+                            className="jb-track-media"
+                            data-mood-tone={getMoodTone(selectedMood.tipoMood)}
+                          >
+                            {embedUrl ? (
                               <iframe
                                 src={embedUrl}
                                 title={`Player di ${brano.titoloBrano}`}
@@ -562,37 +605,50 @@ const Mood = () => {
                                 role="presentation"
                                 aria-label={`Video di YouTube per ${brano.titoloBrano}`}
                               />
+                            ) : (
+                              <i className="bi bi-play" aria-hidden="true" />
+                            )}
+                          </div>
+                          <Card.Body>
+                            <Card.Title className="mytext jb-track-title">
+                              {brano.titoloBrano}
+                            </Card.Title>
+                            <div className="jb-track-actions">
+                              <Button
+                                variant="outline-success"
+                                size="sm"
+                                className="jb-track-listen-btn"
+                                onClick={() => startEditBrano(brano)}
+                                disabled={showEditModal}
+                                aria-label="Modifica il brano selezionato"
+                              >
+                                <i
+                                  className="bi bi-pencil-square"
+                                  aria-hidden="true"
+                                />{" "}
+                                Modifica
+                              </Button>
+                              <Button
+                                variant="outline-danger"
+                                size="sm"
+                                className="jb-track-delete-btn"
+                                onClick={() => handleDeleteBrano(brano.id)}
+                                disabled={showEditModal}
+                                aria-label="Elimina il brano selezionato"
+                              >
+                                <i
+                                  className="bi bi-trash3"
+                                  aria-hidden="true"
+                                />
+                              </Button>
                             </div>
-                          ) : (
-                            <p>Nessun player disponibile</p>
-                          )}
-
-                          <Button
-                            variant="success"
-                            size="sm"
-                            className="me-2 mt-2"
-                            onClick={() => startEditBrano(brano)}
-                            disabled={showEditModal}
-                            aria-label="Modifica il brano selezionato"
-                          >
-                            Modifica
-                          </Button>
-                          <Button
-                            variant="danger"
-                            size="sm"
-                            className="mt-2"
-                            onClick={() => handleDeleteBrano(brano.id)}
-                            disabled={showEditModal}
-                            aria-label="Elimina il brano selezionato"
-                          >
-                            Elimina
-                          </Button>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  )
-                })}
-              </Row>
+                          </Card.Body>
+                        </JBCard>
+                      </Col>
+                    )
+                  })}
+                </Row>
+              </section>
             </>
           ) : (
             <p className="bg-white rounded p-2 mytext fw-semibold">

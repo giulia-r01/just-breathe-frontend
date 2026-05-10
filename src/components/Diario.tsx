@@ -157,42 +157,73 @@ const Diario = () => {
   }
 
   return (
-    <Container className="my-4" role="main">
+    <Container className="jb-diary-page my-4" role="main">
+      <div className="jb-page-hero mt-3 mb-4">
+        <div className="jb-page-hero-icon" aria-hidden="true">
+          <i className="bi bi-journal-bookmark" />
+        </div>
+        <div>
+          <h2 className="jb-page-hero-title mb-1">Il tuo Diario</h2>
+          <p className="jb-page-hero-subtitle mb-0">
+            Scrivi i tuoi pensieri e riflessioni
+          </p>
+        </div>
+      </div>
+
       <Row className="justify-content-center">
-        <Col md={8}>
+        <Col lg={12}>
           <h1 className="visually-hidden">Diario</h1>
-          <h2 className="text-center mb-4 jb-page-header rounded mt-3 py-3">
-            Scrivi il tuo Diario
-          </h2>
-          <Card className="jb-surface p-4 mb-4">
+          <Card className="jb-surface jb-diary-form-card p-4 mb-4">
             <Form onSubmit={handleSubmit}>
+              <h3 className="jb-diary-form-title mb-2">Scrivi il tuo Diario</h3>
+              <p className="jb-diary-form-date mb-3">
+                Oggi è{" "}
+                {new Date().toLocaleDateString("it-IT", {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </p>
               <Form.Group controlId="titolo" className="mb-3">
                 <Form.Label>Titolo</Form.Label>
                 <Form.Control
                   type="text"
                   name="titolo"
-                  placeholder="Inserisci il titolo del tuo diario"
+                  placeholder="Dai un titolo al tuo diario"
                   value={formData.titolo}
                   onChange={handleChange}
                   required
+                  className="jb-diary-input"
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Come ti senti oggi?</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Racconta..."
+                  className="jb-diary-input"
+                  aria-label="Come ti senti oggi?"
                 />
               </Form.Group>
               <Form.Group controlId="contenuto" className="mb-4">
-                <Form.Label>Contenuto</Form.Label>
+                <Form.Label>Che ti passa per la mente? Scrivilo!</Form.Label>
                 <Form.Control
                   as="textarea"
-                  placeholder="Che ti passa per la mente? Scrivilo!"
+                  placeholder="Scrivi i tuoi pensieri..."
                   name="contenuto"
                   rows={5}
                   value={formData.contenuto}
                   onChange={handleChange}
                   required
+                  className="jb-diary-input"
                 />
               </Form.Group>
               <Button
                 type="submit"
                 variant="success"
                 aria-label={editingId ? "Modifica Diario" : "Salva Diario"}
+                className="jb-diary-save-btn"
               >
                 {editingId ? "Modifica Diario" : "Salva Diario"}
               </Button>
@@ -212,21 +243,24 @@ const Diario = () => {
         </Col>
       </Row>
 
-      <h3 className="mt-5 mb-3 jb-section-title rounded py-3 px-3">
-        Diari precedenti
-      </h3>
+      <h3 className="mt-4 mb-3 jb-diary-list-title">Diari precedenti</h3>
 
-      <Row>
+      <Row className="g-3">
         {loading && <LoadingSkeleton className="mb-3" lines={4} />}
         {!loading &&
           diari.map((d) => (
             <Col sm={12} md={6} lg={4} key={d.id}>
-              <Card className="jb-surface mb-3">
+              <Card className="jb-surface jb-diary-item-card mb-1">
                 <Card.Body>
-                  <Card.Title as="h3" className="h4 pb-2">
-                    {d.titolo}
-                  </Card.Title>
-                  <Card.Subtitle as="h4" className="h5 mb-2">
+                  <div className="d-flex justify-content-between align-items-start gap-2 mb-2">
+                    <Card.Title as="h3" className="h4 mb-0">
+                      {d.titolo}
+                    </Card.Title>
+                  </div>
+                  <Card.Subtitle
+                    as="h4"
+                    className="h6 mb-3 jb-diary-item-subtitle"
+                  >
                     {d.dataUltimaModifica !== d.dataInserimento
                       ? `Ultima modifica: ${new Date(
                           d.dataUltimaModifica,
@@ -239,38 +273,40 @@ const Diario = () => {
                           timeZone: "Europe/Rome",
                         })}`}
                   </Card.Subtitle>
-                  <hr />
-                  <Card.Text className="fs-5">
+                  <Card.Text className="jb-diary-item-text">
                     {d.contenuto.length > 150
                       ? d.contenuto.substring(0, 150) + "..."
                       : d.contenuto}
                   </Card.Text>
-                  <Button
-                    aria-label="Visualizza il tuo diario"
-                    variant="success"
-                    size="sm"
-                    onClick={() => handleShowModal(d)}
-                    className="me-2"
-                  >
-                    Visualizza
-                  </Button>
-                  <Button
-                    aria-label="Modifica il tuo diario"
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => handleEdit(d)}
-                    className="me-2"
-                  >
-                    Modifica
-                  </Button>
-                  <Button
-                    aria-label="Elimina il tuo diario"
-                    variant="danger"
-                    size="sm"
-                    onClick={() => handleDelete(d.id)}
-                  >
-                    Elimina
-                  </Button>
+                  <div className="d-flex align-items-center gap-2">
+                    <Button
+                      aria-label="Visualizza il tuo diario"
+                      variant="outline-success"
+                      size="sm"
+                      onClick={() => handleShowModal(d)}
+                      className="jb-diary-read-btn"
+                    >
+                      <i className="bi bi-eye" aria-hidden="true" /> Leggi
+                    </Button>
+                    <Button
+                      aria-label="Modifica il tuo diario"
+                      variant="outline-secondary"
+                      size="sm"
+                      onClick={() => handleEdit(d)}
+                      className="jb-diary-icon-btn"
+                    >
+                      <i className="bi bi-pencil-square" aria-hidden="true" />
+                    </Button>
+                    <Button
+                      aria-label="Elimina il tuo diario"
+                      variant="outline-danger"
+                      size="sm"
+                      onClick={() => handleDelete(d.id)}
+                      className="jb-diary-icon-btn"
+                    >
+                      <i className="bi bi-trash3" aria-hidden="true" />
+                    </Button>
+                  </div>
                 </Card.Body>
               </Card>
             </Col>

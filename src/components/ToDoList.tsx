@@ -230,9 +230,18 @@ const ToDoList = () => {
 
   return (
     <Container role="main">
-      <h1 className="text-center jb-page-header py-3 mt-5 rounded">
-        To Do List - Calendario
-      </h1>
+      <h1 className="visually-hidden">To Do List</h1>
+      <div className="jb-page-hero mt-4 mb-3">
+        <div className="jb-page-hero-icon" aria-hidden="true">
+          <i className="bi bi-check2-square" />
+        </div>
+        <div>
+          <h2 className="jb-page-hero-title mb-1">La tua To Do List</h2>
+          <p className="jb-page-hero-subtitle mb-0">
+            Organizza il mese e tieni il ritmo
+          </p>
+        </div>
+      </div>
       <Row className="justify-content-center my-5 g-3">
         <Col sm={12} lg={6} className="d-flex flex-column align-items-center">
           <Calendar
@@ -258,9 +267,7 @@ const ToDoList = () => {
         </Col>
 
         <Col sm={12} lg={6} className="jb-surface rounded px-3">
-          {loading && (
-            <LoadingSkeleton compact lines={3} className="my-3" />
-          )}
+          {loading && <LoadingSkeleton compact lines={3} className="my-3" />}
           {error && (
             <Alert variant="danger" role="alert">
               {error}
