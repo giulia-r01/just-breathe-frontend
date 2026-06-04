@@ -2,8 +2,10 @@
   width: 140px;
   height: 140px;
   margin: auto;
+  display: block;
   border-radius: 50%;
   transform: scale(1);
+  transform-origin: center center;
   box-shadow: 0 14px 26px rgba(20, 67, 55, 0.26);
 }
 
