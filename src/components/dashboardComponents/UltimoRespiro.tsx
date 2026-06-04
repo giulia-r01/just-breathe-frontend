@@ -87,7 +87,7 @@ const UltimoRespiro = () => {
         <Button
           className="dashboard-cta"
           onClick={() => navigate("/respirazioni")}
-          aria-label="Vai agli esercizi di respirazione"
+          aria-label="Inizia una sessione - Vai agli esercizi di respirazione"
         >
           Inizia una sessione
         </Button>

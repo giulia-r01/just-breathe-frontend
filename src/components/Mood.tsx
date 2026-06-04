@@ -90,7 +90,10 @@ const Mood = () => {
     const fetchBrani = async (moodId: number): Promise<Brano[]> => {
       try {
         setError("")
-        const res = await apiFetch(`/brani/mood/${moodId}`, { auth: true, token })
+        const res = await apiFetch(`/brani/mood/${moodId}`, {
+          auth: true,
+          token,
+        })
         if (!res.ok) {
           console.error("Errore fetch brani", res.status)
           return []
@@ -137,7 +140,10 @@ const Mood = () => {
     setLoading(true)
     try {
       setError("")
-      const res = await apiFetch(`/brani/mood/${mood.id}`, { auth: true, token })
+      const res = await apiFetch(`/brani/mood/${mood.id}`, {
+        auth: true,
+        token,
+      })
       const brani = (await res.json()) || []
       setSelectedMood({ ...mood, brani })
     } catch (e) {

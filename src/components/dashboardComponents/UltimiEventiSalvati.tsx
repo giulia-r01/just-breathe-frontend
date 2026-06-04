@@ -90,11 +90,11 @@ const UltimiEventiSalvati = ({
       footer={
         showButton ? (
           <Button
-            className="dashboard-cta dashboard-cta-outline"
+            className="dashboard-cta"
             onClick={() => navigate("/eventi")}
-            aria-label="Esplora altri eventi"
+            aria-label="Esplora eventi"
           >
-            Esplora altri eventi
+            Esplora eventi
           </Button>
         ) : null
       }

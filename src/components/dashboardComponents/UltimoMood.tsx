@@ -31,11 +31,14 @@ const UltimoMood = () => {
 
     const fetchMood = async () => {
       try {
-        const res = await apiFetch("/moods?page=0&size=1&sortBy=dataCreazione", {
-          auth: true,
-          token,
-          signal: controller.signal,
-        })
+        const res = await apiFetch(
+          "/moods?page=0&size=1&sortBy=dataCreazione",
+          {
+            auth: true,
+            token,
+            signal: controller.signal,
+          },
+        )
         const data = await res.json()
 
         if (data.content && data.content.length > 0) {
@@ -78,9 +81,9 @@ const UltimoMood = () => {
       iconClassName="bi bi-music-note-beamed"
       footer={
         <Button
-          className="dashboard-cta dashboard-cta-soft"
+          className="dashboard-cta"
           onClick={() => navigate("/mood")}
-          aria-label="Esplora i tuoi mood"
+          aria-label="Esplora i tuoi mood - Vai alla sezione mood"
         >
           Esplora i tuoi mood
         </Button>
@@ -111,14 +114,22 @@ const UltimoMood = () => {
             })}
           </p>
           {mood.brani.length > 0 ? (
-            <ul className="dashboard-mood-list mb-0" aria-label="Lista dei brani associati all'ultimo mood">
+            <ul
+              className="dashboard-mood-list mb-0"
+              aria-label="Lista dei brani associati all'ultimo mood"
+            >
               {mood.brani.slice(0, 6).map((brano) => (
-                <li key={brano.id} className="dashboard-mood-item text-truncate">
+                <li
+                  key={brano.id}
+                  className="dashboard-mood-item text-truncate"
+                >
                   <i className="bi bi-music-note-beamed" aria-hidden="true" />{" "}
                   {brano.titoloBrano}
                 </li>
               ))}
-              {mood.brani.length > 6 ? <li className="dashboard-mood-more">...</li> : null}
+              {mood.brani.length > 6 ? (
+                <li className="dashboard-mood-more">...</li>
+              ) : null}
             </ul>
           ) : (
             <p className="mb-0">Nessun brano associato.</p>

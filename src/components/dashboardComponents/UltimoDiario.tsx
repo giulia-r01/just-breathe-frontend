@@ -20,7 +20,9 @@ interface DashboardResponse {
 }
 
 const UltimoDiario = () => {
-  const [dashboardData, setDashboardData] = useState<DashboardResponse | null>(null)
+  const [dashboardData, setDashboardData] = useState<DashboardResponse | null>(
+    null,
+  )
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
@@ -56,7 +58,10 @@ const UltimoDiario = () => {
     return () => controller.abort()
   }, [token])
 
-  if (loading) return <DashboardSkeleton title="Diario" iconClassName="bi bi-book" lines={4} />
+  if (loading)
+    return (
+      <DashboardSkeleton title="Diario" iconClassName="bi bi-book" lines={4} />
+    )
 
   if (error) {
     return (
@@ -74,16 +79,17 @@ const UltimoDiario = () => {
       iconClassName="bi bi-book"
       subtitle={
         dashboardData.diario
-          ? dashboardData.diario.dataUltimaModifica !== dashboardData.diario.dataInserimento
+          ? dashboardData.diario.dataUltimaModifica !==
+            dashboardData.diario.dataInserimento
             ? `Ultima modifica: ${new Date(dashboardData.diario.dataUltimaModifica).toLocaleString("it-IT")}`
             : `Creato il: ${new Date(dashboardData.diario.dataInserimento).toLocaleString("it-IT")}`
           : undefined
       }
       footer={
         <Button
-          className="dashboard-cta dashboard-cta-soft"
+          className="dashboard-cta"
           onClick={() => navigate("/diario")}
-          aria-label="Scrivi qualcosa"
+          aria-label="Scrivi qualcosa - Vai al diario personale"
         >
           Scrivi qualcosa
         </Button>

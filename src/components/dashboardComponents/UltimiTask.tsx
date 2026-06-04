@@ -72,7 +72,13 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
   }, [token, escludiFatti])
 
   if (loading) {
-    return <DashboardSkeleton title="Ultime Task in calendario" iconClassName="bi bi-calendar3" lines={4} />
+    return (
+      <DashboardSkeleton
+        title="Ultime Task in calendario"
+        iconClassName="bi bi-calendar3"
+        lines={4}
+      />
+    )
   }
 
   if (error) {
@@ -89,9 +95,9 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
       iconClassName="bi bi-calendar3"
       footer={
         <Button
-          className="dashboard-cta dashboard-cta-outline"
+          className="dashboard-cta"
           onClick={() => navigate("/todolist")}
-          aria-label="Vai al calendario"
+          aria-label="Aggiungi task - Vai al calendario"
         >
           <i className="bi bi-plus-lg" aria-hidden="true" /> Aggiungi task
         </Button>
@@ -102,15 +108,21 @@ const UltimiTask = ({ escludiFatti = false }: UltimiTaskProps) => {
           Nessun task da fare o in corso.
         </p>
       ) : (
-        <ul className="dashboard-task-list" aria-label="Lista degli ultimi task in calendario">
+        <ul
+          className="dashboard-task-list"
+          aria-label="Lista degli ultimi task in calendario"
+        >
           {tasks.map((task) => (
             <li key={task.id} className="dashboard-task-item">
-              <i className="bi bi-list-task dashboard-task-icon" aria-hidden="true" />
+              <i
+                className="bi bi-list-task dashboard-task-icon"
+                aria-hidden="true"
+              />
               <span>
                 {task.titolo}
                 <small className="d-block text-muted">
-                  {new Date(task.dataCreazioneTask).toLocaleDateString("it-IT")} -{" "}
-                  <strong>{labelTipoTask(task.tipoTask)}</strong>
+                  {new Date(task.dataCreazioneTask).toLocaleDateString("it-IT")}{" "}
+                  - <strong>{labelTipoTask(task.tipoTask)}</strong>
                 </small>
               </span>
             </li>
