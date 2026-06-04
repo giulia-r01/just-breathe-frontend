@@ -12,6 +12,7 @@ import {
   Modal,
 } from "react-bootstrap"
 import LoadingSkeleton from "./common/LoadingSkeleton"
+import PageHero from "./common/PageHero"
 import { apiFetch } from "../utils/api"
 import { getSessionToken } from "../utils/session"
 import "../assets/cssVari/diario.css"
@@ -156,17 +157,12 @@ const Diario = () => {
 
   return (
     <Container className="jb-diary-page my-4" role="main">
-      <div className="jb-page-hero mt-3 mb-4">
-        <div className="jb-page-hero-icon" aria-hidden="true">
-          <i className="bi bi-journal-bookmark" />
-        </div>
-        <div>
-          <h2 className="jb-page-hero-title mb-1">Il tuo Diario</h2>
-          <p className="jb-page-hero-subtitle mb-0">
-            Scrivi i tuoi pensieri e riflessioni
-          </p>
-        </div>
-      </div>
+      <PageHero
+        iconClassName="bi bi-journal-bookmark"
+        title="Il tuo Diario"
+        subtitle="Scrivi i tuoi pensieri e riflessioni"
+        className="mt-3 mb-4"
+      />
 
       <Row className="justify-content-center">
         <Col lg={12}>

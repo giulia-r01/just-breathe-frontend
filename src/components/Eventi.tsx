@@ -1,8 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+﻿/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react"
 import { Form, Button, ListGroup, Container, Row, Col } from "react-bootstrap"
 import UltimiEventiSalvati from "./dashboardComponents/UltimiEventiSalvati"
+import EmptyState from "./common/EmptyState"
 import LoadingSkeleton from "./common/LoadingSkeleton"
+import PageHero from "./common/PageHero"
 import { apiFetch } from "../utils/api"
 import { getSessionToken } from "../utils/session"
 
@@ -124,17 +126,12 @@ const Eventi = () => {
     <Container role="main">
       <Row className="align-items-start py-4 g-2">
         <h1 className="visually-hidden">Eventi</h1>
-        <div className="jb-page-hero mt-3 mb-4">
-          <div className="jb-page-hero-icon" aria-hidden="true">
-            <i className="bi bi-calendar-event" />
-          </div>
-          <div>
-            <h2 className="jb-page-hero-title mb-1">Eventi in città</h2>
-            <p className="jb-page-hero-subtitle mb-0">
-              Scopri gli eventi disponibili vicino a te
-            </p>
-          </div>
-        </div>
+        <PageHero
+          iconClassName="bi bi-calendar-event"
+          title="Eventi in citta"
+          subtitle="Scopri gli eventi disponibili vicino a te"
+          className="mt-3 mb-4"
+        />
         <Col md={5} lg={6}>
           <Form.Group controlId="inputCitta" className="d-flex mb-3">
             <Form.Label className="visually-hidden">
@@ -169,9 +166,11 @@ const Eventi = () => {
           {loading ? (
             <LoadingSkeleton className="my-4" lines={4} />
           ) : eventi.length === 1 && !eventi[0].id ? (
-            <label className="jb-surface rounded p-2 fw-bold d-block">
-              {eventi[0].nome}
-            </label>
+            <EmptyState
+              title={eventi[0].nome}
+              iconClassName="bi bi-search"
+              compact
+            />
           ) : (
             <ListGroup className="gap-2">
               {eventi.map((evento, i) => {

@@ -1,6 +1,7 @@
 import { Button, Col, Container, Row } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
+import EmptyState from "./common/EmptyState"
 import PageHero from "./common/PageHero"
 import { getSessionToken } from "../utils/session"
 
@@ -26,27 +27,29 @@ const NotFound = function () {
         className="mt-3 mb-4"
       />
       <Row className="justify-content-center mx-1">
-        <Col
-          md={8}
-          className="jb-empty-state text-center rounded my-4 py-4 px-4"
-        >
-          <h1 className="jb-empty-state-code">404</h1>
-          <p>
-            🙈 Ops... questa pagina sembra essersi persa tra un respiro e
-            l’altro.
-          </p>
-          <p>
-            Niente panico, torna a rilassarti{" "}
-            {isLoggedIn ? "nella tua Dashboard" : "in home"}. 🌿
-          </p>
-          <Button
-            onClick={handleRedirect}
-            variant="success"
-            className="mt-3"
-            aria-label={isLoggedIn ? "Vai alla Dashboard" : "Torna alla Home"}
-          >
-            {isLoggedIn ? "Vai alla Dashboard" : "Torna alla Home"}
-          </Button>
+        <Col md={8}>
+          <div className="jb-empty-state text-center rounded my-4 py-4 px-4">
+            <h1 className="jb-empty-state-code">404</h1>
+            <EmptyState
+              title="Pagina non disponibile"
+              description={`Torna a rilassarti ${
+                isLoggedIn ? "nella tua dashboard" : "in home"
+              }.`}
+              iconClassName="bi bi-signpost-split"
+              className="jb-empty-state-nested"
+              compact
+            />
+            <Button
+              onClick={handleRedirect}
+              variant="success"
+              className="mt-3"
+              aria-label={
+                isLoggedIn ? "Vai alla Dashboard" : "Torna alla Home"
+              }
+            >
+              {isLoggedIn ? "Vai alla Dashboard" : "Torna alla Home"}
+            </Button>
+          </div>
         </Col>
       </Row>
     </Container>

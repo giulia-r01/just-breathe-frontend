@@ -7,6 +7,7 @@ import UltimiTask from "./dashboardComponents/UltimiTask"
 import UltimoMood from "./dashboardComponents/UltimoMood"
 import UltimiEventiSalvati from "./dashboardComponents/UltimiEventiSalvati"
 import DashboardSkeleton from "./dashboardComponents/DashboardSkeleton"
+import PageHero from "./common/PageHero"
 import "../assets/cssVari/dashboard.css"
 import { apiFetch } from "../utils/api"
 import { getSessionToken } from "../utils/session"
@@ -92,14 +93,12 @@ const Dashboard = function () {
 
   return (
     <Container className="dashboard-shell my-4">
-      <h1 className="dashboard-branding">
-        <span className="dashboard-branding-title">
-          Ciao <em>{utente?.nome}</em>
-        </span>
-        <span className="dashboard-branding-subtitle pt-2">
-          <em>Chiudi fuori il caos. Inizia da un respiro.</em>
-        </span>
-      </h1>
+      <PageHero
+        iconClassName="bi bi-house-heart"
+        title={`Ciao ${utente?.nome ?? ""}`}
+        subtitle="Chiudi fuori il caos. Inizia da un respiro."
+        className="mt-3 mb-4 dashboard-page-hero"
+      />
 
       <Row className="g-4 mt-3">
         <Col lg={4} md={6}>

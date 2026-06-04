@@ -11,6 +11,8 @@ import {
 } from "react-bootstrap"
 import LoadingSkeleton from "./common/LoadingSkeleton"
 import JBCard from "./common/JBCard"
+import EmptyState from "./common/EmptyState"
+import PageHero from "./common/PageHero"
 import { apiFetch } from "../utils/api"
 import { getSessionToken } from "../utils/session"
 import "../assets/cssVari/mood.css"
@@ -372,19 +374,12 @@ const Mood = () => {
   return (
     <Container className="jb-mood-page py-4 px-3 rounded " role="main">
       <h1 className="visually-hidden">Mood</h1>
-      <div className="jb-page-hero mb-4">
-        <div className="jb-page-hero-icon" aria-hidden="true">
-          <i className="bi bi-music-note-beamed" />
-        </div>
-        <div>
-          <h2 className="jb-page-hero-title mb-1">
-            Trasforma il tuo mood in musica
-          </h2>
-          <p className="jb-page-hero-subtitle mb-0">
-            Crea la playlist perfetta per ogni emozione
-          </p>
-        </div>
-      </div>
+      <PageHero
+        iconClassName="bi bi-music-note-beamed"
+        title="Trasforma il tuo mood in musica"
+        subtitle="Crea la playlist perfetta per ogni emozione"
+        className="mb-4"
+      />
 
       {loading && <LoadingSkeleton className="my-4" lines={5} />}
       {success && (
@@ -434,9 +429,12 @@ const Mood = () => {
             <div className="jb-mood-items-wrap mt-2 pe-1">
               <div className="jb-mood-list d-flex flex-column" role="list">
                 {moods.length === 0 && (
-                  <p className="bg-white rounded p-2 mytext fw-semibold mb-0">
-                    Nessun mood salvato.
-                  </p>
+                  <EmptyState
+                    title="Nessun mood salvato"
+                    description="Crea il tuo primo mood per iniziare a costruire la playlist perfetta."
+                    iconClassName="bi bi-music-note-list"
+                    compact
+                  />
                 )}
                 {moods.map((mood) => (
                   <div
@@ -629,9 +627,11 @@ const Mood = () => {
               </section>
             </>
           ) : (
-            <p className="bg-white rounded p-2 mytext fw-semibold">
-              Seleziona un mood per vedere i dettagli.
-            </p>
+            <EmptyState
+              title="Seleziona un mood"
+              description="Scegli un mood dalla colonna a sinistra per vedere i dettagli e i brani associati."
+              iconClassName="bi bi-vinyl"
+            />
           )}
         </Col>
       </Row>

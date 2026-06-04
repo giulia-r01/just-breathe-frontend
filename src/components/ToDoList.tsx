@@ -13,7 +13,9 @@ import {
 } from "react-bootstrap"
 import "../assets/cssVari/toDoList.css"
 import CalendarModal from "./CalendarModal"
+import EmptyState from "./common/EmptyState"
 import LoadingSkeleton from "./common/LoadingSkeleton"
+import PageHero from "./common/PageHero"
 import { apiFetch } from "../utils/api"
 import { getSessionToken } from "../utils/session"
 
@@ -231,17 +233,12 @@ const ToDoList = () => {
   return (
     <Container role="main">
       <h1 className="visually-hidden">To Do List</h1>
-      <div className="jb-page-hero mt-4 mb-3">
-        <div className="jb-page-hero-icon" aria-hidden="true">
-          <i className="bi bi-check2-square" />
-        </div>
-        <div>
-          <h2 className="jb-page-hero-title mb-1">La tua To Do List</h2>
-          <p className="jb-page-hero-subtitle mb-0">
-            Organizza il mese e tieni il ritmo
-          </p>
-        </div>
-      </div>
+      <PageHero
+        iconClassName="bi bi-check2-square"
+        title="La tua To Do List"
+        subtitle="Organizza il mese e tieni il ritmo"
+        className="mt-4 mb-3"
+      />
       <Row className="justify-content-center my-5 g-3">
         <Col sm={12} lg={6} className="d-flex flex-column align-items-center">
           <Calendar
@@ -312,7 +309,12 @@ const ToDoList = () => {
               </Card>
             ))
           ) : (
-            <p aria-live="polite">Nessun task per questa data.</p>
+            <EmptyState
+              title="Nessun task per questa data"
+              description="Aggiungi un nuovo task dal calendario per iniziare a organizzare la giornata."
+              iconClassName="bi bi-calendar3"
+              compact
+            />
           )}
 
           {upcomingTasksOfMonth.length > 0 && (

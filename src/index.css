@@ -667,6 +667,8 @@ body::before {
   border: 1px solid #c7dbd2;
   box-shadow: 0 14px 28px rgba(20, 67, 55, 0.12);
   color: #23423a;
+  border-radius: 1.15rem;
+  padding: 1.5rem;
 }
 
 .jb-empty-state-code {
@@ -674,6 +676,50 @@ body::before {
   font-size: clamp(3rem, 8vw, 4.75rem);
   font-weight: 800;
   letter-spacing: -0.04em;
+}
+
+.jb-empty-state-icon {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto 0.85rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #d8e9e2;
+  color: #0c8b68;
+  font-size: 1.25rem;
+}
+
+.jb-empty-state-title {
+  color: #184238;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+}
+
+.jb-empty-state-text {
+  color: #4b635c;
+  line-height: 1.55;
+}
+
+.jb-empty-state-compact {
+  padding: 1rem 1.1rem;
+  box-shadow: 0 10px 22px rgba(20, 67, 55, 0.08);
+}
+
+.jb-empty-state-compact .jb-empty-state-icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  margin-bottom: 0.65rem;
+  font-size: 1rem;
+}
+
+.jb-empty-state-nested {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding-top: 0;
 }
 
 .jb-admin-shell {

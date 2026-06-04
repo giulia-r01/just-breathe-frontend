@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import LoadingSkeleton from "./common/LoadingSkeleton"
+import PageHero from "./common/PageHero"
 import { apiFetch } from "../utils/api"
 import { getSessionToken } from "../utils/session"
 
@@ -199,9 +200,12 @@ const ProfiloUtente = () => {
   return (
     <Container className="py-5" role="main">
       <h1 className="visually-hidden">Profilo utente</h1>
-      <h2 className="text-center mb-4 jb-page-header rounded py-3">
-        Il tuo profilo
-      </h2>
+      <PageHero
+        iconClassName="bi bi-person-circle"
+        title="Il tuo profilo"
+        subtitle="Gestisci immagine, credenziali e impostazioni del tuo account."
+        className="mb-4"
+      />
 
       <Row className="justify-content-center">
         <Col md={8} lg={6}>

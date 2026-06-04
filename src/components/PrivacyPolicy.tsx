@@ -1,20 +1,18 @@
 import { Col, Container, Row } from "react-bootstrap"
 import "../assets/cssVari/contentPages.css"
+import PageHero from "./common/PageHero"
 
 const PrivacyPolicy = function () {
   return (
     <Container className="py-4" role="main">
       <h1 className="visually-hidden">Privacy Policy</h1>
 
-      <div className="jb-page-hero mt-3 mb-4">
-        <div className="jb-page-hero-icon" aria-hidden="true">
-          <i className="bi bi-shield-lock" />
-        </div>
-        <div>
-          <h2 className="jb-page-hero-title mb-1">Privacy Policy</h2>
-          <p className="jb-page-hero-subtitle mb-0">La tua privacy conta</p>
-        </div>
-      </div>
+      <PageHero
+        iconClassName="bi bi-shield-lock"
+        title="Privacy Policy"
+        subtitle="La tua privacy conta"
+        className="mt-3 mb-4"
+      />
 
       <Row className="justify-content-center mx-1">
         <Col md={10} className="jb-content-box rounded py-4 px-4 my-2">

@@ -6,6 +6,7 @@ import "../assets/cssVari/respiri.css"
 import JBButton from "./common/JBButton"
 import JBCard from "./common/JBCard"
 import LoadingSkeleton from "./common/LoadingSkeleton"
+import PageHero from "./common/PageHero"
 import { apiFetch } from "../utils/api"
 
 interface Respiri {
@@ -109,15 +110,12 @@ const Respiri = () => {
     <Container className="jb-breath-page my-4" role="region" aria-labelledby="respiri-heading">
       <h1 id="respiri-heading" className="visually-hidden">Respirazioni guidate</h1>
 
-      <div className="jb-page-hero mt-3 mb-4">
-        <div className="jb-page-hero-icon" aria-hidden="true">
-          <i className="bi bi-wind" />
-        </div>
-        <div>
-          <h2 className="jb-page-hero-title mb-1">Esercizi di Respirazione Guidata</h2>
-          <p className="jb-page-hero-subtitle mb-0">Scegli la pratica che fa per te</p>
-        </div>
-      </div>
+      <PageHero
+        iconClassName="bi bi-wind"
+        title="Esercizi di Respirazione Guidata"
+        subtitle="Scegli la pratica che fa per te"
+        className="mt-3 mb-4"
+      />
 
       <section className="jb-breath-info-box mb-4" aria-label="Perche praticare la respirazione guidata">
         <div className="d-flex align-items-start gap-3">
