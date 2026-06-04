@@ -2,9 +2,11 @@ import { useEffect, useRef, useState } from "react"
 import { Alert, Badge, Card, Col, Container, Modal, Row } from "react-bootstrap"
 import CircleAnimation from "../animations/CircleAnimation"
 import "../animations/CircleAnimation.css"
+import "../assets/cssVari/respiri.css"
 import JBButton from "./common/JBButton"
 import JBCard from "./common/JBCard"
 import LoadingSkeleton from "./common/LoadingSkeleton"
+import { apiFetch } from "../utils/api"
 
 interface Respiri {
   id: number
@@ -27,7 +29,7 @@ const Respiri = () => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/respirazioni`)
+    apiFetch("/respirazioni")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Errore nel recupero delle respirazioni 😥. Rilassati e riprova o contatta l'assistenza 🌿")

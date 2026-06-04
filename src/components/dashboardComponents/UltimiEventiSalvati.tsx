@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 import { FaTrashAlt } from "react-icons/fa"
 import DashboardCard from "./DashboardCard"
 import DashboardSkeleton from "./DashboardSkeleton"
+import { apiFetch } from "../../utils/api"
+import { getSessionToken } from "../../utils/session"
 
 interface Evento {
   id: number
@@ -33,7 +35,7 @@ const UltimiEventiSalvati = ({
   const navigate = useNavigate()
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
+    const token = getSessionToken()
     if (!token || token === "null") {
       setLoading(false)
       return
@@ -45,15 +47,11 @@ const UltimiEventiSalvati = ({
       setLoading(true)
       setIsError("")
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/eventi/utente?page=0&size=20`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            signal: controller.signal,
-          },
-        )
+        const res = await apiFetch("/eventi/utente?page=0&size=20", {
+          auth: true,
+          token,
+          signal: controller.signal,
+        })
         if (!res.ok) throw new Error("Errore nel recupero degli eventi")
         const data = await res.json()
         setEventi(data.content || [])

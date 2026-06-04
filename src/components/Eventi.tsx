@@ -4,6 +4,8 @@ import { Form, Button, ListGroup, Container, Row, Col } from "react-bootstrap"
 import { FaRegStar, FaStar } from "react-icons/fa"
 import UltimiEventiSalvati from "./dashboardComponents/UltimiEventiSalvati"
 import LoadingSkeleton from "./common/LoadingSkeleton"
+import { apiFetch } from "../utils/api"
+import { getSessionToken } from "../utils/session"
 
 interface EventoDto {
   id?: number
@@ -22,7 +24,7 @@ const Eventi = () => {
   const [isError, setIsError] = useState("")
   const [reloadFlag, setReloadFlag] = useState(0)
 
-  const token = localStorage.getItem("token")
+  const token = getSessionToken()
 
   useEffect(() => {
     if (token) fetchSalvati()
@@ -30,11 +32,7 @@ const Eventi = () => {
 
   const fetchSalvati = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/eventi/utente`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const res = await apiFetch("/eventi/utente", { auth: true, token })
       if (res.ok) {
         const data = await res.json()
         setSalvati(data.content || [])
@@ -51,14 +49,11 @@ const Eventi = () => {
     if (!citta.trim()) return
     setLoading(true)
     try {
-      const res = await fetch(
-        `${
-          import.meta.env.VITE_API_URL
-        }/eventi/esterni?citta=${encodeURIComponent(citta)}`,
+      const res = await apiFetch(
+        `/eventi/esterni?citta=${encodeURIComponent(citta)}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          auth: true,
+          token,
         },
       )
       const data = await res.json()
@@ -87,15 +82,11 @@ const Eventi = () => {
 
     if (eventoSalvato && eventoSalvato.id) {
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/eventi/${eventoSalvato.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        )
+        const res = await apiFetch(`/eventi/${eventoSalvato.id}`, {
+          method: "DELETE",
+          auth: true,
+          token,
+        })
         if (res.ok) {
           setSalvati((prev) => prev.filter((e) => e.id !== eventoSalvato.id))
           setReloadFlag((f) => f + 1)
@@ -108,11 +99,12 @@ const Eventi = () => {
       }
     } else {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/eventi`, {
+        const res = await apiFetch("/eventi", {
           method: "POST",
+          auth: true,
+          token,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(evento),
         })

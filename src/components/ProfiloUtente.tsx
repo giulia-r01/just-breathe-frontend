@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom"
 import { FaCamera, FaTrashAlt } from "react-icons/fa"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 import LoadingSkeleton from "./common/LoadingSkeleton"
+import { apiFetch } from "../utils/api"
+import { getSessionToken } from "../utils/session"
 
 interface Utente {
   id: number
@@ -32,17 +34,13 @@ const ProfiloUtente = () => {
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showOldPassword, setShowOldPassword] = useState(false)
 
-  const token = localStorage.getItem("token")
+  const token = getSessionToken()
   const navigate = useNavigate()
 
   useEffect(() => {
     const fetchProfilo = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/utenti/me`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        const res = await apiFetch("/utenti/me", { auth: true, token })
         if (res.ok) {
           const data = await res.json()
           setUtente(data)
@@ -65,16 +63,12 @@ const ProfiloUtente = () => {
     formData.append("file", file)
 
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/utenti/${utente.id}`,
-        {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        }
-      )
+      const res = await apiFetch(`/utenti/${utente.id}`, {
+        method: "PATCH",
+        auth: true,
+        token,
+        body: formData,
+      })
       if (res.ok) {
         const updatedUser = await res.json()
         setSuccess("Immagine aggiornata con successo 🥳")
@@ -95,16 +89,13 @@ const ProfiloUtente = () => {
     setSuccess("")
     if (!utente || !nuovoUsername.trim()) return
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/utenti/${
-          utente.id
-        }/username?nuovoUsername=${encodeURIComponent(nuovoUsername)}`,
+      const res = await apiFetch(
+        `/utenti/${utente.id}/username?nuovoUsername=${encodeURIComponent(nuovoUsername)}`,
         {
           method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+          auth: true,
+          token,
+        },
       )
       if (res.ok) {
         setSuccess("Username aggiornato con successo 🥳")
@@ -135,18 +126,15 @@ const ProfiloUtente = () => {
     setSuccess("")
     if (!utente || !vecchiaPassword || !nuovaPassword) return
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/utenti/${
-          utente.id
-        }/password?vecchiaPassword=${encodeURIComponent(
+      const res = await apiFetch(
+        `/utenti/${utente.id}/password?vecchiaPassword=${encodeURIComponent(
           vecchiaPassword
         )}&nuovaPassword=${encodeURIComponent(nuovaPassword)}`,
         {
           method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+          auth: true,
+          token,
+        },
       )
       if (res.ok) {
         setSuccess("Password aggiornata con successo 🥳")
@@ -185,15 +173,11 @@ const ProfiloUtente = () => {
     )
       return
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/utenti/${utente.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      const res = await apiFetch(`/utenti/${utente.id}`, {
+        method: "DELETE",
+        auth: true,
+        token,
+      })
       if (res.ok) {
         setSuccess("Utente eliminato con successo 🥳")
         setError("")

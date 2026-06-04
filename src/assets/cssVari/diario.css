@@ -1,0 +1,70 @@
+.jb-diary-page {
+  max-width: 1320px;
+}
+
+.jb-diary-form-card {
+  border-radius: 1rem;
+}
+
+.jb-diary-form-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+
+.jb-diary-form-date {
+  color: #5a6e68;
+}
+
+.jb-diary-input {
+  border-radius: 0.75rem;
+  border-color: #c1d4cc;
+  background: #dee7e2;
+}
+
+.jb-diary-input:focus {
+  border-color: #7eb9a8;
+  box-shadow: 0 0 0 0.2rem rgba(12, 139, 104, 0.2);
+}
+
+.jb-diary-save-btn {
+  border-radius: 0.8rem;
+  padding: 0.38rem 0.95rem;
+}
+
+.jb-diary-list-title {
+  color: #102823;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.jb-diary-item-card {
+  border-radius: 1rem;
+}
+
+.jb-diary-item-subtitle {
+  color: #5a6e68 !important;
+  font-size: 0.85rem;
+}
+
+.jb-diary-item-text {
+  font-size: 1rem;
+  color: #314640;
+  min-height: 72px;
+}
+
+.jb-diary-read-btn {
+  border-radius: 999px;
+  padding-left: 0.9rem;
+  padding-right: 0.9rem;
+  flex-grow: 1;
+}
+
+.jb-diary-icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

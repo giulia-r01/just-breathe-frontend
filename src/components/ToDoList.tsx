@@ -14,6 +14,8 @@ import {
 import "../assets/cssVari/toDoList.css"
 import CalendarModal from "./CalendarModal"
 import LoadingSkeleton from "./common/LoadingSkeleton"
+import { apiFetch } from "../utils/api"
+import { getSessionToken } from "../utils/session"
 
 interface ToDo {
   id: number
@@ -43,7 +45,7 @@ const ToDoList = () => {
   const [currentTask, setCurrentTask] = useState<TaskDraft | null>(null)
   const [showCalendarModal, setShowCalendarModal] = useState(false)
 
-  const token = localStorage.getItem("token")
+  const token = getSessionToken()
 
   const labelTipoTask = (tipo: string) => {
     switch (tipo) {
@@ -74,9 +76,7 @@ const ToDoList = () => {
       setLoading(true)
       setError("")
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
+        const res = await apiFetch("/tasks", { auth: true, token })
         if (!res.ok)
           throw new Error(
             "Errore nel caricamento dei task 😥. Rilassati e riprova o contatta l'assistenza 🌿",
@@ -171,20 +171,19 @@ const ToDoList = () => {
 
     try {
       const method = currentTask.id ? "PUT" : "POST"
-      const url = currentTask.id
-        ? `${import.meta.env.VITE_API_URL}/tasks/${currentTask.id}`
-        : `${import.meta.env.VITE_API_URL}/tasks`
+      const url = currentTask.id ? `/tasks/${currentTask.id}` : "/tasks"
 
       const formattedTask = {
         ...currentTask,
         dataCreazioneTask: currentTask.dataCreazioneTask,
       }
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
+        auth: true,
+        token,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formattedTask),
       })
@@ -213,9 +212,10 @@ const ToDoList = () => {
   const handleDeleteTask = async (id: number) => {
     if (!window.confirm("Sei sicuro di voler eliminare questo task?")) return
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks/${id}`, {
+      const res = await apiFetch(`/tasks/${id}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
+        auth: true,
+        token,
       })
       if (!res.ok)
         throw new Error(

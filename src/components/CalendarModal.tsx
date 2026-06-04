@@ -1,4 +1,6 @@
 import { Modal, Button } from "react-bootstrap"
+import { apiFetch } from "../utils/api"
+import { getSessionToken } from "../utils/session"
 
 interface CalendarModalProps {
   show: boolean
@@ -7,14 +9,12 @@ interface CalendarModalProps {
 
 const CalendarModal = ({ show, handleClose }: CalendarModalProps) => {
   const downloadICS = async () => {
-    const token = localStorage.getItem("token")
+    const token = getSessionToken()
     if (!token)
       return alert("Devi essere loggato per aggiungere i task al calendario.")
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/calendar/ics`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const res = await apiFetch("/calendar/ics", { auth: true, token })
 
       if (!res.ok)
         throw new Error("Impossibile accedere al calendario. Riprova.")

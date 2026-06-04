@@ -8,6 +8,8 @@ import UltimoMood from "./dashboardComponents/UltimoMood"
 import UltimiEventiSalvati from "./dashboardComponents/UltimiEventiSalvati"
 import DashboardSkeleton from "./dashboardComponents/DashboardSkeleton"
 import "../assets/cssVari/dashboard.css"
+import { apiFetch } from "../utils/api"
+import { getSessionToken } from "../utils/session"
 
 interface Utente {
   id: number
@@ -21,7 +23,7 @@ const Dashboard = function () {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
+    const token = getSessionToken()
     if (!token) {
       navigate("/login")
       return
@@ -29,10 +31,9 @@ const Dashboard = function () {
 
     const controller = new AbortController()
 
-    fetch(`${import.meta.env.VITE_API_URL}/utenti/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    apiFetch("/utenti/me", {
+      auth: true,
+      token,
       signal: controller.signal,
     })
       .then((res) => {

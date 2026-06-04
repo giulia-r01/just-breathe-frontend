@@ -1,3 +1,5 @@
+import { clearStoredSession } from "./session"
+
 const SESSION_EXPIRED_MESSAGE_KEY = "sessionExpiredMessage"
 
 const hasAuthorizationHeader = (headers?: HeadersInit): boolean => {
@@ -29,13 +31,6 @@ const parseJwtPayload = (token: string): { exp?: number } | null => {
   }
 }
 
-const clearAuthStorage = () => {
-  localStorage.removeItem("token")
-  localStorage.removeItem("ruolo")
-  localStorage.removeItem("imgProfilo")
-  localStorage.removeItem("userId")
-}
-
 const setExpiredMessage = () => {
   if (!sessionStorage.getItem(SESSION_EXPIRED_MESSAGE_KEY)) {
     sessionStorage.setItem(
@@ -55,7 +50,7 @@ export const clearSessionAndRedirectToLoginIfNeeded = (
   navigate?: (to: string, options?: { replace?: boolean }) => void,
   currentPath?: string
 ) => {
-  clearAuthStorage()
+  clearStoredSession()
   setExpiredMessage()
 
   const path = currentPath ?? window.location.pathname

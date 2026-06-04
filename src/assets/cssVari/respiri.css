@@ -1,0 +1,168 @@
+.bg-relax {
+  --jb-breath-color: #00c2b8;
+  --jb-breath-color-dark: #00a99d;
+  --jb-breath-gradient: linear-gradient(135deg, #4a90e2 0%, #00c2b8 100%);
+}
+
+.bg-focus {
+  --jb-breath-color: #ec3fab;
+  --jb-breath-color-dark: #cf2990;
+  --jb-breath-gradient: linear-gradient(135deg, #b56bff 0%, #ec3fab 100%);
+}
+
+.bg-energia {
+  --jb-breath-color: #ff3d3d;
+  --jb-breath-color-dark: #e33232;
+  --jb-breath-gradient: linear-gradient(135deg, #ff8a00 0%, #ff3d3d 100%);
+}
+
+.modal-header.bg-relax .btn-close,
+.modal-header.bg-focus .btn-close,
+.modal-header.bg-energia .btn-close {
+  filter: invert(1) grayscale(1) brightness(2);
+}
+
+.jb-breath-page {
+  max-width: 1320px;
+}
+
+.jb-breath-card {
+  border-radius: 1.6rem;
+  border: 2px solid transparent;
+  background: #ffffff !important;
+}
+
+.jb-breath-card.bg-relax {
+  border-color: #00c2b8;
+  background: #ffffff !important;
+}
+
+.jb-breath-card.bg-focus {
+  border-color: #ec3fab;
+  background: #ffffff !important;
+}
+
+.jb-breath-card.bg-energia {
+  border-color: #ff3d3d;
+  background: #ffffff !important;
+}
+
+.jb-breath-card-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.jb-breath-card-icon.bg-relax,
+.jb-breath-card-icon.bg-focus,
+.jb-breath-card-icon.bg-energia,
+.jb-breath-badge.bg-relax,
+.jb-breath-badge.bg-focus,
+.jb-breath-badge.bg-energia,
+.jb-breath-time-badge.bg-relax,
+.jb-breath-time-badge.bg-focus,
+.jb-breath-time-badge.bg-energia,
+.jb-breath-start-btn.bg-relax,
+.jb-breath-start-btn.bg-focus,
+.jb-breath-start-btn.bg-energia,
+.jb-breath-modal-header.bg-relax,
+.jb-breath-modal-header.bg-focus,
+.jb-breath-modal-header.bg-energia,
+.jb-breath-modal-action.bg-relax,
+.jb-breath-modal-action.bg-focus,
+.jb-breath-modal-action.bg-energia {
+  background: var(--jb-breath-gradient) !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.jb-breath-badge {
+  border-radius: 999px;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.03em;
+  padding: 0.3rem 0.5rem !important;
+}
+
+.jb-breath-card-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.jb-breath-card.bg-relax .jb-breath-card-title {
+  color: #00a99d;
+}
+
+.jb-breath-card.bg-focus .jb-breath-card-title {
+  color: #cf2990;
+}
+
+.jb-breath-card.bg-energia .jb-breath-card-title {
+  color: #e33232;
+}
+
+.jb-breath-time-badge {
+  border-radius: 999px;
+  font-size: 0.8rem !important;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem !important;
+  width: fit-content;
+}
+
+.jb-breath-card-text {
+  color: #455b54;
+}
+
+.jb-breath-start-btn {
+  border-radius: 1rem;
+  width: 100%;
+  font-weight: 700;
+}
+
+.jb-breath-info-box {
+  background: #d1e6e1;
+  border: 1px solid #abd1c8;
+  border-radius: 1.4rem;
+  padding: 1.35rem 1.5rem;
+}
+
+.jb-breath-info-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #0f8e6a;
+  background: #b9ddd4;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.jb-breath-info-title {
+  color: #1f322d;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.jb-breath-info-text {
+  color: #4f6760;
+  font-size: 1.2rem;
+}
+
+.jb-breath-modal-header {
+  color: #ffffff;
+}
+
+.jb-breath-modal-header .modal-title {
+  color: #ffffff;
+}
+
+.jb-breath-modal-action {
+  min-width: 92px;
+  border-radius: 0.9rem;
+}

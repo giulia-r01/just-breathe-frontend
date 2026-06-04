@@ -12,6 +12,9 @@ import {
   Modal,
 } from "react-bootstrap"
 import LoadingSkeleton from "./common/LoadingSkeleton"
+import { apiFetch } from "../utils/api"
+import { getSessionToken } from "../utils/session"
+import "../assets/cssVari/diario.css"
 
 interface Diario {
   id: number
@@ -34,18 +37,13 @@ const Diario = () => {
   const [showModal, setShowModal] = useState(false)
   const [selectedDiario, setSelectedDiario] = useState<Diario | null>(null)
 
-  const token = localStorage.getItem("token")
+  const token = getSessionToken()
 
   const fetchDiari = async (page = 0) => {
     setLoading(true)
     setError("")
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/diari?page=${page}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      )
+      const res = await apiFetch(`/diari?page=${page}`, { auth: true, token })
       if (!res.ok)
         throw new Error(
           "Qualcosa è andato storto nel recupero dei tuoi diari 😥. Rilassati, riprova o contatta l'assistenza 🌿",
@@ -90,18 +88,17 @@ const Diario = () => {
     e.preventDefault()
     setError("")
     setSuccess("")
-    const endpoint = editingId
-      ? `${import.meta.env.VITE_API_URL}/diari/${editingId}`
-      : `${import.meta.env.VITE_API_URL}/diari`
+    const endpoint = editingId ? `/diari/${editingId}` : "/diari"
 
     const method = editingId ? "PUT" : "POST"
 
     try {
-      const res = await fetch(endpoint, {
+      const res = await apiFetch(endpoint, {
         method,
+        auth: true,
+        token,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       })
@@ -130,9 +127,10 @@ const Diario = () => {
   const handleDelete = async (id: number) => {
     if (!window.confirm("Sei sicuro di voler eliminare questo diario?")) return
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/diari/${id}`, {
+      const res = await apiFetch(`/diari/${id}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
+        auth: true,
+        token,
       })
       if (!res.ok) throw new Error("Errore durante l'eliminazione 😥")
       setSuccess("Diario eliminato ✨")

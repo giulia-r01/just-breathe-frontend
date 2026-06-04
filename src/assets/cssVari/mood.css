@@ -1,0 +1,260 @@
+.jb-mood-page {
+  max-width: 1320px;
+}
+
+.jb-mood-shell {
+  background: #e9f2ee;
+  border: 1px solid #c7dbd2;
+  border-radius: 1.2rem;
+  box-shadow: 0 10px 24px rgba(20, 67, 55, 0.08);
+}
+
+.jb-mood-sidebar {
+  padding: 1rem;
+  min-height: 220px;
+  max-height: 680px;
+  display: flex;
+  flex-direction: column;
+}
+
+.jb-mood-sidebar-title {
+  margin-bottom: 1.25rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.jb-mood-select {
+  background-color: #f6fbf9;
+  border-color: #b9cec5;
+  color: #274f45;
+}
+
+.jb-mood-select:focus {
+  border-color: #7eb9a8;
+  box-shadow: 0 0 0 0.2rem rgba(12, 139, 104, 0.2);
+}
+
+.jb-mood-item {
+  border: 0;
+  border-radius: 1rem;
+  background: #dde7e2;
+  color: #1f322d;
+  min-height: 56px;
+  padding: 0.9rem 1rem;
+  cursor: pointer;
+}
+
+.jb-mood-item.is-active {
+  color: #fff;
+  border: 0;
+}
+
+.jb-mood-item.is-active[data-mood-tone="energico"] {
+  background: linear-gradient(135deg, #ff9e44 0%, #ff6c3f 100%);
+}
+
+.jb-mood-item.is-active[data-mood-tone="felice"] {
+  background: linear-gradient(135deg, #ffd166 0%, #f79d00 100%);
+}
+
+.jb-mood-item.is-active[data-mood-tone="arrabbiato"] {
+  background: linear-gradient(135deg, #ff6b6b 0%, #d7263d 100%);
+}
+
+.jb-mood-item.is-active[data-mood-tone="rilassato"] {
+  background: linear-gradient(135deg, #4ecdc4 0%, #2a9d8f 100%);
+}
+
+.jb-mood-item.is-active[data-mood-tone="sopraffatto"] {
+  background: linear-gradient(135deg, #9b5de5 0%, #5f5ce6 100%);
+}
+
+.jb-mood-item.is-active[data-mood-tone="nostalgico"] {
+  background: linear-gradient(135deg, #8d99ae 0%, #5c677d 100%);
+}
+
+.jb-mood-item.is-active[data-mood-tone="stressato"] {
+  background: linear-gradient(135deg, #f28482 0%, #e76f51 100%);
+}
+
+.jb-mood-item.is-active[data-mood-tone="ansioso"] {
+  background: linear-gradient(135deg, #6a4c93 0%, #3a0ca3 100%);
+}
+
+.jb-mood-item.is-active[data-mood-tone="annoiato"] {
+  background: linear-gradient(135deg, #adb5bd 0%, #6c757d 100%);
+}
+
+.jb-mood-active-badge {
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+}
+
+.jb-mood-main {
+  padding: 1.35rem;
+}
+
+.jb-mood-main-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.85rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.jb-mood-main-header h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  width: 100%;
+}
+
+.jb-mood-main-meta {
+  display: block;
+  color: #60756e;
+  font-weight: 600;
+  width: 100%;
+}
+
+.jb-mood-main-label {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #2e3f3a;
+  margin-bottom: 0.6rem;
+}
+
+.jb-mood-input {
+  border-radius: 0.9rem;
+  border-color: #c1d4cc;
+  background: #dee7e2;
+}
+
+.jb-mood-add-btn {
+  border-radius: 0.9rem;
+  padding-left: 1.15rem;
+  padding-right: 1.15rem;
+}
+
+.jb-track-card {
+  border-radius: 1.2rem;
+  border: 1px solid #c7dbd2;
+  overflow: hidden;
+}
+
+.jb-track-media {
+  height: 168px;
+  background: linear-gradient(135deg, #a46cd8 0%, #c0328f 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jb-track-media[data-mood-tone="energico"] {
+  background: linear-gradient(135deg, #ff9e44 0%, #ff6c3f 100%);
+}
+
+.jb-track-media[data-mood-tone="felice"] {
+  background: linear-gradient(135deg, #ffd166 0%, #f79d00 100%);
+}
+
+.jb-track-media[data-mood-tone="arrabbiato"] {
+  background: linear-gradient(135deg, #ff6b6b 0%, #d7263d 100%);
+}
+
+.jb-track-media[data-mood-tone="rilassato"] {
+  background: linear-gradient(135deg, #4ecdc4 0%, #2a9d8f 100%);
+}
+
+.jb-track-media[data-mood-tone="sopraffatto"] {
+  background: linear-gradient(135deg, #9b5de5 0%, #5f5ce6 100%);
+}
+
+.jb-track-media[data-mood-tone="nostalgico"] {
+  background: linear-gradient(135deg, #8d99ae 0%, #5c677d 100%);
+}
+
+.jb-track-media[data-mood-tone="stressato"] {
+  background: linear-gradient(135deg, #f28482 0%, #e76f51 100%);
+}
+
+.jb-track-media[data-mood-tone="ansioso"] {
+  background: linear-gradient(135deg, #6a4c93 0%, #3a0ca3 100%);
+}
+
+.jb-track-media[data-mood-tone="annoiato"] {
+  background: linear-gradient(135deg, #adb5bd 0%, #6c757d 100%);
+}
+
+.jb-track-media iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.jb-track-media i {
+  color: #fff;
+  font-size: 2.6rem;
+}
+
+.jb-track-title {
+  font-size: 1.35rem;
+}
+
+.jb-track-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.jb-track-listen-btn {
+  flex-grow: 1;
+}
+
+.jb-track-delete-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  padding: 0;
+}
+
+.jb-mood-items-wrap {
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto !important;
+  padding: 0.5rem 0.5rem 1rem;
+}
+
+.jb-mood-list {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.jb-mood-list .jb-mood-item + .jb-mood-item {
+  margin-top: 1rem;
+}
+
+.jb-mood-delete-icon-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.jb-mood-delete-icon-btn:hover,
+.jb-mood-delete-icon-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}

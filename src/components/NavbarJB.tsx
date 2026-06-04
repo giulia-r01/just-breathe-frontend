@@ -1,6 +1,7 @@
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap"
 import { Link, useNavigate, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { clearStoredSession, getSessionToken, getStoredProfileImage, getStoredRole } from "../utils/session"
 
 const NavbarJB = function () {
   const navigate = useNavigate()
@@ -12,9 +13,9 @@ const NavbarJB = function () {
   const [expanded, setExpanded] = useState(false)
 
   useEffect(() => {
-    const t = localStorage.getItem("token")
-    const r = localStorage.getItem("ruolo")
-    const img = localStorage.getItem("imgProfilo") || "user.svg"
+    const t = getSessionToken()
+    const r = getStoredRole()
+    const img = getStoredProfileImage()
 
     setToken(t)
     setRuolo(r)
@@ -22,7 +23,7 @@ const NavbarJB = function () {
   }, [location])
 
   const handleLogout = () => {
-    localStorage.clear()
+    clearStoredSession()
     navigate("/")
   }
 

@@ -1,34 +1,36 @@
 import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom"
-import { useEffect } from "react"
+import { lazy, Suspense, useEffect } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-icons/font/bootstrap-icons.min.css"
 import "./index.css"
 import NavbarJB from "./components/NavbarJB"
 import FooterJB from "./components/FooterJB"
-import Register from "./components/Register"
-import Login from "./components/Login"
-import RecuperoPsw from "./components/RecuperoPsw"
-import ResetPsw from "./components/ResetPsw"
-import Home from "./components/Home"
-import Dashboard from "./components/Dashboard"
-import Respiri from "./components/Respiri"
-import Diario from "./components/Diario"
-import ToDoList from "./components/ToDoList"
-import Mood from "./components/Mood"
-import Eventi from "./components/Eventi"
-import ProfiloUtente from "./components/ProfiloUtente"
-import BackOffice from "./components/BackOffice"
-import ChiSiamo from "./components/ChiSiamo"
-import PrivacyPolicy from "./components/PrivacyPolicy"
-import NotFound from "./components/NotFound"
 import { clearSessionAndRedirectToLoginIfNeeded, isTokenExpired } from "./utils/authInterceptor"
+import { getSessionToken } from "./utils/session"
+
+const Register = lazy(() => import("./components/Register"))
+const Login = lazy(() => import("./components/Login"))
+const RecuperoPsw = lazy(() => import("./components/RecuperoPsw"))
+const ResetPsw = lazy(() => import("./components/ResetPsw"))
+const Home = lazy(() => import("./components/Home"))
+const Dashboard = lazy(() => import("./components/Dashboard"))
+const Respiri = lazy(() => import("./components/Respiri"))
+const Diario = lazy(() => import("./components/Diario"))
+const ToDoList = lazy(() => import("./components/ToDoList"))
+const Mood = lazy(() => import("./components/Mood"))
+const Eventi = lazy(() => import("./components/Eventi"))
+const ProfiloUtente = lazy(() => import("./components/ProfiloUtente"))
+const BackOffice = lazy(() => import("./components/BackOffice"))
+const ChiSiamo = lazy(() => import("./components/ChiSiamo"))
+const PrivacyPolicy = lazy(() => import("./components/PrivacyPolicy"))
+const NotFound = lazy(() => import("./components/NotFound"))
 
 const SessionGuard = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
+    const token = getSessionToken()
 
     if (!token) return
 
@@ -47,8 +49,19 @@ const SessionGuard = () => {
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Suspense
+        fallback={
+          <div className="container py-5" role="status" aria-live="polite">
+            <div className="jb-loading-skeleton">
+              <span className="visually-hidden">Caricamento pagina</span>
+              <span className="placeholder col-12" />
+              <span className="placeholder col-10" />
+              <span className="placeholder col-8" />
+            </div>
+          </div>
+        }
+      >
         <SessionGuard />
         <NavbarJB />
         <main className="flex-grow-1 pt-5 mt-5">
@@ -72,8 +85,8 @@ function App() {
           </Routes>
         </main>
         <FooterJB />
-      </BrowserRouter>
-    </>
+      </Suspense>
+    </BrowserRouter>
   )
 }
 

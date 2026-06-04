@@ -11,6 +11,9 @@ import {
 } from "react-bootstrap"
 import LoadingSkeleton from "./common/LoadingSkeleton"
 import JBCard from "./common/JBCard"
+import { apiFetch } from "../utils/api"
+import { getSessionToken } from "../utils/session"
+import "../assets/cssVari/mood.css"
 
 interface Brano {
   id: number
@@ -38,7 +41,7 @@ const tipiMood = [
 ]
 
 const Mood = () => {
-  const token = localStorage.getItem("token")
+  const token = getSessionToken()
 
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
@@ -62,9 +65,7 @@ const Mood = () => {
       setLoading(true)
       try {
         setError("")
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/moods`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
+        const res = await apiFetch("/moods", { auth: true, token })
         const data = await res.json()
         const moodsList: Mood[] = data.content || []
         setMoods(moodsList)
@@ -87,12 +88,7 @@ const Mood = () => {
     const fetchBrani = async (moodId: number): Promise<Brano[]> => {
       try {
         setError("")
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/brani/mood/${moodId}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        )
+        const res = await apiFetch(`/brani/mood/${moodId}`, { auth: true, token })
         if (!res.ok) {
           console.error("Errore fetch brani", res.status)
           return []
@@ -139,12 +135,7 @@ const Mood = () => {
     setLoading(true)
     try {
       setError("")
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/brani/mood/${mood.id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      )
+      const res = await apiFetch(`/brani/mood/${mood.id}`, { auth: true, token })
       const brani = (await res.json()) || []
       setSelectedMood({ ...mood, brani })
     } catch (e) {
@@ -161,13 +152,11 @@ const Mood = () => {
     if (!token || !newTipoMood) return
     try {
       setError("")
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/moods?tipoMood=${newTipoMood}`,
-        {
-          method: "POST",
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      )
+      const res = await apiFetch(`/moods?tipoMood=${newTipoMood}`, {
+        method: "POST",
+        auth: true,
+        token,
+      })
       if (!res.ok)
         throw new Error(
           "Errore creazione mood 😥. Rilassati e riprova o contatta l'assistenza 🌿",
@@ -188,17 +177,15 @@ const Mood = () => {
     if (!token || !newBrano || !selectedMood) return
     try {
       setError("")
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/brani/${selectedMood.id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ titoloBrano: newBrano }),
+      const res = await apiFetch(`/brani/${selectedMood.id}`, {
+        method: "POST",
+        auth: true,
+        token,
+        headers: {
+          "Content-Type": "application/json",
         },
-      )
+        body: JSON.stringify({ titoloBrano: newBrano }),
+      })
       if (!res.ok)
         throw new Error(
           "Errore aggiunta brano 😥. Rilassati e riprova o contatta l'assistenza 🌿",
@@ -236,20 +223,18 @@ const Mood = () => {
         editingBrano.titoloBrano !== editTitolo ||
         (editingBrano.link || "") !== editLink
       ) {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/brani/${editingBrano.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              titoloBrano: editTitolo,
-              link: editLink,
-            }),
+        const res = await apiFetch(`/brani/${editingBrano.id}`, {
+          method: "PUT",
+          auth: true,
+          token,
+          headers: {
+            "Content-Type": "application/json",
           },
-        )
+          body: JSON.stringify({
+            titoloBrano: editTitolo,
+            link: editLink,
+          }),
+        })
 
         if (!res.ok)
           throw new Error(
@@ -260,15 +245,12 @@ const Mood = () => {
       }
 
       if (editMoodId !== selectedMood?.id) {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/brani/${
-            editingBrano.id
-          }/mood/${editMoodId}`,
+        const res = await apiFetch(
+          `/brani/${editingBrano.id}/mood/${editMoodId}`,
           {
             method: "PATCH",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            auth: true,
+            token,
           },
         )
 
@@ -335,13 +317,11 @@ const Mood = () => {
     if (!token || !selectedMood) return
     try {
       setError("")
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/brani/${branoId}`,
-        {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      )
+      const res = await apiFetch(`/brani/${branoId}`, {
+        method: "DELETE",
+        auth: true,
+        token,
+      })
       if (!res.ok)
         throw new Error(
           "Errore eliminazione brano 😥. Rilassati e riprova o contatta l'assistenza 🌿",
@@ -367,13 +347,11 @@ const Mood = () => {
     if (!token || !selectedMood) return
     try {
       setError("")
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/moods/${selectedMood.id}`,
-        {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      )
+      const res = await apiFetch(`/moods/${selectedMood.id}`, {
+        method: "DELETE",
+        auth: true,
+        token,
+      })
       if (!res.ok)
         throw new Error(
           "Errore eliminazione mood 😥. Rilassati e riprova o contatta l'assistenza 🌿",

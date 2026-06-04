@@ -1,9 +1,10 @@
 import { useEffect } from "react"
 import { Button, Col, Container, Row } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+import { getSessionToken } from "../utils/session"
 
 const Home = function () {
-  const token = localStorage.getItem("token")
+  const token = getSessionToken()
   const navigate = useNavigate()
 
   useEffect(() => {

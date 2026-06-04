@@ -5,6 +5,7 @@ import UserListComponent from "./backOfficeComponent.tsx/UserListComponent"
 import StatisticheComponent from "./backOfficeComponent.tsx/StatisticheComponent"
 import RespiriAdminComponent from "./backOfficeComponent.tsx/RespiriAdminComponent"
 import LoadingSkeleton from "./common/LoadingSkeleton"
+import { getSessionToken, getStoredUserId } from "../utils/session"
 
 const BackOffice = () => {
   const [token, setToken] = useState<string | null>(null)
@@ -13,12 +14,12 @@ const BackOffice = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token")
-    const storedId = localStorage.getItem("userId")
+    const storedToken = getSessionToken()
+    const storedId = getStoredUserId()
 
     if (storedToken && storedId) {
       setToken(storedToken)
-      setMyId(parseInt(storedId))
+      setMyId(storedId)
     }
 
     setLoading(false)

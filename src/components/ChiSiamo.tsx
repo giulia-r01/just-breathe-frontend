@@ -1,4 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap"
+import "../assets/cssVari/contentPages.css"
 
 const ChiSiamo = function () {
   return (

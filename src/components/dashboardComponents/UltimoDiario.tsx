@@ -3,6 +3,8 @@ import { Alert, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import DashboardCard from "./DashboardCard"
 import DashboardSkeleton from "./DashboardSkeleton"
+import { apiFetch } from "../../utils/api"
+import { getSessionToken } from "../../utils/session"
 
 interface Diario {
   id: number
@@ -22,7 +24,7 @@ const UltimoDiario = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
-  const token = localStorage.getItem("token")
+  const token = getSessionToken()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -32,8 +34,9 @@ const UltimoDiario = () => {
       setLoading(true)
       setError("")
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/dashboard`, {
-          headers: { Authorization: `Bearer ${token}` },
+        const res = await apiFetch("/dashboard", {
+          auth: true,
+          token,
           signal: controller.signal,
         })
         if (!res.ok) throw new Error("Errore nel caricamento della dashboard")

@@ -1,0 +1,26 @@
+.jb-content-box {
+  background: #e9f2ee;
+  color: #24312d;
+  border: 1px solid #c7dbd2;
+  border-radius: 1.2rem;
+  box-shadow: 0 10px 24px rgba(20, 67, 55, 0.08);
+}
+
+.jb-content-box-title {
+  color: #123b31;
+  font-weight: 800;
+}
+
+.jb-content-box p {
+  color: #2f4a43;
+}
+
+.jb-content-box a {
+  color: #0c7d63;
+  font-weight: 700;
+}
+
+.jb-content-box a:hover,
+.jb-content-box a:focus-visible {
+  color: #0a6650;
+}

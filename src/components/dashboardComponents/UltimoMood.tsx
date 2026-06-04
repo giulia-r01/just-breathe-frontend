@@ -3,6 +3,8 @@ import { Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import DashboardCard from "./DashboardCard"
 import DashboardSkeleton from "./DashboardSkeleton"
+import { apiFetch } from "../../utils/api"
+import { getSessionToken } from "../../utils/session"
 
 interface Mood {
   id: number
@@ -21,7 +23,7 @@ const UltimoMood = () => {
   const [loading, setLoading] = useState(true)
   const [isError, setIsError] = useState("")
   const [mood, setMood] = useState<Mood | null>(null)
-  const token = localStorage.getItem("token")
+  const token = getSessionToken()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -29,24 +31,20 @@ const UltimoMood = () => {
 
     const fetchMood = async () => {
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/moods?page=0&size=1&sortBy=dataCreazione`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-            signal: controller.signal,
-          },
-        )
+        const res = await apiFetch("/moods?page=0&size=1&sortBy=dataCreazione", {
+          auth: true,
+          token,
+          signal: controller.signal,
+        })
         const data = await res.json()
 
         if (data.content && data.content.length > 0) {
           const ultimoMood = data.content[0]
-          const resBrani = await fetch(
-            `${import.meta.env.VITE_API_URL}/brani/mood/${ultimoMood.id}`,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-              signal: controller.signal,
-            },
-          )
+          const resBrani = await apiFetch(`/brani/mood/${ultimoMood.id}`, {
+            auth: true,
+            token,
+            signal: controller.signal,
+          })
           const braniData = await resBrani.json()
           setMood({ ...ultimoMood, brani: braniData })
         }

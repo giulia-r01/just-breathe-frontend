@@ -3,6 +3,8 @@ import { Alert, Button, Badge } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import DashboardCard from "./DashboardCard"
 import DashboardSkeleton from "./DashboardSkeleton"
+import { apiFetch } from "../../utils/api"
+import "../../assets/cssVari/respiri.css"
 
 interface Respiro {
   id: number
@@ -36,7 +38,7 @@ const UltimoRespiro = () => {
   useEffect(() => {
     const controller = new AbortController()
 
-    fetch(`${import.meta.env.VITE_API_URL}/respirazioni`, {
+    apiFetch("/respirazioni", {
       signal: controller.signal,
     })
       .then((res) => {
