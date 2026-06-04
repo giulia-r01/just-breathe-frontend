@@ -6,6 +6,7 @@ import StatisticheComponent from "./backOfficeComponent.tsx/StatisticheComponent
 import RespiriAdminComponent from "./backOfficeComponent.tsx/RespiriAdminComponent"
 import LoadingSkeleton from "./common/LoadingSkeleton"
 import { getSessionToken, getStoredUserId } from "../utils/session"
+import PageHero from "./common/PageHero"
 
 const BackOffice = () => {
   const [token, setToken] = useState<string | null>(null)
@@ -38,10 +39,15 @@ const BackOffice = () => {
   }
 
   return (
-    <Container className="my-5" role="main">
-      <h1 className="text-white mynav rounded text-center mb-5 py-3">
-        Backoffice Admin
-      </h1>
+    <Container className="my-4" role="main">
+      <div className="jb-admin-shell mb-4">
+        <PageHero
+          iconClassName="bi bi-shield-check"
+          title="Backoffice Admin"
+          subtitle="Gestione utenti, statistiche e contenuti dell'app in un'unica area."
+          className="mb-0"
+        />
+      </div>
       <h2 className="visually-hidden">
         Riepilogo attività di backoffice dell'admin
       </h2>

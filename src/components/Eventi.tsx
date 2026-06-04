@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react"
 import { Form, Button, ListGroup, Container, Row, Col } from "react-bootstrap"
-import { FaRegStar, FaStar } from "react-icons/fa"
 import UltimiEventiSalvati from "./dashboardComponents/UltimiEventiSalvati"
 import LoadingSkeleton from "./common/LoadingSkeleton"
 import { apiFetch } from "../utils/api"
@@ -207,12 +206,15 @@ const Eventi = () => {
                           : "Aggiungi evento ai preferiti"
                       }
                       variant="link"
-                      className={`fs-4 ${
+                      className={`fs-4 jb-star-toggle ${
                         isSalvato ? "text-success" : "text-secondary"
-                      }`}
+                      } ${isSalvato ? "is-active" : ""}`}
                       onClick={() => handleToggleSalvataggio(evento)}
                     >
-                      {isSalvato ? <FaStar /> : <FaRegStar />}
+                      <i
+                        className={isSalvato ? "bi bi-star-fill" : "bi bi-star"}
+                        aria-hidden="true"
+                      />
                     </Button>
                   </ListGroup.Item>
                 )

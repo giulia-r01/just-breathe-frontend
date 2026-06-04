@@ -1,13 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react"
-import {
-  Table,
-  Button,
-  Form,
-  Col,
-  Alert,
-  Pagination,
-} from "react-bootstrap"
+import { Table, Button, Form, Col, Alert, Pagination } from "react-bootstrap"
 import LoadingSkeleton from "../common/LoadingSkeleton"
 
 interface BackOfficeUser {
@@ -69,13 +62,13 @@ const UserListComponent = ({ token, myId }: Props) => {
         {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       )
 
       setUtenti((prev) =>
         prev.map((u) =>
-          u.id === id ? { ...u, ruolo: nuovoRuolo as "USER" | "ADMIN" } : u
-        )
+          u.id === id ? { ...u, ruolo: nuovoRuolo as "USER" | "ADMIN" } : u,
+        ),
       )
     } catch {
       alert("Errore durante il cambio ruolo")
@@ -85,17 +78,15 @@ const UserListComponent = ({ token, myId }: Props) => {
   const toggleAttivo = async (id: number, attivo: boolean) => {
     try {
       await fetch(
-        `${
-          import.meta.env.VITE_API_URL
-        }/backoffice/${id}/attivo?attivo=${!attivo}`,
+        `${import.meta.env.VITE_API_URL}/backoffice/${id}/attivo?attivo=${!attivo}`,
         {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       )
 
       setUtenti((prev) =>
-        prev.map((u) => (u.id === id ? { ...u, attivo: !attivo } : u))
+        prev.map((u) => (u.id === id ? { ...u, attivo: !attivo } : u)),
       )
     } catch {
       alert("Errore durante la modifica dello stato 😥")
@@ -111,22 +102,20 @@ const UserListComponent = ({ token, myId }: Props) => {
       minute: "2-digit",
     })
 
-  if (loading)
-    return <LoadingSkeleton compact lines={3} />
-  if (errore)
+  if (loading) return <LoadingSkeleton compact lines={3} />
+  if (errore) {
     return (
       <Alert className="text-danger" role="alert">
         {errore}
       </Alert>
     )
+  }
 
   return (
     <Col sm={12}>
-      <h3 className="mb-4 ">
-        <span className="mynav rounded text-white p-2">Gestione Utenti</span>
-      </h3>
-      <Table striped bordered hover responsive className="rounded">
-        <thead className="table-success">
+      <h3 className="jb-admin-section-title mb-4">Gestione utenti</h3>
+      <Table responsive className="jb-table">
+        <thead>
           <tr>
             <th>Username</th>
             <th>Ruolo</th>

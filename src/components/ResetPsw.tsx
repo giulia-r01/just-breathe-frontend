@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react"
-import {
-  Alert,
-  Button,
-  Col,
-  Container,
-  Row,
-  Form,
-} from "react-bootstrap"
+import { Button, Form } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
-import { FaEye, FaEyeSlash } from "react-icons/fa"
+import AuthFrame from "./common/AuthFrame"
+import StatusAlert from "./common/StatusAlert"
 
 const ResetPsw = function () {
   const [token, setToken] = useState("")
@@ -46,7 +40,7 @@ const ResetPsw = function () {
 
     if (!token) {
       setError(
-        "Token mancante. Ricarica la pagina dal link ricevuto via email."
+        "Token mancante. Ricarica la pagina dal link ricevuto via email.",
       )
       return
     }
@@ -63,11 +57,11 @@ const ResetPsw = function () {
           const text = await res.text()
           throw new Error(
             text ||
-              "Errore durante il reset password 😥. Rilassati e riprova o contatta l'assistenza 🌿"
+              "Errore durante il reset password 😥. Rilassati e riprova o contatta l'assistenza 🌿",
           )
         }
         setSuccess(
-          "Password resettata con successo 🥳! Ora verrai reindirizzato al login..."
+          "Password resettata con successo 🥳! Ora verrai reindirizzato al login...",
         )
         setPassword("")
         setConfirmPassword("")
@@ -81,92 +75,93 @@ const ResetPsw = function () {
   }
 
   return (
-    <Container className="mt-4">
-      <Row className="justify-content-center">
-        <Col md={6} lg={4} className="mynav py-3 my-4 rounded text-white">
-          <h1 className="visually-hidden">Reset della password</h1>
-          <h2 className="pb-2">Imposta una nuova password</h2>
+    <AuthFrame
+      title="Imposta una nuova password"
+      subtitle={
+        <p className="mb-0">
+          Scegli una password nuova e confermala per completare il reset.
+        </p>
+      }
+    >
+      <h1 className="visually-hidden">Reset della password</h1>
+      {error && <StatusAlert message={error} variant="danger" />}
+      {success && <StatusAlert message={success} variant="success" />}
 
-          {error && (
-            <div role="alert">
-              <Alert variant="danger">{error}</Alert>
-            </div>
-          )}
-          {success && (
-            <div role="alert">
-              <Alert variant="success">{success}</Alert>
-            </div>
-          )}
-
-          <Form onSubmit={handleSubmit} noValidate>
-            <Form.Group className="mb-3" controlId="password">
-              <Form.Label>Nuova password</Form.Label>
-              <div className="input-group">
-                <Form.Control
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  autoComplete="off"
-                />
-                <Button
-                  variant="success"
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  aria-label={
-                    showPassword ? "Nascondi password" : "Mostra password"
-                  }
-                >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
-                </Button>
-              </div>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="confirmPassword">
-              <Form.Label>Conferma nuova password</Form.Label>
-              <div className="input-group">
-                <Form.Control
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                  autoComplete="off"
-                />
-                <Button
-                  variant="success"
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  aria-label={
-                    showConfirmPassword
-                      ? "Nascondi password"
-                      : "Mostra password"
-                  }
-                >
-                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                </Button>
-              </div>
-            </Form.Group>
-
+      <Form onSubmit={handleSubmit} noValidate>
+        <Form.Group className="mb-3" controlId="password">
+          <Form.Label>Nuova password</Form.Label>
+          <div className="input-group">
+            <Form.Control
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="off"
+            />
             <Button
-              type="submit"
               variant="success"
-              className="w-100 d-flex justify-content-center align-items-center"
-              disabled={loading}
-              aria-label="Reset Password"
+              type="button"
+              className="jb-password-toggle"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={
+                showPassword ? "Nascondi password" : "Mostra password"
+              }
             >
-              {loading ? (
-                <div role="status" aria-live="polite">
-                  <span className="jb-inline-skeleton me-2" aria-hidden="true" />
-                  Caricamento...
-                </div>
-              ) : (
-                "Reset Password"
-              )}
+              <i
+                className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}
+                aria-hidden="true"
+              />
             </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+          </div>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="confirmPassword">
+          <Form.Label>Conferma nuova password</Form.Label>
+          <div className="input-group">
+            <Form.Control
+              type={showConfirmPassword ? "text" : "password"}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              autoComplete="off"
+            />
+            <Button
+              variant="success"
+              type="button"
+              className="jb-password-toggle"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              aria-label={
+                showConfirmPassword ? "Nascondi password" : "Mostra password"
+              }
+            >
+              <i
+                className={
+                  showConfirmPassword ? "bi bi-eye-slash" : "bi bi-eye"
+                }
+                aria-hidden="true"
+              />
+            </Button>
+          </div>
+        </Form.Group>
+
+        <Button
+          type="submit"
+          variant="success"
+          className="w-100 d-flex justify-content-center align-items-center"
+          disabled={loading}
+          aria-label="Reset Password"
+        >
+          {loading ? (
+            <div role="status" aria-live="polite">
+              <span className="jb-inline-skeleton me-2" aria-hidden="true" />
+              Caricamento...
+            </div>
+          ) : (
+            "Reset Password"
+          )}
+        </Button>
+      </Form>
+    </AuthFrame>
   )
 }
 

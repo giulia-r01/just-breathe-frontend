@@ -1,14 +1,7 @@
 import { useEffect, useState } from "react"
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  Modal,
-  Row,
-  Alert,
-} from "react-bootstrap"
+import { Button, Card, Col, Form, Modal, Row, Alert } from "react-bootstrap"
 import LoadingSkeleton from "../common/LoadingSkeleton"
+import JBCard from "../common/JBCard"
 
 interface Respiro {
   id?: number
@@ -50,7 +43,7 @@ const RespiriAdminComponent = () => {
       })
       if (!res.ok)
         throw new Error(
-          "Qualcosa è andato storto nel recupero delle respirazioni 😥"
+          "Qualcosa è andato storto nel recupero delle respirazioni 😥",
         )
       const data = await res.json()
       setRespiri(data)
@@ -93,7 +86,7 @@ const RespiriAdminComponent = () => {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    >,
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({
@@ -109,8 +102,9 @@ const RespiriAdminComponent = () => {
       formData.inspiraSecondi <= 0 ||
       formData.trattieniSecondi < 0 ||
       formData.espiraSecondi <= 0
-    )
+    ) {
       return "I secondi devono essere numeri positivi (trattieni può essere 0)"
+    }
     return null
   }
 
@@ -157,8 +151,9 @@ const RespiriAdminComponent = () => {
 
   const handleDelete = async (id?: number) => {
     if (!id) return
-    if (!window.confirm("Sei sicuro di voler eliminare questa respirazione?"))
+    if (!window.confirm("Sei sicuro di voler eliminare questa respirazione?")) {
       return
+    }
 
     setLoading(true)
     setError("")
@@ -170,7 +165,7 @@ const RespiriAdminComponent = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
           },
-        }
+        },
       )
       if (!res.ok) throw new Error("Errore durante l'eliminazione 😥")
       await fetchRespiri()
@@ -183,11 +178,7 @@ const RespiriAdminComponent = () => {
 
   return (
     <div className="my-4 pt-5">
-      <h3 className="mb-4">
-        <span className="mynav rounded text-white p-2">
-          Gestione Respirazioni
-        </span>
-      </h3>
+      <h3 className="jb-admin-section-title mb-4">Gestione respirazioni</h3>
       <Button
         variant="success"
         className="mb-3"
@@ -197,9 +188,7 @@ const RespiriAdminComponent = () => {
         + Nuova Respirazione
       </Button>
 
-      {loading && (
-        <LoadingSkeleton compact lines={3} />
-      )}
+      {loading && <LoadingSkeleton compact lines={3} />}
 
       {error && (
         <Alert variant="danger" role="alert">
@@ -212,15 +201,17 @@ const RespiriAdminComponent = () => {
       <Row xs={1} md={2} lg={3} className="g-3">
         {respiri.map((respiro) => (
           <Col key={respiro.id}>
-            <Card>
+            <JBCard variantStyle="elevated">
               <Card.Body>
                 <Card.Title className="mytext">{respiro.nome}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
                   Categoria: {respiro.categoria}
                 </Card.Subtitle>
                 <Card.Text>
-                  Inspira: {respiro.inspiraSecondi}s<br />
-                  Trattieni: {respiro.trattieniSecondi}s<br />
+                  Inspira: {respiro.inspiraSecondi}s
+                  <br />
+                  Trattieni: {respiro.trattieniSecondi}s
+                  <br />
                   Espira: {respiro.espiraSecondi}s
                 </Card.Text>
                 <div>
@@ -241,7 +232,7 @@ const RespiriAdminComponent = () => {
                   </Button>
                 </div>
               </Card.Body>
-            </Card>
+            </JBCard>
           </Col>
         ))}
       </Row>

@@ -9,8 +9,6 @@ import {
   Row,
 } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
-import { FaCamera, FaTrashAlt } from "react-icons/fa"
-import { FaEye, FaEyeSlash } from "react-icons/fa"
 import LoadingSkeleton from "./common/LoadingSkeleton"
 import { apiFetch } from "../utils/api"
 import { getSessionToken } from "../utils/session"
@@ -244,9 +242,10 @@ const ProfiloUtente = () => {
               <Form.Group className="mb-3">
                 <Form.Label
                   htmlFor="fileInputControl"
-                  className="btn btn-outline-success btn-sm"
+                  className="btn btn-outline-success btn-sm jb-file-trigger"
                 >
-                  <FaCamera className="me-2" /> Cambia immagine
+                  <i className="bi bi-camera me-2" aria-hidden="true" /> Cambia
+                  immagine
                 </Form.Label>
                 <Form.Control
                   type="file"
@@ -303,13 +302,19 @@ const ProfiloUtente = () => {
                   />
                   <Button
                     variant="success"
+                    className="jb-password-toggle"
                     onClick={() => setShowOldPassword(!showOldPassword)}
                     tabIndex={-1}
                     aria-label={
                       showOldPassword ? "Nascondi password" : "Mostra password"
                     }
                   >
-                    {showOldPassword ? <FaEyeSlash /> : <FaEye />}
+                    <i
+                      className={
+                        showOldPassword ? "bi bi-eye-slash" : "bi bi-eye"
+                      }
+                      aria-hidden="true"
+                    />
                   </Button>
                 </div>
               </Form.Group>
@@ -326,13 +331,19 @@ const ProfiloUtente = () => {
                   />
                   <Button
                     variant="success"
+                    className="jb-password-toggle"
                     onClick={() => setShowNewPassword(!showNewPassword)}
                     tabIndex={-1}
                     aria-label={
                       showNewPassword ? "Nascondi password" : "Mostra password"
                     }
                   >
-                    {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+                    <i
+                      className={
+                        showNewPassword ? "bi bi-eye-slash" : "bi bi-eye"
+                      }
+                      aria-hidden="true"
+                    />
                   </Button>
                 </div>
                 <Button
@@ -351,7 +362,8 @@ const ProfiloUtente = () => {
                   onClick={handleDeleteAccount}
                   aria-label="Elimina il mio account"
                 >
-                  <FaTrashAlt className="me-2" /> Elimina il mio account
+                  <i className="bi bi-trash3 me-2" aria-hidden="true" />
+                  Elimina il mio account
                 </Button>
               </div>
             </Form>

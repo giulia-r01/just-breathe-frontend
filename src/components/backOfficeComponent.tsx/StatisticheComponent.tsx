@@ -1,14 +1,7 @@
 import { useEffect, useState } from "react"
-import {
-  Card,
-  Col,
-  Table,
-  Row,
-  Alert,
-  Pagination,
-} from "react-bootstrap"
-import { ListGroup } from "react-bootstrap"
+import { Col, Table, Row, Alert, Pagination, ListGroup } from "react-bootstrap"
 import LoadingSkeleton from "../common/LoadingSkeleton"
+import JBCard from "../common/JBCard"
 
 interface Props {
   token: string
@@ -43,7 +36,7 @@ const StatisticheComponent = ({ token }: Props) => {
             }/backoffice/statistiche/media-attivita-utente`,
             {
               headers: { Authorization: `Bearer ${token}` },
-            }
+            },
           ),
           fetch(`${import.meta.env.VITE_API_URL}/backoffice/mood-statistiche`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -54,13 +47,13 @@ const StatisticheComponent = ({ token }: Props) => {
             }/backoffice/statistiche/attivita-utenti?page=${currentPage}&size=${pageSize}&sort=username`,
             {
               headers: { Authorization: `Bearer ${token}` },
-            }
+            },
           ),
         ])
 
         if (!resMedia.ok || !resMood.ok || !resDettagli.ok) {
           throw new Error(
-            "Qualcosa è andato storto nel recupero delle statistiche 😥"
+            "Qualcosa è andato storto nel recupero delle statistiche 😥",
           )
         }
 
@@ -83,30 +76,26 @@ const StatisticheComponent = ({ token }: Props) => {
     fetchStats()
   }, [token, currentPage])
 
-  if (loading)
-    return <LoadingSkeleton compact lines={4} />
-  if (error)
+  if (loading) return <LoadingSkeleton compact lines={4} />
+  if (error) {
     return (
       <Alert className="text-danger" role="alert">
         {error}
       </Alert>
     )
+  }
 
   return (
     <Col sm={12}>
-      <h3 className="mb-4">
-        <span className="mynav rounded text-white p-2">
-          Statistiche Generali
-        </span>
-      </h3>
+      <h3 className="jb-admin-section-title mb-4">Statistiche generali</h3>
 
-      <Card className="shadow p-4">
+      <JBCard variantStyle="elevated" className="p-4">
         <h4 className="fw-bold mb-3 mytext">Attività dettagliate per utente</h4>
-        <Table striped bordered hover responsive className="mb-4">
+        <Table responsive className="mb-4 jb-table">
           <caption className="visually-hidden">
             Tabella dettagli attività per utente
           </caption>
-          <thead className="table-secondary">
+          <thead>
             <tr>
               <th>Username</th>
               <th>Diari</th>
@@ -163,7 +152,7 @@ const StatisticheComponent = ({ token }: Props) => {
                 {Object.entries(moodStats).map(([tipo, count]) => (
                   <ListGroup.Item
                     key={tipo}
-                    className="d-flex justify-content-between align-items-center"
+                    className="d-flex justify-content-between align-items-center jb-list-item"
                   >
                     <span className="text-capitalize">{tipo}</span>
                     <span className="badge bg-success rounded-pill">
@@ -175,7 +164,7 @@ const StatisticheComponent = ({ token }: Props) => {
             )}
           </Col>
         </Row>
-      </Card>
+      </JBCard>
     </Col>
   )
 }

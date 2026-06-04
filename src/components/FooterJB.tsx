@@ -1,4 +1,3 @@
-import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
 const FooterJB = function () {
@@ -21,7 +20,7 @@ const FooterJB = function () {
           rel="noopener noreferrer"
           aria-label="Profilo Instagram di Just Breathe"
         >
-          <FaInstagram aria-hidden="true" />
+          <i className="bi bi-instagram" aria-hidden="true" />
         </a>
         <a
           title="Apri su LinkedIn"
@@ -31,7 +30,7 @@ const FooterJB = function () {
           rel="noopener noreferrer"
           aria-label="Profilo LinkedIn di Just Breathe"
         >
-          <FaLinkedin aria-hidden="true" />
+          <i className="bi bi-linkedin" aria-hidden="true" />
         </a>
         <a
           title="Apri su GitHub"
@@ -41,7 +40,7 @@ const FooterJB = function () {
           rel="noopener noreferrer"
           aria-label="Profilo GitHub di Just Breathe"
         >
-          <FaGithub aria-hidden="true" />
+          <i className="bi bi-github" aria-hidden="true" />
         </a>
       </p>
       <p className="mb-1">

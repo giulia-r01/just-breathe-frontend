@@ -279,7 +279,7 @@ const ToDoList = () => {
           </h2>
           {tasksOfDay.length > 0 ? (
             tasksOfDay.map((task) => (
-              <Card key={task.id} className="mb-2 text-dark">
+              <Card key={task.id} className="mb-2 text-dark jb-section-card">
                 <Card.Body>
                   <Card.Title className="d-flex justify-content-between">
                     {task.titolo}
@@ -288,7 +288,7 @@ const ToDoList = () => {
                         variant="outline-success"
                         size="sm"
                         onClick={() => handleEditTaskClick(task)}
-                        className="me-2"
+                        className="me-2 jb-icon-button-sm"
                         aria-label={`Modifica il task ${task.titolo}`}
                       >
                         ✏️
@@ -297,6 +297,7 @@ const ToDoList = () => {
                         aria-label={`Elimina il task ${task.titolo}`}
                         variant="outline-danger"
                         size="sm"
+                        className="jb-icon-button-sm"
                         onClick={() => handleDeleteTask(task.id)}
                       >
                         🗑️
@@ -318,7 +319,7 @@ const ToDoList = () => {
             <>
               <h3 className="mt-4 fs-4">Prossimi task del mese</h3>
               {upcomingTasksOfMonth.map((task) => (
-                <Card key={task.id} className="mb-2 text-dark">
+                <Card key={task.id} className="mb-2 text-dark jb-section-card">
                   <Card.Body>
                     <Card.Title className="d-flex justify-content-between">
                       {task.titolo}{" "}
@@ -327,7 +328,7 @@ const ToDoList = () => {
                           variant="outline-success"
                           size="sm"
                           onClick={() => handleEditTaskClick(task)}
-                          className="me-2"
+                          className="me-2 jb-icon-button-sm"
                           aria-label={`Modifica il task ${task.titolo}`}
                         >
                           ✏️
@@ -336,6 +337,7 @@ const ToDoList = () => {
                           aria-label={`Elimina il task ${task.titolo}`}
                           variant="outline-danger"
                           size="sm"
+                          className="jb-icon-button-sm"
                           onClick={() => handleDeleteTask(task.id)}
                         >
                           🗑️

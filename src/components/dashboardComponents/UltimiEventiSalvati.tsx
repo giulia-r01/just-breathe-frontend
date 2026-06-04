@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { Alert, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
-import { FaTrashAlt } from "react-icons/fa"
 import DashboardCard from "./DashboardCard"
 import DashboardSkeleton from "./DashboardSkeleton"
 import { apiFetch } from "../../utils/api"
@@ -130,12 +129,12 @@ const UltimiEventiSalvati = ({
               {showStars && onToggleSalvataggio ? (
                 <Button
                   variant="link"
-                  className="p-0 border-0 text-danger fs-5 mt-1"
+                  className="jb-icon-button-sm btn btn-outline-danger mt-1"
                   title="Rimuovi dai preferiti"
                   onClick={() => onToggleSalvataggio(evento)}
                   aria-label="Rimuovi l'evento dai preferiti"
                 >
-                  <FaTrashAlt />
+                  <i className="bi bi-trash3" aria-hidden="true" />
                 </Button>
               ) : null}
             </div>

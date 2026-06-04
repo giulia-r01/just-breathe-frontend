@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { Container, Row, Col, Button } from "react-bootstrap"
-import { FaEye, FaEyeSlash } from "react-icons/fa"
+import { Button } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { SESSION_EXPIRED_MESSAGE_KEY } from "../utils/authInterceptor"
+import AuthFrame from "./common/AuthFrame"
+import StatusAlert from "./common/StatusAlert"
 
 interface LoginFormData {
   username: string
@@ -49,14 +50,14 @@ const Login = function () {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
-        }
+        },
       )
 
       if (!response.ok) {
         const data = await response.json()
         setError(
           data.message ||
-            "Credenziali non valide. Rilassati, riprova o resetta la tua password cliccando sul link 'Hai scordato la tua password?' 🌿"
+            "Credenziali non valide. Rilassati, riprova o resetta la tua password cliccando sul link 'Hai scordato la tua password?' 🌿",
         )
       } else {
         const data = await response.json()
@@ -69,7 +70,7 @@ const Login = function () {
             headers: {
               Authorization: `Bearer ${data.token}`,
             },
-          }
+          },
         )
 
         if (profiloRes.ok) {
@@ -92,90 +93,94 @@ const Login = function () {
   }
 
   return (
-    <Container className="container mt-4" role="main">
-      <Row className="justify-content-center px-4">
-        <Col md={6} lg={4} className="jb-surface jb-auth-card py-3 my-4 rounded">
-          <h1>Login</h1>
+    <AuthFrame
+      title="Login"
+      subtitle={
+        <p className="mb-0">
+          Accedi al tuo spazio personale e riprendi da dove hai lasciato.
+        </p>
+      }
+    >
+      {error && <StatusAlert message={error} variant="danger" />}
+      {success && <StatusAlert message={success} variant="success" />}
 
-          {error && <div className="alert alert-danger">{error}</div>}
-          {success && <div className="alert alert-success">{success}</div>}
+      <form onSubmit={handleSubmit} noValidate autoComplete="off">
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            autoComplete="new-username"
+            name="username"
+            className="form-control"
+            placeholder="Inserisci il tuo username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-          <form onSubmit={handleSubmit} noValidate autoComplete="off">
-            <div className="mb-3">
-              <label htmlFor="username" className="form-label">
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                autoComplete="new-username"
-                name="username"
-                className="form-control"
-                placeholder="Inserisci il tuo username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
-              <div className="input-group">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  name="password"
-                  autoComplete="new-password"
-                  className="form-control"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  minLength={6}
-                  placeholder="Inserisci la tua password"
-                />
-                <button
-                  type="button"
-                  className="btn btn-success"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  aria-label={
-                    showPassword ? "Nascondi password" : "Mostra password"
-                  }
-                  tabIndex={-1}
-                >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
-                </button>
-              </div>
-            </div>
-            <p className="text-center">
-              <Link
-                to="/auth/password/recupero"
-                className="jb-footer-link"
-                aria-label="Hai scordato la tua password? - Recupera la password dimenticata"
-              >
-                Hai scordato la tua password?
-              </Link>
-            </p>
-            <Button
-              type="submit"
-              className="w-100 d-flex justify-content-center align-items-center"
-              disabled={loading}
-              variant="success"
+        <div className="mb-4">
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <div className="input-group">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              autoComplete="new-password"
+              className="form-control"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              minLength={6}
+              placeholder="Inserisci la tua password"
+            />
+            <button
+              type="button"
+              className="btn btn-success jb-password-toggle"
+              onClick={() => setShowPassword((prev) => !prev)}
+              aria-label={
+                showPassword ? "Nascondi password" : "Mostra password"
+              }
+              tabIndex={-1}
             >
-              {loading ? (
-                <>
-                  <span className="jb-inline-skeleton me-2" aria-hidden="true" />
-                  Caricamento...
-                </>
-              ) : (
-                "Accedi"
-              )}
-            </Button>
-          </form>
-        </Col>
-      </Row>
-    </Container>
+              <i
+                className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}
+                aria-hidden="true"
+              />
+            </button>
+          </div>
+        </div>
+        <p className="text-center">
+          <Link
+            to="/auth/password/recupero"
+            className="jb-footer-link"
+            aria-label="Hai scordato la tua password? - Recupera la password dimenticata"
+          >
+            Hai scordato la tua password?
+          </Link>
+        </p>
+        <Button
+          type="submit"
+          className="w-100 d-flex justify-content-center align-items-center"
+          disabled={loading}
+          variant="success"
+        >
+          {loading ? (
+            <>
+              <span className="jb-inline-skeleton me-2" aria-hidden="true" />
+              Caricamento...
+            </>
+          ) : (
+            "Accedi"
+          )}
+        </Button>
+      </form>
+    </AuthFrame>
   )
 }
 
