@@ -427,6 +427,7 @@ const Mood = () => {
                 onClick={handleCreateMood}
                 disabled={showEditModal}
                 aria-label="Crea - clicca per creare il tuo mood"
+                className="jb-mood-create-btn"
               >
                 Crea
               </Button>

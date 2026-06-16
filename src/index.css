@@ -11,8 +11,8 @@
   --jb-bg-grad-bottom: #e2efea;
   --jb-text: #24312d;
   --jb-muted: #4a615a;
-  --jb-primary: #0c8b68;
-  --jb-primary-hover: #0a7558;
+  --jb-primary: #0a7558;
+  --jb-primary-hover: #095b45;
   --jb-primary-focus: #9fd8c8;
   --jb-surface-strong: #0f5a49;
   --jb-surface-soft: #dcebe5;
@@ -638,11 +638,11 @@ body::before {
 .jb-star-toggle:hover,
 .jb-star-toggle:focus-visible {
   background-color: #dceae4 !important;
-  color: #0c8b68 !important;
+  color: #0a7558 !important;
 }
 
 .jb-star-toggle.is-active {
-  color: #0c8b68 !important;
+  color: #0a7558 !important;
 }
 
 .jb-file-trigger {

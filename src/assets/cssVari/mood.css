@@ -141,6 +141,14 @@
   padding-right: 1.15rem;
 }
 
+.jb-mood-create-btn:disabled,
+.jb-mood-add-btn:disabled {
+  opacity: 1 !important;
+  background-color: #095b45 !important;
+  border-color: #095b45 !important;
+  color: #ffffff !important;
+}
+
 .jb-track-card {
   border-radius: 1.2rem;
   border: 1px solid #c7dbd2;
@@ -214,6 +222,13 @@
 
 .jb-track-listen-btn {
   flex-grow: 1;
+}
+
+.jb-track-listen-btn:disabled {
+  opacity: 1 !important;
+  color: #0f5a49 !important;
+  border-color: #0f5a49 !important;
+  background-color: #eef6f2 !important;
 }
 
 .jb-track-delete-btn {
