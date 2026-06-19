@@ -1,5 +1,6 @@
 import { Card } from "react-bootstrap"
 import type { PropsWithChildren, ReactNode } from "react"
+import "../../assets/cssVari/dashboard.css"
 
 interface DashboardCardProps extends PropsWithChildren {
   title: string
